@@ -1,3 +1,6 @@
+Cuando inicié mis estudios en Henry, tenía el deseo de llevar a cabo este Proyecto Individual (PI). Sin embargo, quería que este proyecto tuviera un propósito más allá de ser simplemente un requisito académico. Por lo tanto, diseñé la base de este proyecto con una intención especial, buscando crear algo que incite a las personas a querer visitarlo nuevamente.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
