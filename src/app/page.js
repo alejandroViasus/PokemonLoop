@@ -1,95 +1,63 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { getAllPokemons } from "@/store/slice";
+
+//? ---------------- COMPONENTS
+import NavigationMenu from "./components/NavigationMenu/NavigationMenu";
+
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const globalState = useSelector((state) => state.valueState);
+  useEffect(() => {
+    // fetch(`/api/pokemon/all?email=${globalState.user.email}`)
+    fetch(`/api/user/getuser?email=${globalState.user.email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data: ", data);
+        if(data.register){
+          dispatch(getAllPokemons(data.data));
+        }else{
+          if(globalState.user.email!==""){
+            router.push("/register");
+          }else{
+            console.log("correo vacio redireccion : Invalida")
+          }
+        }
+      })
+      .catch((err) => {
+        console.log("ERROR__________",err)
+        if (globalState.user.email !== "") {
+          router.push("/register");
+        }
+      });
+  }, [globalState.user.email]);
+
+  console.log(globalState);
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main className="main-app">
+      <NavigationMenu />
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <h1>
+        globalState {"  : "} {globalState.user.email}
+      </h1>
+      <h1>pokemons {globalState.user.allPokemons.length}</h1>
     </main>
-  )
+  );
+}
+
+{
+  /* <Image
+  src={
+    "https://th.bing.com/th/id/R.166c3adb6c3150c596e8fd75aae6fb0a?rik=AgySNAtTku0dxg&riu=http%3a%2f%2flogos-download.com%2fwp-content%2fuploads%2f2016%2f07%2fPok%c3%a9mon_logo.png&ehk=qOQewe8jlQDEb75Dsg5lFydn3LWbIbxRGjIoWlzDcA8%3d&risl=&pid=ImgRaw&r=0"
+  }
+  width={500}
+  height={183}
+  alt="logo-pokemon"
+/> */
 }
