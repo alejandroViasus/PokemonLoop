@@ -9,7 +9,9 @@ const nextConfig = {
           'coolwallpapers.me',
           'img.freepik.com',
           "3.bp.blogspot.com" ,
-          'lh3.googleusercontent.com'
+          'lh3.googleusercontent.com',
+          'images.wikidexcdn.net',
+          'raw.githubusercontent.com',
         ],
       },
 }

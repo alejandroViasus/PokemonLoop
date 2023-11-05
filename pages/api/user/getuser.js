@@ -17,9 +17,9 @@ export default async function handler(req, res) {
         //const users = await user.find({});
 
         if(users.length===0){
-          res.status(200).json({ success: true,register:false, data: users });
+          res.status(200).json({ success: true,register:false, data: users[0] });
         }else{
-          res.status(200).json({ success: true, register:true, data: users });
+          res.status(200).json({ success: true, register:true, data: users[0]  });
         }
     
       } catch (error) {

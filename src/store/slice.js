@@ -1,21 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { globalStateFormat } from "@/Assets/globalStateFormat";
 
 export const Slice = createSlice({
   name: "valueState",
-  initialState: {
-    user: {
-      email: "",
-      allPokemons:[],
-    },
-  },
+  initialState: globalStateFormat,
   reducers: {
-    changeUser: (state, action) => {
-      return { ...state, user: { ...state.user, email: action.payload } };
+    updateUser: (state,action) => {
+      return { ...state, user: action.payload.newUser };
     },
-    getAllPokemons: (state, action) => {
-        return { ...state, user: { ...state.user, allPokemons: action.payload } };
-      },
+
   },
 });
 
-export const { changeUser ,getAllPokemons} = Slice.actions;
+export const { updateUser } = Slice.actions;

@@ -3,14 +3,8 @@ import mongoose from 'mongoose';
 const userSchema = mongoose.Schema(
     {
         //!principalInfo
-        version:{
-            type:String,
-            required:true
-        },
-        ban:{
-            type:Boolean,
-            required:true
-        },
+       
+        
         email:{
             type:String,
             required:true
@@ -23,17 +17,29 @@ const userSchema = mongoose.Schema(
             type:String,
             required:true
         },
+        theme:{
+            type:String,
+            required:true
+        },
         experience:{
+            type:Number,
+            required:true
+        },
+        level:{
+            type:Number,
+            required:true
+        },
+        league:{
+            type:Number,
+            required:true
+        },
+        fractionLevel:{
             type:Number,
             required:true
         },
         //!economy
 
         coins:{
-            type:Number,
-            required:true
-        },
-        tickets:{
             type:Number,
             required:true
         },
@@ -49,6 +55,10 @@ const userSchema = mongoose.Schema(
             type:Number,
             required:true
         },
+         tickets:{
+            type:Number,
+            required:false
+        },
         //! stadistics
         wins:{
             type:Number,
@@ -58,25 +68,16 @@ const userSchema = mongoose.Schema(
             type:Number,
             required:true
         },
-        league:{
-            type:Number,
-            required:true
-        },
-        level:{
-            type:Number,
-            required:true
-        },
-        fractionLevel:{
-            type:Number,
-            required:true
-        },
+        
+        
+       
         phone:{
             type:Number,
-            required:true
+            required:false
         },
         addmin:{
             type:Boolean,
-            required:true
+            required:false
         },
     },{
         timestamps:true,
