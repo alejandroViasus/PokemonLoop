@@ -13,9 +13,10 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const email = req.query.email;
-        console.log(".............in pokemon GET",email);
-        const pokemons = await pokemon.find({trainer:email});
+        // const email = req.query.email;
+        const id = req.query.id;
+        console.log(".............in pokemon GET",id);
+        const pokemons = await pokemon.find({trainer:id});
         res.status(200).json({ success: true, data: pokemons });
       } catch (error) {
         res.status(400).json({ success: false });

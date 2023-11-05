@@ -93,7 +93,7 @@ const [initialP,setInitialP]=useState({
         const newUser = {
           email: state.email,
           gametag: state.name,
-          pictureTrainer: state.type === "None" ? "Campista" : state.type,
+          pictureTrainer: state.trainer === "None" ? "Campista" : state.trainer,
           theme: state.type === "None" ? "Normal" : state.type,
           experience: 0,
           level: 5,

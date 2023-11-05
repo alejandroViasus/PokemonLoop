@@ -5,6 +5,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { updateUser } from "@/store/slice";
 import { useRouter } from "next/navigation";
 import { navigationItems } from "@/Assets/navigationItems";
+import Link from "next/link";
 
 //? import Components
 import NavigationMenuItems from "../NavigationMenuItems/NavigationMenuItems";
@@ -25,7 +26,7 @@ import NavigationMenuItems from "../NavigationMenuItems/NavigationMenuItems";
 //?   }
 //? }
 
-function NavigationMenu() {
+function NavigationMenu({iNeedInfoUser=()=>{}}) {
   // creacion de variables
   const urlSingUp = "/sign-up";
   const router = useRouter();
@@ -52,11 +53,12 @@ function NavigationMenu() {
           }
         });
     }
-  }, [globalState.user?.email]);
+  }, [globalState.user?.email,globalState.user?._id,user?.email]);
 
   useEffect(() => {
     const newUser = { ...globalState.user, email: user?.email || undefined };
     //console.log("NEW USER", newUser);
+    iNeedInfoUser(user)
     dispatch(updateUser({ state: globalState, newUser: newUser }));
   }, [user]);
 
@@ -65,8 +67,8 @@ function NavigationMenu() {
   const menuNavigation = keyNavigationItems.map((item) => {
     return (
       <NavigationMenuItems
-        key={navigationItems[item].route}
-        item={navigationItems[item]}
+        key={navigationItems[item].route(globalState.user._id)}
+        item={navigationItems[item]} id={globalState.user._id}
       />
     );
   });
@@ -78,9 +80,9 @@ function NavigationMenu() {
         <h3>{globalState.user.email}</h3>
         <h3>{globalState.user.level}</h3>
       {globalState.user._id === "0" ? (
-        <a href="/api/auth/login">Login</a>
+        <Link href="/api/auth/login">Login</Link>
         ) : (
-          <a href="/api/auth/logout">Logout</a>
+          <Link href="/api/auth/logout">Logout</Link>
           )}
       </div>
 

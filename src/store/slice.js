@@ -8,8 +8,11 @@ export const Slice = createSlice({
     updateUser: (state,action) => {
       return { ...state, user: action.payload.newUser };
     },
+    setListPokemons:(state,action)=>{
+      return { ...state, pokemonsUser: action.payload.listPokemons};
+    }
 
   },
 });
 
-export const { updateUser } = Slice.actions;
+export const { updateUser ,setListPokemons} = Slice.actions;
