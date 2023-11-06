@@ -9,7 +9,7 @@ import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
 
 
 function Page() {
-  const urlHome = "/";
+    const urlHome = "/";
   const globalState = useSelector((state) => state.valueState);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -52,7 +52,7 @@ function Page() {
 //     }
 //   }, [state.userInfo]);
 
-  console.log("_AAAAAAAAAAAAAAAA_", globalState);
+  //console.log("_AAAAAAAAAAAAAAAA_", globalState);
   return (
     <div>
       <NavigationMenu />

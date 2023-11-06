@@ -21,7 +21,7 @@ function PrincipalDetailUserHome() {
       fetch(`http://localhost:3000/api/pokemon/all?id=${globalState.user._id}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.data);
+          //console.log(data.data);
           dispatch(
             setListPokemons({ state: globalState, listPokemons: data.data })
           );
@@ -44,7 +44,11 @@ function PrincipalDetailUserHome() {
         <p>{globalState.user.coins}</p>
       </div>
       <div>
-        <h3>BAG :</h3>
+        <h3>Box :</h3>
+        <p>{globalState.user.box}</p>
+      </div>
+      <div>
+        <h3>Bag :</h3>
         <p>
           {globalState.pokemonsUser?.length} / {globalState.user.bagPokemons}
         </p>

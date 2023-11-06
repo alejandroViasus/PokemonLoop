@@ -2,6 +2,13 @@ import pokemon from "../../models/pokemon";
 import { pokemonFormat } from "./globalStateFormat";
 
 export const valuesPokemon = {
+  values:{
+    expedition:{
+      big:{value:100,sizeTeam:4}}
+  },
+  componentBox:{
+    size:16,
+  },
   maxNumberPokedex: 1007, //Valor maximo de la pokedex para buscar pokemones
   minNumberPokedex: 1, //valor minimo de la pokedex para buscar pokemones
   maxLevelTrainer: 100, //nivel maximo del entrenador
