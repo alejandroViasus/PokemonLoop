@@ -54,7 +54,7 @@ export const valuesPokemon = {
         801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814,
         815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828,
         829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842,
-        843, 844, 845, 846, 847, 848, 849, 850,
+        843, 844, 845, 846, 847, 848, 849, 850,1007,
       ],
     },
   },
@@ -72,6 +72,14 @@ export const valuesPokemon = {
 };
 
 export const pokemonGet = {
+  shiny: () => {
+    const value = Math.random();
+    if (value > 0.99) {
+      return 1;
+    } else {
+      return 0;
+    }
+  },
   genre: () => {
     const value = Math.random();
     if (value > 0.5) {
@@ -172,7 +180,7 @@ export const generate = {
     //console.log("Trainer in generate.newPokemon", trainer.level)
     const levelPokemon = pokemonGet.level(trainer.level);
     const newPokemon = pokemonFormat;
-    newPokemon.shiny = pokemonGet.genre();
+    newPokemon.shiny = pokemonGet.shiny();
     newPokemon.noPokedex = pokemonGet.noPokedex(trainer.level, dataPokemon.id);
     newPokemon.name = dataPokemon.name;
     newPokemon.trainer = trainer._id; //la data que llego del regiustro del nuevo usuario

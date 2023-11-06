@@ -1,1 +1,2 @@
 se me ocurrio , para solucionar el problema de la funcionalidad de las cartas y es creando cartas que solo van a recibir los datos necesarios para poder renderizar el pokemon con todo y estadisticas , pero el contenedor es decir el padre donde se renderize la card maneje los handlers necesarios para la ocacion , dejando asi a la card solo como un conponente estetico
+faltan validaciones para el aumento de nivel y la idea es que por cada nivel el usuario consiga una caja
