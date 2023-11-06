@@ -2,13 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector, useDispatch } from "react-redux";
+import { setListPokemons } from "@/store/slice";
 
 //? ---- components
 import BoxSelector from "../components/BoxSelector/BoxSelector";
 import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
 
 function Page() {
+  const dispatch = useDispatch();
   const globalState = useSelector((state) => state.valueState);
   const urlHome = "/";
   const searchParams = useSearchParams();
@@ -24,7 +26,7 @@ function Page() {
 
   useEffect(() => {
     //valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
-    console.log(globalState);
+
     if (globalState.user._id == 0) {
       router.push(`${urlHome}`);
     }
@@ -66,12 +68,25 @@ function Page() {
     }
   }, [state.userInfo?.box]);
 
+  useEffect(() => {
+    if (globalState.user._id != 0) {
+      //    console.log("cambio de ID", globalState.user._id);
+      fetch(`http://localhost:3000/api/pokemon/all?id=${globalState.user._id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          //console.log(data.data);
+          dispatch(
+            setListPokemons({ state: globalState, listPokemons: data.data })
+          );
+        });
+    }
+  }, [state.trade]);
+
   const handlerOpenBox = async () => {
     if (state.userInfo.box > 0) {
       setState({
         ...state,
         trade: true,
-
         userInfo: { ...state.userInfo, box: state.userInfo.box - 1 },
       });
     }
@@ -82,11 +97,25 @@ function Page() {
       trade: false,
     });
   };
-  ("");
-  //console.log("coins : ", state.userInfo.coins);
+
+  console.log(globalState);
+  console.log(
+    "bag :",
+    globalState.user?.bagPokemons,
+    "pokemons",
+    globalState.pokemonsUser.length,
+    "bag<pokemons",
+    globalState.user?.bagPokemons < globalState.pokemonsUser.length
+  );
   return (
     <div>
-        <NavigationMenu/>
+      <NavigationMenu />
+      <h1>
+        {" "}
+        bag: 
+        {globalState.pokemonsUser?.length?globalState.pokemonsUser?.length:0}/{globalState?.user.bagPokemons?globalState?.user.bagPokemons:0}{" "}
+      </h1>
+
       {/* aqui se hace una validacion para comprobar que la maleta no este llena  */}
       {globalState.user?.bagPokemons < globalState.pokemonsUser.length ? (
         <h1> mochila llena</h1>

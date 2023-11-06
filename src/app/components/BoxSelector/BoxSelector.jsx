@@ -31,9 +31,9 @@ function BoxSelector() {
         .then((resp) => resp.json())
         .then((dataPokemon) => {
           let newPokemon = pokemonFormat;
-          console.log("............", newPokemon);
+          //console.log("............", newPokemon);
           newPokemon = generate.newPokemon(dataPokemon, globalState.user);
-          console.log("NEW_POKEMON_GENERATE", newPokemon);
+          //console.log("NEW_POKEMON_GENERATE", newPokemon);
           fetch("/api/pokemon/create-pokemon", {
             method: "POST",
             headers: {
@@ -42,7 +42,7 @@ function BoxSelector() {
             body: JSON.stringify(newPokemon),
           })
             .then((resp) => resp.json())
-            .then((data) => console.log("pokemonCreado", data))
+            //.then((data) => console.log("pokemonCreado", data))
             .catch((err) => console.log("%__2__%%", err));
         })
         .catch((err) => console.log("%__1__%%", err));
@@ -50,7 +50,7 @@ function BoxSelector() {
   }, [state.trade]);
 
   const handlerSelected = (value) => {
-    console.log(value);
+    //console.log(value);
     setState({ ...state, pokemonSelected: value, trade: true });
   };
   //console.log(state);

@@ -1,5 +1,4 @@
 import dbConnect from '../../../../lib/dbConnect';
-
 import user from '../../../../models/user';
 
 export default async function handler(req, res) {

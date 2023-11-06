@@ -5,8 +5,8 @@ import Image from "next/image";
 import { trainers } from "@/Assets/trainers";
 
 function PrincipalDetailUserHome() {
-  const globalState = useSelector((state) => state.valueState);
   const dispatch = useDispatch();
+  const globalState = useSelector((state) => state.valueState);
   //console.log(trainers[globalState.user.pictureTrainer],globalState.user.pictureTrainer);
   //console.log(globalState);
   const initialState = {};

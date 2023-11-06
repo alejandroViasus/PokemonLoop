@@ -2,13 +2,18 @@ import pokemon from "../../models/pokemon";
 import { pokemonFormat } from "./globalStateFormat";
 
 export const valuesPokemon = {
-  values:{
-    expedition:{
-      big:{value:100,sizeTeam:4}}
+  values: {
+    expedition: {
+      big: { value: 100, sizeTeam: 4 },
+    },
   },
-  componentBox:{
-    size:16,
+  componentRenderCards:{
+    sizeRender:8,
   },
+  componentBox: {
+    size: 16,
+  },
+  toleranceShiny:5,
   maxNumberPokedex: 1007, //Valor maximo de la pokedex para buscar pokemones
   minNumberPokedex: 1, //valor minimo de la pokedex para buscar pokemones
   maxLevelTrainer: 100, //nivel maximo del entrenador
@@ -54,7 +59,7 @@ export const valuesPokemon = {
         801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814,
         815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828,
         829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842,
-        843, 844, 845, 846, 847, 848, 849, 850,1007,
+        843, 844, 845, 846, 847, 848, 849, 850, 1007,
       ],
     },
   },
@@ -73,10 +78,13 @@ export const valuesPokemon = {
 
 export const pokemonGet = {
   shiny: () => {
-    const value = Math.random();
-    if (value > 0.99) {
+    const tolerance=valuesPokemon.toleranceShiny;
+    const value = Math.random() *tolerance;
+    if (value > tolerance-0.1 && value <= tolerance) {
+      console.log("SHINY",value)
       return 1;
     } else {
+      console.log(value)
       return 0;
     }
   },
@@ -96,7 +104,7 @@ export const pokemonGet = {
       Math.round(Math.random() * valuesPokemon.maxNumberPokedex) +
       valuesPokemon.minNumberPokedex;
 
-    console.log("nopokedex:", noPokedex, "levelTrainer", levelTrainer);
+    //console.log("nopokedex:", noPokedex, "levelTrainer", levelTrainer);
 
     if (valuesPokemon.listWarningPokemon.pokerfull.list.includes(noPokedex)) {
       if (
@@ -183,8 +191,8 @@ export const generate = {
     newPokemon.shiny = pokemonGet.shiny();
     newPokemon.noPokedex = pokemonGet.noPokedex(trainer.level, dataPokemon.id);
     newPokemon.name = dataPokemon.name;
-    newPokemon.trainer = trainer._id; //la data que llego del regiustro del nuevo usuario
-    newPokemon.favorite = true;
+    newPokemon.trainer = trainer._id; //la data que llego del registro del nuevo usuario
+    newPokemon.favorite = false;
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
     newPokemon.actualStack = 0;
     newPokemon.level = pokemonGet.level(trainer.level);

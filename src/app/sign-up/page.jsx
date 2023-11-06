@@ -101,7 +101,7 @@ const [initialP,setInitialP]=useState({
           fractionLevel: 0,
           coins: 200,
           pokeballs: 20,
-          bagPokemons: 15,
+          bagPokemons: 24,
           box: 7,
           wins: 0,
           loss: 0,
@@ -125,7 +125,8 @@ const [initialP,setInitialP]=useState({
                 `https://pokeapi.co/api/v2/pokemon/${state.initialPokemon}`
               );
               const dataPokemon = await responsePokemonData.json();
-              newPokemon = generate.newPokemon(dataPokemon, data.data);
+               newPokemon = generate.newPokemon(dataPokemon, data.data);
+               newPokemon.team=true;
               console.log("|||||||||||||", newPokemon);
               const responsePokemon = await fetch(
                 "/api/pokemon/create-pokemon",
