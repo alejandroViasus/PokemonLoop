@@ -26,7 +26,6 @@ function Page() {
 
   useEffect(() => {
     //valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
-
     if (globalState.user._id == 0) {
       router.push(`${urlHome}`);
     }

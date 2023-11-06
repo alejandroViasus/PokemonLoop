@@ -8,7 +8,7 @@ import { setListPokemons } from "@/store/slice";
 //? ---- components
 
 import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
-import RenderCards from "../components/RenderCards/RenderCards";
+import CardsRender from "../components/CardsRender/CardsRender"
 
 function Page() {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function Page() {
 
   useEffect(() => {
     //valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
-    console.log(globalState);
+    //console.log(globalState);
     if (globalState.user._id == 0) {
       router.push(`${urlHome}`);
     }
@@ -93,7 +93,7 @@ function Page() {
       <NavigationMenu />
       <div>Cards {state.listPokemons?.length}</div>
       <div>Team {state.teamPokemon?.length}</div>
-      <RenderCards/>
+      <CardsRender/>
     </div>
   );
 }

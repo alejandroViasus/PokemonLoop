@@ -7,13 +7,14 @@ export const valuesPokemon = {
       big: { value: 100, sizeTeam: 4 },
     },
   },
-  componentRenderCards:{
-    sizeRender:8,
+  componentRenderCards: {
+    sizeRender: 8,
+    initialIndex: 1,
   },
   componentBox: {
     size: 16,
   },
-  toleranceShiny:5,
+  toleranceShiny: 5,
   maxNumberPokedex: 1007, //Valor maximo de la pokedex para buscar pokemones
   minNumberPokedex: 1, //valor minimo de la pokedex para buscar pokemones
   maxLevelTrainer: 100, //nivel maximo del entrenador
@@ -78,13 +79,13 @@ export const valuesPokemon = {
 
 export const pokemonGet = {
   shiny: () => {
-    const tolerance=valuesPokemon.toleranceShiny;
-    const value = Math.random() *tolerance;
-    if (value > tolerance-0.1 && value <= tolerance) {
-      console.log("SHINY",value)
+    const tolerance = valuesPokemon.toleranceShiny;
+    const value = Math.random() * tolerance;
+    if (value > tolerance - 0.1 && value <= tolerance) {
+      console.log("SHINY", value);
       return 1;
     } else {
-      console.log(value)
+      console.log(value);
       return 0;
     }
   },
@@ -195,7 +196,7 @@ export const generate = {
     newPokemon.favorite = false;
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
     newPokemon.actualStack = 0;
-    newPokemon.level = pokemonGet.level(trainer.level);
+    newPokemon.level = pokemonGet.level(trainer.level)+1;
     newPokemon.weight = dataPokemon.weight;
     newPokemon.height = dataPokemon.height;
     newPokemon.type1 = pokemonGet.type(0, dataPokemon.types);
