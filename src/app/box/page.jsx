@@ -110,7 +110,6 @@ function Page() {
     <div>
       <NavigationMenu />
       <h1>
-        {" "}
         bag: 
         {globalState.pokemonsUser?.length?globalState.pokemonsUser?.length:0}/{globalState?.user.bagPokemons?globalState?.user.bagPokemons:0}{" "}
       </h1>

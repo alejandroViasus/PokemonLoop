@@ -5,7 +5,7 @@ import dbConnect from '../../../lib/dbConnect';
 import pokemon from '../../../models/pokemon';
 
 export default async function handler(req, res) {
-    console.log(".............in pokemon")
+    //console.log(".............in pokemon")
   const { method } = req;
 
   await dbConnect();
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       try {
         // const email = req.query.email;
         const id = req.query.id;
-        console.log(".............in pokemon GET",id);
+        //console.log(".............in pokemon GET",id);
         const pokemons = await pokemon.find({trainer:id});
         res.status(200).json({ success: true, data: pokemons });
       } catch (error) {

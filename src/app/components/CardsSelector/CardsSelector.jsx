@@ -14,11 +14,7 @@ function CardsSelector({
   const [state, setState] = useState(initialState);
 
   useEffect(() => {
-    console.log(
-      "selector",
-      valuesPokemon.componentRenderCards.initialIndex,
-      totalCards
-    );
+   // console.log("selector",valuesPokemon.componentRenderCards.initialIndex,totalCards);
     const miniItems = [];
     for (
       let i = valuesPokemon.componentRenderCards.initialIndex;

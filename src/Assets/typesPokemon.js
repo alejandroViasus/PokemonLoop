@@ -18,6 +18,27 @@ import iconRock from "../../public/Assets/icons/type-rock.svg";
 import iconSteel from "../../public/Assets/icons/type-steel.svg";
 import iconWater from "../../public/Assets/icons/type-water.svg";
 
+
+
+import IconNone from "@/app/components/IconType/IconNone";
+import IconBug from "@/app/components/IconType/IconBug";
+import IconDark from "@/app/components/IconType/IconDark";
+import IconDragon from "@/app/components/IconType/IconDragon";
+import IconElectric from "@/app/components/IconType/IconElectric";
+import IconFairy from "@/app/components/IconType/IconFairy";
+import IconFighting from "@/app/components/IconType/IconFighting";
+import IconFire from "@/app/components/IconType/IconFire";
+import IconFlying from "@/app/components/IconType/IconFlying";
+import IconGhost from "@/app/components/IconType/IconGhost";
+import IconGrass from "@/app/components/IconType/IconGrass";
+import IconGround from "@/app/components/IconType/IconGround";
+import IconIce from "@/app/components/IconType/IconIce";
+import IconNormal from "@/app/components/IconType/IconNormal";
+import IconPoison from "@/app/components/IconType/IconPoison";
+import IconPsychic from "@/app/components/IconType/IconPsychic";
+import IconRock from "@/app/components/IconType/IconRock";
+import IconSteel from "@/app/components/IconType/IconSteel";
+import IconWater from "@/app/components/IconType/IconWater";
 export const typesPokemon = {
   None:{
     icon:iconNone,

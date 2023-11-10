@@ -1,23 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
 import { imagesPokemon } from "@/Assets/funcions";
+import { handlerVersion } from "@/store/slice";
+
+//? Components
+import CardButtonTeam from "../CardButtonTeam/CardButtonTeam";
+import ShowType from "../ShowType/ShowType";
+import ShowEffectiveness from "../ShowEffectiveness/ShowEffectiveness";
+
 
 function CardDetail({ pokemon }) {
-  console.log("pokemon___", pokemon);
+  const dispatch = useDispatch();
+  const globalState = useSelector((state) => state.valueState);
+  const initialState = {};
+  const [state, setState] = useState(initialState);
+
+  useEffect(() => {
+    setState(pokemon);
+  }, [globalState.version]);
+  useEffect(() => {
+    if (pokemon?._id) {
+      const version = `v${pokemon?._id} detailPokemon"}`;
+      dispatch(handlerVersion({ state: globalState, version }));
+    }
+  }, [pokemon]);
+
+  //console.log("pokemon___", state.type1 , state.type2);
+
+  
+  
+
   return (
     <div>
-      {pokemon ? (
+      {state?._id ? (
         <div>
-          <h1>{pokemon?.name}</h1>
+          <h1>{state?.name}</h1>
           <Image
-            src={imagesPokemon.official(pokemon.noPokedex, pokemon.shiny)}
+            src={imagesPokemon.official(state.noPokedex, state.shiny)}
             width={100}
             height={100}
-            alt={`detail pokemon ${pokemon.name}`}
+            alt={`detail pokemon ${state.name}`}
           />
           <h4> {pokemon.shiny ? "SHINY" : ""}</h4>
-          <h4> noPokedex {pokemon.noPokedex}</h4>
-          <h4> {pokemon.favorite ? "FAVORITE" : ""}</h4>
+          <h4> Favorite {pokemon.noPokedex}</h4>
+          <CardButtonTeam pokemon={state} porperty={"favorite"} />
+          <CardButtonTeam pokemon={state} />
+          <h4> types</h4>
+           
+           {state?.type1 ? (
+            <ShowType
+              type1={state.type1}
+              type2={state.type2}
+              fill="rgba(22,22,22,1)"
+            ></ShowType>
+          ) : null}  
+
+          <ShowEffectiveness
+          type1={state.type1}
+          type2={state.type2}
+          Effectiveness={'2'}
+          />
           <h4> noPokedex: {pokemon.noPokedex}</h4>
           <h4> LEVEL: {pokemon.level}</h4>
           <h4>

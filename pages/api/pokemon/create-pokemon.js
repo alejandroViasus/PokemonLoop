@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const NewPokemon = await pokemon.create(req.body);
-        console.log("_____________________________________por Body",req.body)
+        //console.log("_____________________________________por Body",req.body)
         res.status(201).json({ success: true, data: NewPokemon });
       } catch (error) {
         console.log("______error",error)

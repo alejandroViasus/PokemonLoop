@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         const email = req.query.email;
         let pokemons;
 
-        console.log("____",email);
+        //console.log("____",email);
 
         if (email) {
           // If an email is provided, filter the pokemons by email and team

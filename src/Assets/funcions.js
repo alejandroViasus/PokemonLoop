@@ -1,6 +1,10 @@
 import pokemon from "../../models/pokemon";
 import { pokemonFormat } from "./globalStateFormat";
 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export const valuesPokemon = {
   values: {
     expedition: {
@@ -161,10 +165,14 @@ export const pokemonGet = {
   },
   type: (value, types) => {
     //console.log(types);
+
+   
+
+
     if (types.length === 1) {
-      return types[0].type.name;
+      return capitalizeFirstLetter(types[0].type.name)
     } else {
-      return types[value].type.name;
+      return capitalizeFirstLetter(types[value].type.name);
     }
   },
   scale: (levelTrainer = 1) => {
@@ -186,6 +194,8 @@ export const pokemonGet = {
 
 export const generate = {
   newPokemon: (dataPokemon, trainer) => {
+    let height = Math.round();
+
     //console.log("Trainer in generate.newPokemon", trainer.level)
     const levelPokemon = pokemonGet.level(trainer.level);
     const newPokemon = pokemonFormat;
@@ -196,9 +206,9 @@ export const generate = {
     newPokemon.favorite = false;
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
     newPokemon.actualStack = 0;
-    newPokemon.level = pokemonGet.level(trainer.level)+1;
-    newPokemon.weight = dataPokemon.weight;
-    newPokemon.height = dataPokemon.height;
+    newPokemon.level = pokemonGet.level(trainer.level) + 1;
+    newPokemon.weight = (dataPokemon.weight*0.1).toFixed(3);
+    newPokemon.height = (dataPokemon.height * 0.1).toFixed(3);
     newPokemon.type1 = pokemonGet.type(0, dataPokemon.types);
     newPokemon.type2 = pokemonGet.type(1, dataPokemon.types);
     //*scale
