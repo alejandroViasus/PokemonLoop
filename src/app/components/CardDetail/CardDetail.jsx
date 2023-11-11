@@ -8,7 +8,7 @@ import { handlerVersion } from "@/store/slice";
 import CardButtonTeam from "../CardButtonTeam/CardButtonTeam";
 import ShowType from "../ShowType/ShowType";
 import ShowEffectiveness from "../ShowEffectiveness/ShowEffectiveness";
-
+import ShowStacks from "../ShowStacks/ShowStacks";
 
 function CardDetail({ pokemon }) {
   const dispatch = useDispatch();
@@ -28,9 +28,6 @@ function CardDetail({ pokemon }) {
 
   //console.log("pokemon___", state.type1 , state.type2);
 
-  
-  
-
   return (
     <div>
       {state?._id ? (
@@ -46,21 +43,33 @@ function CardDetail({ pokemon }) {
           <h4> Favorite {pokemon.noPokedex}</h4>
           <CardButtonTeam pokemon={state} porperty={"favorite"} />
           <CardButtonTeam pokemon={state} />
-          <h4> types</h4>
-           
-           {state?.type1 ? (
-            <ShowType
+          <div style={{ display: "flex", width: `550px` }}>
+            <h4> types</h4>
+            {state?.type1 ? (
+              <ShowType
+                type1={state.type1}
+                type2={state.type2}
+                fill="rgba(22,22,22,1)"
+              ></ShowType>
+            ) : null}
+          </div>
+          <div style={{ display: "flex" }}>
+            <ShowEffectiveness
               type1={state.type1}
               type2={state.type2}
-              fill="rgba(22,22,22,1)"
-            ></ShowType>
-          ) : null}  
-
+              Effectiveness={"2"}
+            />
+          </div>
           <ShowEffectiveness
-          type1={state.type1}
-          type2={state.type2}
-          Effectiveness={'2'}
+            type1={state.type1}
+            type2={state.type2}
+            Effectiveness={"0.5"}
           />
+
+          <div>
+            <ShowStacks pokemon={pokemon} />
+          </div>
+
           <h4> noPokedex: {pokemon.noPokedex}</h4>
           <h4> LEVEL: {pokemon.level}</h4>
           <h4>

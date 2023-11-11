@@ -166,11 +166,8 @@ export const pokemonGet = {
   type: (value, types) => {
     //console.log(types);
 
-   
-
-
     if (types.length === 1) {
-      return capitalizeFirstLetter(types[0].type.name)
+      return capitalizeFirstLetter(types[0].type.name);
     } else {
       return capitalizeFirstLetter(types[value].type.name);
     }
@@ -193,6 +190,67 @@ export const pokemonGet = {
 };
 
 export const generate = {
+  getStat: (pokemon, typeStack) => {
+    //console.log(pokemon, typeStack);
+
+    let nivel = pokemon.level;
+    let statBase = pokemon[`base${typeStack}`];
+    let iv = pokemon[`scale${typeStack}`];
+    //iv = 30;
+    //iv = 1;
+
+    
+    let pe = pokemon[`effort${typeStack}`];
+    let naturaleza = 1;
+
+    
+    //console.log("nivel:", nivel);
+    //console.log("statBase:", statBase);
+    //console.log("pe:", pe);
+    //console.log("iv:", iv);
+
+    if (typeStack === "Heald") {
+      // Cálculo de HP
+      const stat= 5 * ((nivel/10) * (((statBase + iv) * 2) + iv + pe)) + nivel
+      
+      return Math.round(stat)
+    } else {
+      // Cálculo de otras estadísticas (como ataque y defensa)
+      const stat= (5 + (nivel / 100) * ((statBase*iv) * 2 + iv + pe)) + nivel
+      
+      return Math.round(stat)
+    }
+  },
+  getStackReference: (pokemon, typeStack) => {
+    //console.log(pokemon, typeStack);
+
+    let nivel = pokemon.level;
+    let statBase = pokemon[`base${typeStack}`];
+    let iv = 30;
+    //iv = 30;
+    //iv = 1;
+    let pe = pokemon[`effort${typeStack}`];
+    let naturaleza = 1;
+
+    // console.log("nivel:", nivel);
+    // console.log("statBase:", statBase);
+    // console.log("pe:", pe);
+    // console.log("iv:", iv);
+
+    if (typeStack === "Heald") {
+      // Cálculo de HP
+      const stat= 5 * ((nivel/10) * (((statBase + iv) * 2) + iv + pe)) + nivel
+      return Math.round(stat)
+    } else {
+      // Cálculo de otras estadísticas (como ataque y defensa)
+      const stat= (5 + (nivel / 100) * ((statBase*iv) * 2 + iv + pe)) + nivel
+      
+
+      //console.log(stat , typeStack)
+      return Math.round(stat)
+    }
+  },
+
   newPokemon: (dataPokemon, trainer) => {
     let height = Math.round();
 
@@ -207,7 +265,7 @@ export const generate = {
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
     newPokemon.actualStack = 0;
     newPokemon.level = pokemonGet.level(trainer.level) + 1;
-    newPokemon.weight = (dataPokemon.weight*0.1).toFixed(3);
+    newPokemon.weight = (dataPokemon.weight * 0.1).toFixed(3);
     newPokemon.height = (dataPokemon.height * 0.1).toFixed(3);
     newPokemon.type1 = pokemonGet.type(0, dataPokemon.types);
     newPokemon.type2 = pokemonGet.type(1, dataPokemon.types);

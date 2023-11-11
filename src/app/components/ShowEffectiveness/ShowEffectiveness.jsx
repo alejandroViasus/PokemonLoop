@@ -7,7 +7,7 @@ import ShowType from "../ShowType/ShowType";
 function ShowEffectiveness({ type1, type2, Effectiveness = "2" }) {
   const initialState = {
     effective: [],
-    ineffective: [],
+    title: "",
   };
 
   const [state, setState] = useState(initialState);
@@ -18,37 +18,32 @@ function ShowEffectiveness({ type1, type2, Effectiveness = "2" }) {
       //console.log(`type ${type2}`, typesPokemon[type1]?.effectiveness);
 
       const keys = Object.keys(typesPokemon[type1].effectiveness);
-      console.log(keys);
+      //console.log(keys);
       const effective = [];
-      const ineffective = [];
 
       keys.map((type) => {
         if (
-          typesPokemon[type1].effectiveness[type] == "2" ||
-          typesPokemon[type2].effectiveness[type] == "2"
+          typesPokemon[type1].effectiveness[type] == Effectiveness ||
+          typesPokemon[type2].effectiveness[type] == Effectiveness
         ) {
           effective.push(type);
-        } else if (
-          typesPokemon[type1].effectiveness[type] == "0.5" ||
-          typesPokemon[type2].effectiveness[type] == "0.5"
-        ) {
-          ineffective.push(type);
         }
       });
-      console.log("efective", effective);
-      console.log("inefective", ineffective);
-
-      setState({effective,ineffective})
+      let title = Effectiveness == "2" ? "strengths" : "weaknesses";
+      //console.log("efective", effective);
+      //console.log("inefective", ineffective);
+      setState({ effective, title });
     }
   }, [type1, type2]);
 
   return (
-    <div style={{ display: "flex" }}>
-      <div>
-        {state.ineffective?.map((type) => {
+    <div>
+      <h1>{state.title}</h1>
+      <div style={{ display: "flex" }}>
+        {state.effective?.map((type, index) => {
           return (
             <ShowType
-              key={`ineffective${type}${index}`}
+              key={`effective${type}${index}`}
               type1={type}
               type2={type}
               fill="rgba(22,22,22,1)"
