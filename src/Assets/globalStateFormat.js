@@ -19,6 +19,7 @@ export const globalStateFormat = {
   pokemonsUser: [],
   teamUser: [],
   version:"cero",
+  render:'cero',
 };
 
 export const pokemonFormat = {

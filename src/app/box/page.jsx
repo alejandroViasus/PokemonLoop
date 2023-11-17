@@ -115,7 +115,7 @@ function Page() {
       </h1>
 
       {/* aqui se hace una validacion para comprobar que la maleta no este llena  */}
-      {globalState.user?.bagPokemons < globalState.pokemonsUser.length ? (
+      {globalState.user?.bagPokemons <= globalState.pokemonsUser.length ? (
         <h1> mochila llena</h1>
       ) : (
         <div>

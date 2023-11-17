@@ -6,10 +6,28 @@ function capitalizeFirstLetter(str) {
 }
 
 export const valuesPokemon = {
+  levelsTrainers:{
+    inferior:{probability:0.5,addFractionLevel:0.1,restriction:'all'},
+    equal:{probability:0.7,addFractionLevel:0.5,restriction:'all'},
+    superior:{probability:0.8,addFractionLevel:1,restriction:'pokerfull'},
+    master:{probability:0.9,addFractionLevel:2,restriction:'legendary'},
+  },
   values: {
     expedition: {
       big: { value: 100, sizeTeam: 4 },
     },
+  },
+  componentBattle:{
+    sizeTeam:5,
+  },
+  componentSentToOak:{
+    baseValue:{
+      coins:5,
+      pokeball:2,
+      box:0,
+      baseValuePointsToBox:30,
+      exp:25,
+    }
   },
   componentRenderCards: {
     sizeRender: 8,
@@ -64,7 +82,7 @@ export const valuesPokemon = {
         801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814,
         815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828,
         829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842,
-        843, 844, 845, 846, 847, 848, 849, 850, 1007,
+        843, 844, 845, 846, 847, 848, 849, 850, 1007,887,888,889,
       ],
     },
   },
@@ -142,7 +160,7 @@ export const pokemonGet = {
     }
     return noPokedex;
   },
-  level: (levelTrainer = 1) => {
+  level: (levelTrainer = 1, difficult=0) => {
     const probability = Math.random();
     let levelPokemon = levelTrainer;
     const keysProbability = Object.keys(valuesPokemon.probabilitiLevel);
@@ -150,12 +168,12 @@ export const pokemonGet = {
       if (probability > valuesPokemon.probabilitiLevel[key].probability) {
         levelPokemon = Math.round(
           Math.random() *
-            (levelTrainer + valuesPokemon.probabilitiLevel[key].value)
+            (levelPokemon*difficult+levelTrainer + valuesPokemon.probabilitiLevel[key].value)
         );
       }
       return levelPokemon;
     });
-    return Math.round(Math.random() * levelPokemon);
+    return Math.round(Math.random() * (levelPokemon+levelPokemon*difficult));
   },
   stackLevel: (levelPokemon) => {
     return (
@@ -190,6 +208,15 @@ export const pokemonGet = {
 };
 
 export const generate = {
+  rivalLevel:(user)=>{
+
+    
+    const porbability=Math.random()
+
+    probability>0.6 ? Math.round(Math.random()*(user.level)):null
+    
+    return Math.round()
+  },
   getStat: (pokemon, typeStack) => {
     //console.log(pokemon, typeStack);
 

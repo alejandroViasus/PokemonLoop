@@ -82,7 +82,7 @@ function ShowStacks({ pokemon }) {
       statSpecialDeffense: 0,
       statSpeed: 0,
     },
-    timmer: 18,
+    timmer: 12,
     complete: false,
     interval: 0,
   };

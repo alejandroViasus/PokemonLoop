@@ -9,6 +9,7 @@ import CardButtonTeam from "../CardButtonTeam/CardButtonTeam";
 import ShowType from "../ShowType/ShowType";
 import ShowEffectiveness from "../ShowEffectiveness/ShowEffectiveness";
 import ShowStacks from "../ShowStacks/ShowStacks";
+import SendToOak from "../SendToOak/SendToOak";
 
 function CardDetail({ pokemon }) {
   const dispatch = useDispatch();
@@ -43,6 +44,8 @@ function CardDetail({ pokemon }) {
           <h4> Favorite {pokemon.noPokedex}</h4>
           <CardButtonTeam pokemon={state} porperty={"favorite"} />
           <CardButtonTeam pokemon={state} />
+
+          <SendToOak pokemon={pokemon}/>
           <div style={{ display: "flex", width: `550px` }}>
             <h4> types</h4>
             {state?.type1 ? (

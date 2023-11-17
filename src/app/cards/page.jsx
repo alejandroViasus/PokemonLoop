@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
+
 //? ---- components
 import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
 import CardsRender from "../components/CardsRender/CardsRender";
@@ -32,7 +33,7 @@ function page() {
         console.log("ERRROR____", err);
         router.push(`${urlHome}`);
       });
-  }, [userId]);
+  }, [userId,globalState.render]);
 
   useEffect(() => {
     fetch(`/api/pokemon/get/allPokemons?id=${userId}`)
@@ -65,7 +66,7 @@ function page() {
       <div>{pokemonSelected?.name}</div>
       <div style={{ display: "flex" }}>
         <CardsRender
-          pokemons={listPokemons.slice().reverse()}
+          pokemons={listPokemons?.slice().reverse()}
           changeselect={changeselect}
         />
         <CardDetail pokemon={pokemonSelected} />

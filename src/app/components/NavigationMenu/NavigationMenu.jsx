@@ -26,7 +26,7 @@ import NavigationMenuItems from "../NavigationMenuItems/NavigationMenuItems";
 //?   }
 //? }
 
-function NavigationMenu({iNeedInfoUser=()=>{}}) {
+function NavigationMenu({ iNeedInfoUser = () => {} }) {
   // creacion de variables
   const urlSingUp = "/sign-up";
   const router = useRouter();
@@ -53,14 +53,19 @@ function NavigationMenu({iNeedInfoUser=()=>{}}) {
           }
         });
     }
-  }, [globalState.user?.email,globalState.user?._id,user?.email]);
+    console.log("desde NavigationManu", globalState);
+  }, [globalState.user?.email, globalState.user?._id, user?.email, globalState.render]);
 
   useEffect(() => {
     const newUser = { ...globalState.user, email: user?.email || undefined };
     //console.log("NEW USER", newUser);
-    iNeedInfoUser(user)
+    iNeedInfoUser(user);
     dispatch(updateUser({ state: globalState, newUser: newUser }));
   }, [user]);
+
+  useEffect(() => {
+    
+  }, []);
 
   const keyNavigationItems = Object.keys(navigationItems);
 
@@ -68,22 +73,26 @@ function NavigationMenu({iNeedInfoUser=()=>{}}) {
     return (
       <NavigationMenuItems
         key={navigationItems[item].route(globalState.user._id)}
-        item={navigationItems[item]} id={globalState.user._id}
+        item={navigationItems[item]}
+        id={globalState.user._id}
       />
     );
   });
-  //console.log("desde NavigationManu" , globalState,menuNavigation)
 
   return (
     <section>
       <div>
         <h3>{globalState.user.email}</h3>
-        <h3>{globalState.user.level}</h3>
-      {globalState.user._id === "0" ? (
-        <Link href="/api/auth/login">Login</Link>
+        <h3>lvl {globalState.user.level}</h3>
+        <h3>exp: {globalState.user.experience}</h3>
+        <h3>pokeballs: {globalState.user.pokeballs}</h3>
+        <h3>box: {globalState.user.box}</h3>
+        <h3>coins: {globalState.user.coins}</h3>
+        {globalState.user._id === "0" ? (
+          <Link href="/api/auth/login">Login</Link>
         ) : (
           <Link href="/api/auth/logout">Logout</Link>
-          )}
+        )}
       </div>
 
       {globalState.user._id !== "0" ? menuNavigation : null}
