@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
+import { valuesPokemon } from "@/Assets/funcions";
 
 //? ---- components
 import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
@@ -14,11 +15,17 @@ function page() {
   const urlHome = "/";
   const globalState = useSelector((state) => state.valueState);
 
-
   const [userId, setUserId] = useState(searchParams.get("id") || "0");
   const [userInfo, setUserInfo] = useState({});
   const [listPokemons, setListPokemons] = useState([]);
   const [pokemonSelected, setPokemonSelected] = useState({});
+
+  useEffect(() => {
+    //valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
+    if (globalState.user._id == "0") {
+      router.push(`${urlHome}`);
+    }
+  }, []);
 
   useEffect(() => {
     fetch(`/api/user/get/userById?id=${userId}`)
@@ -33,7 +40,7 @@ function page() {
         console.log("ERRROR____", err);
         router.push(`${urlHome}`);
       });
-  }, [userId,globalState.render]);
+  }, [userId, globalState.render]);
 
   useEffect(() => {
     fetch(`/api/pokemon/get/allPokemons?id=${userId}`)
@@ -55,14 +62,17 @@ function page() {
     setPokemonSelected(listPokemons.slice().reverse()[0]);
   }, [listPokemons]);
 
-
   const changeselect = (pokemon) => {
     setPokemonSelected(pokemon);
   };
 
   return (
     <section>
-      <NavigationMenu />
+      <div>
+        <NavigationMenu />
+      </div>
+      <div> TEAM : {valuesPokemon.componentBattle.sizeTeam} / {globalState.teamUser.length}</div>
+
       <div>{pokemonSelected?.name}</div>
       <div style={{ display: "flex" }}>
         <CardsRender

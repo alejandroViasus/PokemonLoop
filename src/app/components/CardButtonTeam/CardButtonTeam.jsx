@@ -8,11 +8,13 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
   const globalState = useSelector((state) => state.valueState);
 
   const initialState = {
-    team: pokemon.team,
+    team: pokemon.team || false,
+    favorite: pokemon.favorite || false,
   };
 
   const [state, setState] = useState(initialState);
-  const [actualTeam, setActualTeam] = useState([]);
+  const [actualTeam, setActualTeam] = useState(globalState.teamUser);
+  const [disabledButton, setDisabledButton] = useState(true);
   useEffect(() => {
     if (pokemon._id !== undefined) {
       fetch(`/api/pokemon/get/getById?id=${pokemon._id}`)
@@ -29,53 +31,67 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
     }
   }, [globalState.version, pokemon._id]);
 
-  // useEffect(() => {
-  //   if (porperty === "team" && state.trainer!==undefined) {
-  //     const teamUserPokemon = fetch(`/api/pokemon/get/team?id=${state.trainer}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {console.log("buttonTeam", data.data); setActualTeam(data.data)})
-  //     .catch((err) => console.log(err));
-  //   }
-  // }, [globalState.version,state]);
-  
-  const handleChange = () => {
-    let updatePokemon = { ...state, [porperty]: !state[porperty] };
-    fetch(`/api/pokemon/put/putById?id=${state._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatePokemon),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        //console.log("data", data.data);
-        const version = `v${data.data._id}${porperty}${
-          data.data[porperty] ? "true" : "false"
-        }`;
-        //console.log("version", version);
-        dispatch(handlerVersion({ state: globalState, version }));
-      });
-    };
-    //console.log(pokemon)
+  let disabsledButton = false;
 
-    let disabledButton =  pokemon.team===false||(actualTeam.length>=valuesPokemon.componentBattle.sizeTeam&&pokemon.team===false)
+  useEffect(() => {
+    setActualTeam(globalState.teamUser);
+  }, [globalState.teamUser]);
+
+  useEffect(() => {
+    setDisabledButton(
+      (actualTeam.length >= valuesPokemon.componentBattle.sizeTeam &&
+        pokemon.team === false &&
+        porperty === "team") ||
+        pokemon.team === false
+    );
+  }, [actualTeam]);
+
+  const handleChange = () => {
+    if (
+      actualTeam.length < valuesPokemon.componentBattle.sizeTeam ||
+      state.team === true ||
+      porperty === "favorite"
+    ) {
+      let updatePokemon = { ...state, [porperty]: !state[porperty] };
+      fetch(`/api/pokemon/put/putById?id=${state._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatePokemon),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          //console.log("data", data.data);
+          const version = `v${data.data._id}${porperty}${
+            data.data[porperty] ? "true" : "false"
+          }`;
+          //console.log("version", version);
+          dispatch(handlerVersion({ state: globalState, version }));
+        });
+    }
+  };
+
+  //console.log("buton Team", state.name,state.team);
 
   return (
     <div>
-      <div>{actualTeam.length}/{valuesPokemon.componentBattle.sizeTeam}</div>
-      {pokemon.team || state ? (
-        porperty==='team'?<button onClick={handleChange}
-        disabled={disabledButton}
-        >
-        {state.team ? `${porperty}` : "...."}
-        </button>:<button onClick={handleChange}
-         
+      {state === null ? null : (
+        <div>
+          <div>
+            {actualTeam.length}/{valuesPokemon.componentBattle.sizeTeam}
+          </div>
+          <button
+            onClick={handleChange}
+            disabled={
+              ((!state?.team &&
+                actualTeam.length >= valuesPokemon.componentBattle.sizeTeam) && porperty === "team")
+            }
           >
-          {state.favorite ? `${porperty}` : "...."}
+            {state[porperty] ? `${porperty}` : "...." || ""}
           </button>
-          
-          ) : null}
+        </div>
+      )}
     </div>
   );
 }

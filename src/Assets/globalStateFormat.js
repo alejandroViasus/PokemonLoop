@@ -24,6 +24,8 @@ export const globalStateFormat = {
 
 export const pokemonFormat = {
   //basic
+  heald:100,
+  alive:true,
   shiny: undefined, //!----boolean
   noPokedex: undefined, //!----number
   name: undefined, //!----string

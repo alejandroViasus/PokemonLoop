@@ -117,7 +117,7 @@ export const typesPokemon = {
       Water: "1",
       Electric: "1",
       Grass: "1",
-      Ice: "1",
+      Ice: "0.5",
       Fighting: "1",
       Poison: "1",
       Ground: "1",

@@ -122,7 +122,7 @@ const [initialP,setInitialP]=useState({
               console.log("Usuario creado exitosamente:", data.data);
               let newPokemon = pokemonFormat;
               const responsePokemonData = await fetch(
-                `https://pokeapi.co/api/v2/pokemon/${state.initialPokemon}`
+                `http://pokeapi.co/api/v2/pokemon/${state.initialPokemon}`
               );
               const dataPokemon = await responsePokemonData.json();
                newPokemon = generate.newPokemon(dataPokemon, data.data);

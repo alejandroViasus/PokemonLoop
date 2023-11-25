@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { updateUser } from "@/store/slice";
+import { updateTeam, updateUser } from "@/store/slice";
 import { useRouter } from "next/navigation";
 import { navigationItems } from "@/Assets/navigationItems";
 import Link from "next/link";
@@ -53,8 +53,13 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
           }
         });
     }
-    console.log("desde NavigationManu", globalState);
-  }, [globalState.user?.email, globalState.user?._id, user?.email, globalState.render]);
+    //console.log("desde NavigationManu", globalState);
+  }, [
+    globalState.user?.email,
+    globalState.user?._id,
+    user?.email,
+    globalState.render,
+  ]);
 
   useEffect(() => {
     const newUser = { ...globalState.user, email: user?.email || undefined };
@@ -64,8 +69,20 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   }, [user]);
 
   useEffect(() => {
-    
-  }, []);
+    if (globalState.user._id !== "0") {
+      fetch(`/api/pokemon/get/team?id=${globalState.user._id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          let dataTeam = data.data;
+          //console.log("data", dataTeam);
+          dispatch(updateTeam({ state: globalState, teamUser: dataTeam }));
+        });
+    }
+  }, [globalState.version]);
+  
+  useEffect(() => {
+    //console.log("desde NavigationManu", globalState);
+  }, [globalState.teamUser]);
 
   const keyNavigationItems = Object.keys(navigationItems);
 

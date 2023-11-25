@@ -6,10 +6,10 @@ export const Slice = createSlice({
   initialState: globalStateFormat,
   reducers: {
     updateTeam: (state, action) => {
-      return { ...state, user: action.payload.newUser };
+      return { ...state, teamUser: action.payload.teamUser };
     },
     updateUser: (state, action) => {
-      return { ...state, teamUser: action.payload.newUser };
+      return { ...state, user: action.payload.newUser };
     },
     setListPokemons: (state, action) => {
       return {

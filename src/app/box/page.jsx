@@ -9,6 +9,7 @@ import { setListPokemons } from "@/store/slice";
 import BoxSelector from "../components/BoxSelector/BoxSelector";
 import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
 
+
 function Page() {
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state.valueState);
@@ -22,6 +23,7 @@ function Page() {
     tickets: 0,
     userInfo: {},
     trade: false,
+    selected: false,
   };
 
   useEffect(() => {
@@ -86,6 +88,7 @@ function Page() {
       setState({
         ...state,
         trade: true,
+
         userInfo: { ...state.userInfo, box: state.userInfo.box - 1 },
       });
     }
@@ -94,24 +97,34 @@ function Page() {
     setState({
       ...state,
       trade: false,
+      selected: false,
+    });
+  };
+  const handlerDone = async () => {
+    setState({
+      ...state,
+      selected: true,
     });
   };
 
-  console.log(globalState);
-  console.log(
-    "bag :",
-    globalState.user?.bagPokemons,
-    "pokemons",
-    globalState.pokemonsUser.length,
-    "bag<pokemons",
-    globalState.user?.bagPokemons < globalState.pokemonsUser.length
-  );
+  console.log(state.selected);
+  // console.log(
+  //   "bag :",
+  //   globalState.user?.bagPokemons,
+  //   "pokemons",
+  //   globalState.pokemonsUser.length,
+  //   "bag<pokemons",
+  //   globalState.user?.bagPokemons < globalState.pokemonsUser.length
+  // );
   return (
     <div>
       <NavigationMenu />
       <h1>
-        bag: 
-        {globalState.pokemonsUser?.length?globalState.pokemonsUser?.length:0}/{globalState?.user.bagPokemons?globalState?.user.bagPokemons:0}{" "}
+        bag:
+        {globalState.pokemonsUser?.length
+          ? globalState.pokemonsUser?.length
+          : 0}
+        /{globalState?.user.bagPokemons ? globalState?.user.bagPokemons : 0}{" "}
       </h1>
 
       {/* aqui se hace una validacion para comprobar que la maleta no este llena  */}
@@ -123,24 +136,27 @@ function Page() {
 
           <div>
             {state.trade ? (
-              <BoxSelector />
+              <BoxSelector handlerDone={handlerDone} />
             ) : (
               <h1>
                 You caught a Pokémon’s attention and it started following you.
               </h1>
             )}
           </div>
-          {state.trade ? (
+          {state.selected && state.trade ? (
             <button onClick={handlerCloseBox}>
               <p>Done !!!</p>
             </button>
-          ) : (
+          ) : null}
+
+          {!state.selected && !state.trade ? (
             <button onClick={handlerOpenBox}>
               <p>Find out which Pokémon it is {`(${state.userInfo.box})`}</p>
             </button>
-          )}
+          ) : null}
         </div>
       )}
+     
     </div>
   );
 }

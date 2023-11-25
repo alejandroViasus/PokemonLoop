@@ -36,8 +36,8 @@ function CardDetail({ pokemon }) {
           <h1>{state?.name}</h1>
           <Image
             src={imagesPokemon.official(state.noPokedex, state.shiny)}
-            width={100}
-            height={100}
+            width={200}
+            height={200}
             alt={`detail pokemon ${state.name}`}
           />
           <h4> {pokemon.shiny ? "SHINY" : ""}</h4>

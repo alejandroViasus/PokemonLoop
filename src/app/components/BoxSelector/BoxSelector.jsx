@@ -7,7 +7,7 @@ import { pokemonFormat } from "@/Assets/globalStateFormat";
 import BoxSelectorItem from "../BoxSelectorItem/BoxSelectorItem";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 
-function BoxSelector() {
+function BoxSelector({handlerDone}) {
   const globalState = useSelector((state) => state.valueState);
 
   const generatePokemons = () => {
@@ -51,6 +51,7 @@ function BoxSelector() {
 
   const handlerSelected = (value) => {
     //console.log(value);
+    handlerDone()
     setState({ ...state, pokemonSelected: value, trade: true });
   };
   //console.log(state);

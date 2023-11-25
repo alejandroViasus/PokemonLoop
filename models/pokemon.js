@@ -3,6 +3,14 @@ import mongoose from "mongoose";
 
 const pokemonSchema = mongoose.Schema(
   {
+    heald:{
+      type: Number, // example 1
+      required: true,
+    },
+    alive: {
+      type: Boolean, // example false
+      required: true,
+    },
     shiny: {
       type: Boolean, // example false
       required: true,
