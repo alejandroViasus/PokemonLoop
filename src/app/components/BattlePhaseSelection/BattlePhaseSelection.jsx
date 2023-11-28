@@ -7,7 +7,7 @@ import { globalStateFormat } from "@/Assets/globalStateFormat";
 import BattlePhaseSelectionteam from "../BattlePhaseSelectionteam/BattlePhaseSelectionteam";
 import CardBaseMini from "../CardBaseMini/CardBaseMini";
 
-function BattlePhaseSelection({ localState, handlerSelect, handlerPhase}) {
+function BattlePhaseSelection({ localState, handlerSelect, handlerPhase }) {
   const initialState = {};
 
   //console.log(localState);
@@ -49,23 +49,31 @@ function BattlePhaseSelection({ localState, handlerSelect, handlerPhase}) {
               </>
             ) : null}
           </div>
-          <BattlePhaseSelectionteam teamPokemon={localState?.trainer.team}  handlerSelect={handlerSelect}/>
+          <BattlePhaseSelectionteam
+            teamPokemon={localState?.trainer.team}
+            handlerSelect={handlerSelect}
+          />
         </div>
         <div>
           {localState.battlefield?.pokemonSelectedRival ? (
             <>
               {" "}
-              Selected{" "}
+              Selected{" "} Rival
               <CardBaseMini
                 pokemon={localState.battlefield?.pokemonSelectedRival}
                 handlerSelect={() => {}}
               />
             </>
           ) : null}
-          <BattlePhaseSelectionteam teamPokemon={localState?.rival.team} handlerSelect={()=>{}} />
+          <BattlePhaseSelectionteam
+            teamPokemon={localState?.rival.team}
+            handlerSelect={() => {}}
+          />
         </div>
       </div>
-      <div><button onClick={()=> handlerPhase('delay')}> StartBattle </button></div>
+      <div>
+        <button onClick={() => handlerPhase("delay")}> StartBattle </button>
+      </div>
     </div>
   );
 }

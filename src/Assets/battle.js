@@ -12,8 +12,8 @@ export const battle = {
       const newState = { ...state };
       //       //console.log(newState)
       newState.general.time.count += newState.general.time.step;
-      //newState.pokemonUser = battle.phase.nextStep(state, "User");
-      //newState.pokemonRival = battle.phase.nextStep(state, "Rival");
+      newState.pokemonUser = battle.phase.nextStep(state, "User");
+      newState.pokemonRival = battle.phase.nextStep(state, "Rival");
       //battle.phase.nextStep(state, "User");
       return newState;
     },
@@ -145,7 +145,7 @@ export const battle = {
       let selector = `pokemon${user}`;
       let focus = { ...state[selector].position[axis].direction.aceleration };
       const speed = state[selector].stats.speed / 100;
-      //console.log("aceleration -_-_-", focus);
+      console.log("aceleration -_-_-", focus);
       if (focus.actual < focus.max) {
         focus.actual = focus.actual + speed;
       }

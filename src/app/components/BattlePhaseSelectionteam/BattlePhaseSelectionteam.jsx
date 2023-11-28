@@ -1,20 +1,25 @@
-import React from 'react'
-import CardBaseMini from '../CardBaseMini/CardBaseMini'
-function BattlePhaseSelectionteam({teamPokemon , handlerSelect,user='rival'}) {
+import React from "react";
+import CardBaseMini from "../CardBaseMini/CardBaseMini";
+function BattlePhaseSelectionteam({
+  teamPokemon,
+  handlerSelect,
+  user = "rival",
+}) {
   return (
     <div>
-        {teamPokemon.map((pokemon)=>{
-            return(
-                <CardBaseMini
+      {teamPokemon.map((pokemon) => {
+        //console.log(pokemon);
+        return (
+            <CardBaseMini
               key={`${pokemon._id}`}
               pokemon={pokemon}
               handlerSelect={handlerSelect}
-              user='user'
+              user="user"
             />
-            )
-        })}
-        </div>
-  )
+        );
+      })}
+    </div>
+  );
 }
 
-export default BattlePhaseSelectionteam
+export default BattlePhaseSelectionteam;

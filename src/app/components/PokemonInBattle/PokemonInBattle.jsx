@@ -4,12 +4,15 @@ import { imagesPokemon } from "@/Assets/funcions";
 import { get } from "../BattleField/batleField";
 import { valuesPokemon } from "@/Assets/funcions";
 function PokemonInBattle({ pokemon, pokemonId }) {
-  let size = `${get.positionSize(pokemon.dataPokemon)}px`;
+  let size = get.positionSize(pokemon.dataPokemon);
+  
+  
+
   let bg = "rgba(22,22,22,1)";
   //console.log("pokemon:", pokemon, pokemon);
 
   const [state, setState] = useState({
-    size: `${get.positionSize(pokemon.dataPokemon)}px`,
+    size: size>valuesPokemon.componentBattle.size.tail/2?`${get.positionSize(pokemon.dataPokemon)}px`:`${valuesPokemon.componentBattle.size.tail/2}px`,
     bg: `${
       pokemonId === valuesPokemon.componentBattle.id.pokemon
         ? "rgba(7, 102, 173,1)"
@@ -19,63 +22,67 @@ function PokemonInBattle({ pokemon, pokemonId }) {
   });
 
   //console.log('in pokemonBattle',pokemonId,pokemon.position.x.position)
-  console.log("in pokemonBattle", state);
+ //console.log("in pokemonBattle", state);
 
   return (
     <>
       {state.longTailKeys.reverse()?.map((tail, index) => {
-        console.log(index % 3);
+        //console.log(index % 3);
         return (
           <>
-            {index % 10 === 0 ? (
+            {index % 5 === 0 ? (
               <div
                 id={tail === "pokemon" ? pokemonId : `${pokemonId}${tail}`}
                 style={{
                   position: "absolute",
-                  width: `${size}`,
-                  
-                  height: `${size}`,
+                  width: `${size}px`,
+                  height: `${size}px`,
                   transform: `translate(${pokemon.position?.x.position[tail]}px, ${pokemon.position?.y.position[tail]}px)`,
-                  // top: `${pokemon.position.y.position.pokemon}px`,
-                  // left: `${pokemon.position.x.position.pokemon}px`,
-                  background: `${state.bg}`,
-                  borderRadius: `15%`,
+
+                  //background: `${bg}`,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-        
-                  zIndex:`${tail==='pokemon'?100:100-index}`,
-                  border:`1px solid black`
+                  opacity: `${tail === "pokemon" ? 1 : 1 / (index * 0.15)}`,
+                  zIndex: `${tail === "pokemon" ? 1 : 0}`,
+                  //border:`1px solid black`
                 }}
               >
                 <div
                   style={{
-                    position: "relative",
+                    borderRadius: `20%`,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    width: `70%`,
-                    height: `70%`,
+                    background: `${state.bg}`,
+                    width: `${size > 100 ? size - index * 3 : size - index}px`,
+                    height: `${size > 100 ? size - index * 3 : size - index}px`,
                   }}
                 >
-                  
-                  {pokemon !== undefined&&tail==='pokemon'  ? (
+                  {pokemon !== undefined && tail === "pokemon" ? (
+                    < div
+                    style={{
+                     
+                      width: `20%`,
+                      height: `20%`,
+                    }}
+                    >
                     <Image
-                    src={imagesPokemon.official(
-                      pokemon.dataPokemon?.noPokedex,
-                      pokemon.shiny
-                      )}
-                      layout="fill"
-                      objectFit="cover"
-                      alt={`pokemon ${pokemon.dataPokemon?.name} in Battle`}
-                      />
-                      ) : null}
+                      src={imagesPokemon.official(
+                        pokemon.dataPokemon?.noPokedex,
+                        pokemon.shiny
+                        )}
+                        layout="fill"
+                        objectFit="cover"
+                        alt={`pokemon ${pokemon.dataPokemon?.name} in Battle`}
+                        />
+                        </div>
+                  ) : null}
                 </div>
               </div>
             ) : (
               <></>
             )}
-              
           </>
         );
       })}

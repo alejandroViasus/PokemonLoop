@@ -8,6 +8,7 @@ import Image from "next/image";
 import { globalStateFormat } from "@/Assets/globalStateFormat";
 import { generate, valuesPokemon, pokemonGet } from "@/Assets/funcions";
 import { trainers } from "@/Assets/trainers";
+import { battle } from "../components/BattleField/batleField";
 
 //? ---- components
 
@@ -152,8 +153,36 @@ function Page() {
       team: value,
     });
   };
-  const handlerPhase = (value) => {
-    setState({ ...state, phase: value });
+  const handlerPhase = (value, stateBttle) => {
+    //! estamos cambiando el estado de los pokemones con el danio recivido y si esta vivo aun
+
+    // ESTAMOS BUSCANDO EL POKEMON EN EL EQUIUPOOI POKEMON PARA  EDIDR EL ESTADO AL POKEMON QUE ESTUVO EN LA BATALLA
+    if (stateBttle !== undefined) {
+      let newState = { ...state };
+      console.log("newState...", newState);
+      newState.phase = value;
+
+      newState.trainer.team = battle.pokemonAlive(
+        stateBttle.pokemonUser,
+        newState.trainer.team
+      );
+      newState.rival.team = battle.pokemonAlive(
+        stateBttle.pokemonRival,
+        newState.rival.team
+      );
+
+      newState.battlefield.pokemonSelectedRival =
+        generate.SelectorPokemonTeamRival(newState.rival.team);
+      newState.battlefield.pokemonSelectedUser =
+        generate.SelectorPokemonTeamRival(newState.trainer.team);
+
+      newState=generate.gameOver(newState,stateBttle);
+
+      console.log("newState...",newState);
+      return setState(newState);
+    }
+
+    return setState({ ...state, phase: value });
   };
 
   //console.log("ALERT ?????????????????", state);
@@ -209,13 +238,12 @@ function Page() {
           color: "rgba(222,222,222,1)",
         }}
       >
-        <BattleField localState={state} />
+        <BattleField localState={state} handlerPhase={handlerPhase} />
         {state.phase === "delay" ? (
           <BattlePhaseDelay handlerPhase={handlerPhase} />
-          ) : null}
+        ) : null}
 
-
-        <button onClick={() => handlerPhase("delay")}> again</button>
+        <button onClick={() => handlerPhase("login-phase")}> again</button>
       </section>
     </div>
   );

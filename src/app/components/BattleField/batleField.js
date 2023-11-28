@@ -13,6 +13,57 @@ const keysStats = [
 ];
 
 export const get = {
+  porcentajeHeald:(pokemon)=>{
+    const totalHeald=pokemon.stats.Heald
+    const actualHeald=pokemon.stats.HealdActual
+    let heald = (actualHeald/totalHeald)*100
+    heald=heald<=0?0:heald   
+    return heald
+  },
+  phaseFigth: (state) => {
+    const newState = { ...state };
+    const healdPokemon = state.pokemonUser.stats.HealdActual;
+    const healdRival = state.pokemonRival.stats.HealdActual;
+    //console.log("phaseFigth", newState, healdPokemon);
+    if (healdPokemon < 1 || healdRival < 1) {
+      newState.general.figth.move = false;
+    }
+    return newState;
+  },
+  colision: (state) => {
+    let newState = { ...state };
+    const pokemonUser = get.dimension(valuesPokemon.componentBattle.id.pokemon);
+    const pokemonRival = get.dimension(valuesPokemon.componentBattle.id.rival);
+    //console.log('colision',newState.pokemonUser.position.x.direction.value)
+    if (
+      pokemonUser.right > pokemonRival.left &&
+      pokemonUser.right < pokemonRival.right &&
+      ((pokemonUser.top > pokemonRival.top &&
+        pokemonUser.top < pokemonRival.bottom) ||
+        (pokemonUser.bottom > pokemonRival.top &&
+          pokemonUser.bottom < pokemonRival.bottom))
+    ) {
+      newState.pokemonUser.position.x.direction.value = "Left";
+      newState.pokemonRival.position.x.direction.value = "Rigth";
+      battle.figth(newState);
+      //console.log("Colision");
+    }
+    if (
+      pokemonUser.left < pokemonRival.right &&
+      pokemonUser.left > pokemonRival.left &&
+      ((pokemonUser.top > pokemonRival.top &&
+        pokemonUser.top < pokemonRival.bottom) ||
+        (pokemonUser.bottom > pokemonRival.top &&
+          pokemonUser.bottom < pokemonRival.bottom))
+    ) {
+      newState.pokemonUser.position.x.direction.value = "Rigth";
+      newState.pokemonRival.position.x.direction.value = "Left";
+      battle.figth(newState);
+      //console.log("Colision");
+    }
+
+    return newState;
+  },
   isRival: (id = "a") => {
     // Convertir la cadena a minúsculas para hacer la comparación insensible a mayúsculas
     const lowerCaseStr = id.toLowerCase();
@@ -20,10 +71,14 @@ export const get = {
     return lowerCaseStr.includes("rival");
   },
   size: (pokemon) => {
-    return pokemon.position.size * valuesPokemon.componentBattle.size.scale;
+    return get.positionSize(pokemon);
   },
   positionSize: (pokemon) => {
-    return pokemon.height * valuesPokemon.componentBattle.size.scale;
+    return pokemon.height * valuesPokemon.componentBattle.size.scale > 30
+      ? pokemon.height * valuesPokemon.componentBattle.size.scale > 250
+        ? 100
+        : pokemon.height * valuesPokemon.componentBattle.size.scale
+      : 30;
   },
   initialPosition: () => {},
   initialDirection: (axis) => {
@@ -73,9 +128,7 @@ export const get = {
             size -
             margin);
     }
-
     //console.log('initialPosition', isRival?'rival':null,axis,initialPosition)
-
     const tailPokemon = {
       pokemon: initialPosition,
     };
@@ -87,24 +140,16 @@ export const get = {
   dimension: (id) => {
     if (id !== undefined) {
       const battlefield = document.getElementById(id);
-      //console.log('........................ dimension ',id,battlefield)
-
-      return {
-        top: battlefield?.offsetTop || 0,
-        left: battlefield?.offsetLeft || 0,
-        rigth: battlefield?.offsetLeft + battlefield?.offsetWidth || 0,
-        bottom: battlefield?.offsetTop + battlefield?.offsetHeight || 0,
-        width: battlefield?.offsetWidth || 0,
-        height: battlefield?.offsetHeight || 0,
-      };
+      //console.log('........................ dimension ',id,battlefield?.getBoundingClientRect())
+      return battlefield?.getBoundingClientRect();
     } else {
       return {
-        top: 0,
-        left: 0,
-        rigth: 0,
-        bottom: 0,
-        width: 0,
-        height: 0,
+        top: 2,
+        left: 2,
+        rigth: 2,
+        bottom: 2,
+        width: 2,
+        height: 2,
       };
     }
   },
@@ -117,11 +162,12 @@ export const format = {
         phase: 1000, //delay entre la trancicion de comenzar la batalla y empezar a moverse los pokemon
         step: 1, //incremeto de pasos por turno
         count: 0, //conteo de pasos en la talla pokemon
-        delay: 15, //tiempo que demora de delay para generar el siguiente paso o posicion del pokemon
+        delay: 5, //tiempo que demora de delay para generar el siguiente paso o posicion del pokemon
       },
       figth: {
         state: false, // identificador de estado para saber si se esta en la batalla o no
         pause: false,
+        move: true,
         stepsSpeed: [
           // posibles opciones de velocidad
           { value: 0.5, title: "", icon: "" },
@@ -137,7 +183,7 @@ export const format = {
       battlefield: {
         bioma: {
           value: get.bioma(),
-          difficult: state.battlefield.difficult,
+          difficult: state.battlefield?.difficult||'equal',
         },
         width: 1000, //ancho de el campo pokemon (px)
         height: 550, //alto de el campo pokemon (px)
@@ -161,7 +207,7 @@ export const axis = (pokemon, axis) => {
         min: 0.01,
       },
     },
-    position: get.tail(pokemon, 24, axis),
+    position: get.tail(pokemon, valuesPokemon.componentBattle.size.tail, axis),
   };
   return initialaxis;
 };
@@ -194,6 +240,20 @@ export const initialStateBattle = (localState, trainers) => {
 };
 
 export const set = {
+  aceleration: (state, user, axis) => {
+    const selector = `pokemon${user}`;
+    const increment = state[selector].position[axis].direction.increment;
+    const speed = state[selector].stats.Speed;
+    let focus = state[selector].position[axis].direction.aceleration.actual;
+    const aceletation = (speed * increment) / 1000;
+    focus = focus + aceletation;
+    //console.log("aceleration: ", user, aceletation, focus);
+    if (focus > valuesPokemon.componentBattle.limitSpeed) {
+      return valuesPokemon.componentBattle.limitSpeed;
+    } else {
+      return focus;
+    }
+  },
   pause: (state) => {
     const pause = {
       ...state,
@@ -214,13 +274,108 @@ export const set = {
 };
 
 export const battle = {
+  pokemonAlive:(pokemon,team)=>{
+    let newTeam = JSON.parse(JSON.stringify(team));
+    team.map((pokemonInTeam,index)=>{
+      if(pokemonInTeam._id===pokemon.dataPokemon._id){
+         console.log('pokemon',newTeam[index].alive)
+        //console.log(pokemon.stats.HealdActual)
+        newTeam[index].alive=pokemon.stats.HealdActual>0?true:false;
+        newTeam[index].heald=get.porcentajeHeald(pokemon);
+        
+      }
+    })
+    console.log('pokemonAlive:...',newTeam)
+    return newTeam
+  },
+  figth: (state) => {
+    const newState = { ...state };
+    const pokemons = ["pokemonUser", "pokemonRival"];
+
+    const formatpokemon = (pokemon) => {
+      return {
+        id: pokemon,
+        alive: newState[pokemon].dataPokemon.alive,
+        heald: newState[pokemon].stats.Heald,
+        actualHeald: newState[pokemon].stats.HealdActual,
+        selectorAttack: Math.random(),
+        attack: newState[pokemon].stats.Attack,
+        deffense: newState[pokemon].stats.Deffense,
+        specialAttack: newState[pokemon].stats.SpecialAttack,
+        specialDeffense: newState[pokemon].stats.SpecialDeffense,
+        typesPokemon: [
+          newState[pokemon].dataPokemon.type1,
+          newState[pokemon].dataPokemon.type2,
+        ],
+      };
+    };
+    const pokemonUser = formatpokemon("pokemonUser");
+    const pokemonRival = formatpokemon("pokemonRival");
+
+    newState.pokemonUser = battle.phase.figth(
+      newState,
+      pokemonUser,
+      pokemonRival
+    );
+    newState.pokemonRival = battle.phase.figth(
+      newState,
+      pokemonRival,
+      pokemonUser
+    );
+
+    return newState;
+  },
   phase: {
+    figth: (state, pokemon, rival) => {
+      const newState = state[pokemon.id];
+      const heald = newState.stats.HealdActual;
+      const rangeBlock = heald > 100 ? 0.9 : 0.4;
+      const blockattack = Math.random();
+      let scaleDmg = 0;
+      rival.typesPokemon.map((type) => {
+        const scale4Type = typesPokemon[type].effectiveness;
+        pokemon.typesPokemon.map((typeU) => {
+          //console.log(rival.id, type,'->',typeU, scale4Type[typeU])
+          scaleDmg =
+            scale4Type[typeU] > scaleDmg ? scale4Type[typeU] : scaleDmg;
+        });
+      });
+
+      //console.log('SCALE DMG .....',scaleDmg,heald);
+
+      if (blockattack > rangeBlock) {
+        if (newState.stats.HealdActual > 0) {
+          if (pokemon.selectorAttack < 0.5) {
+            //! si el selector de ataque es mayor a 0.5 el pokemon recibira danio especial , si es menor recibira danio normal
+            let punch = rival.attack * scaleDmg - pokemon.defense;
+            punch = punch > 5 ? punch : 5;
+            let newHeald = newState.stats.HealdActual - punch;
+            newState.stats.HealdActual = newHeald;
+          } else {
+            let punch = rival.specialAttack - pokemon.specialDeffense;
+            punch = punch > 5 ? punch : 5;
+            let newHeald = newState.stats.HealdActual - punch;
+            newState.stats.HealdActual = newHeald;
+          }
+        } else {
+          newState.stats.HealdActual = 0;
+        }
+      } else {
+        newState.stats.HealdActual = newState.stats.HealdActual - 1;
+      }
+      //console.log("Colision", rival.id, rival.typesPokemon);
+      //console.log("Colision",pokemon.typesPokemon);
+
+      return newState;
+    },
     timeCount: (state) => {
-      const newState = { ...state };
-      //       //console.log(newState)
+      let newState = { ...state };
       newState.general.time.count += newState.general.time.step;
-      newState.pokemonUser = battle.phase.nextStep(state, "User");
       newState.pokemonRival = battle.phase.nextStep(state, "Rival");
+      newState.pokemonUser = battle.phase.nextStep(state, "User");
+      newState = get.colision(newState);
+      newState = get.phaseFigth(newState);
+
       //battle.phase.nextStep(state, "User");
       return newState;
     }, //battle.phase.timeCount
@@ -228,6 +383,7 @@ export const battle = {
       const selector = `pokemon${user}`;
       const focus = { ...state[selector] };
       focus.position = battle.phase.step(state, user);
+
       return focus;
     }, //battle.phase.NextStep
     step: (state, user) => {
@@ -244,8 +400,13 @@ export const battle = {
       //! aqui podremos detecta colisiones en el campo de batalla y las colociones con el rival
       const selector = `pokemon${user}`;
       const idCamp = valuesPokemon.componentBattle.id.battleField;
-
       const focus = state[selector].position[axis].direction;
+
+      const dimensionPokemonRival =
+        user === "User"
+          ? get.dimension(valuesPokemon.componentBattle.id.rival)
+          : get.dimension(valuesPokemon.componentBattle.id.user);
+
       const focusValues = {
         pokemon: {
           direction: state[selector].position[axis].direction.value,
@@ -260,14 +421,10 @@ export const battle = {
           dimension: get.dimension(idCamp),
         },
       };
+      //console.log(user, focusValues.pokemon.dimension);
 
       if (axis === "x") {
-       
-
         if (focusValues.pokemon.position <= 0) {
-          // console.log(
-          //   "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[Rigth"
-          // );
           focus.value = "Rigth";
         }
         if (
@@ -275,29 +432,26 @@ export const battle = {
           focusValues.battleField.dimension.width -
             focusValues.pokemon.dimension.width
         ) {
-        
           focus.value = "Left";
-          focus.variable=Math.random()
+          focus.variable = Math.random();
         }
       }
       if (axis === "y") {
-        
-        
         if (focusValues.pokemon.position <= 0) {
-          
           focus.value = "Down";
-          focus.variable=Math.random()
+          focus.variable = Math.random();
         }
         if (
           focusValues.pokemon.position >=
           focusValues.battleField.dimension.height -
             focusValues.pokemon.dimension.height
         ) {
-        
           focus.value = "Up";
         }
       }
 
+      focus.aceleration.actual = set.aceleration(state, user, axis);
+      //console.log("focus:...", focus);
 
       return focus;
     },
@@ -308,7 +462,6 @@ export const battle = {
       const focus = { ...state[selector].position[axis] };
       focus.position = battle.move.nextPosition(state, user, axis);
       focus.direction = battle.direction.setDirection(state, user, axis);
-      
 
       const size = get.size({ ...state[selector] });
       if (focus.position.pokemon < 0) {
@@ -318,22 +471,21 @@ export const battle = {
         if (
           focus.position.pokemon >
           state.general.battlefield.dimension.width - size
-          ) {
-            focus.position.pokemon =
+        ) {
+          focus.position.pokemon =
             state.general.battlefield.dimension.width - size;
-          }
         }
-        if (axis === "y") {
+      }
+      if (axis === "y") {
         if (
           focus.position.pokemon >
           state.general.battlefield.dimension.height - size
         ) {
           focus.position.pokemon =
-          state.general.battlefield.dimension.height - size;
+            state.general.battlefield.dimension.height - size;
         }
       }
-      
-      
+
       return focus;
     }, //move
     nextPosition: (state, user, axis) => {
@@ -350,9 +502,11 @@ export const battle = {
       const selector = `pokemon${user}`;
       switch (tail) {
         case "pokemon": {
-          const focus = battle.move.step(state, user, axis);
-          //console.log("...inFocus :", tail, focus);
-          return focus;
+          if (state.general.figth.move) {
+            const focus = battle.move.step(state, user, axis);
+            //console.log("...inFocus :", tail, focus);
+            return focus;
+          }
         }
         case "tail_0": {
           const focus = state[selector].position[axis].position.pokemon;
@@ -370,21 +524,29 @@ export const battle = {
     }, //battle.move.tail
     step: (state, user, axis) => {
       const selector = `pokemon${user}`;
-      let focus = state[selector].position[axis].position.pokemon;
-      const referencePosition = state[selector].position[axis];
+      let speed =
+        state[selector].stats.Speed > 30 ? 30 : state[selector].stats.Speed;
+
+        let focus = state[selector].position[axis].position.pokemon;
+        const referencePosition = state[selector].position[axis];
       const focusValues = {
         // se maneja un objeto para guardar temporalmente el valor de la posicion y la direccion
         direction: referencePosition.direction.value,
         increment: referencePosition.direction.increment,
-        aceleration: referencePosition.direction.aceleration.actual,
-        speed: state[selector].stats.Speed,
-        variable:state[selector].position[axis].direction.variable
+        aceleration:
+          referencePosition.direction.aceleration.actual + 1+((speed/200) * 0.5),
+          speed,
+        variable: state[selector].position[axis].direction.variable * 0.5,
       };
 
-      const increment= 5+(focusValues.increment *
-      (focusValues.aceleration + 1) *
-      focusValues.speed)/focusValues.variable;
-
+      //console.log("focus value", user, state);
+      //console.log(focusValues.variable)
+      
+      const increment =
+        3 + (3*focusValues.variable)+
+        ((focusValues.increment * focusValues.aceleration * focusValues.speed) /
+          (10 /
+          focusValues.variable)/4);
 
       //console.log(focus, focusValues.direction);
       if (
@@ -393,11 +555,9 @@ export const battle = {
       ) {
         focus += increment;
       } else {
-        focus =
-          focus -increment
+        focus = focus - increment;
       }
 
-      
       return focus;
     }, //battle.move.step
   }, //battle.move

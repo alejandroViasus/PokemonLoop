@@ -6,11 +6,11 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const dimension={
+const dimension = {
   height: 550,
   width: 1000,
-  margin:5
-}
+  margin: 5,
+};
 
 export const valuesPokemon = {
   levelsTrainers: {
@@ -46,21 +46,22 @@ export const valuesPokemon = {
   },
   componentBattle: {
     sizeTeam: 5,
-    size:{
-      max:2.5,
-      scale:50,//escala de tamanios en pixels (px)
-      battleField:{
-        margin:dimension.width*dimension.margin/100,
+    limitSpeed: 1,
+    size: {
+      tail: 30,
+      max: 2.5,
+      scale: 50, //escala de tamanios en pixels (px)
+      battleField: {
+        margin: (dimension.width * dimension.margin) / 100,
         height: dimension.height,
         width: dimension.width,
       },
     },
-    id:{
-      pokemon:'id_pokemonUser',
-      rival:'id_pokemonRival',
-      battleField:'id_battleField',
-    }
-   
+    id: {
+      pokemon: "id_pokemonUser",
+      rival: "id_pokemonRival",
+      battleField: "id_battleField",
+    },
   },
   componentSentToOak: {
     baseValue: {
@@ -264,17 +265,62 @@ export const generate = {
     return biomas[selectorBioma];
   },
 
-  SelectorPokemonTeamRival: (team) => {
+  gameOver: (state, stateBttle) => {
+    const newState = { ...state };
+
+
+    //! newState.battleField?.pokemonSelectedRival aparece como undefinded y no podemos hacer la validacion pa terminar el combate 
+     console.log("in validation game..........................");
+     console.log("stateBattle  :", stateBttle);
+     console.log("New State  :", newState);
+     console.log("in validation game..........................");
+
+    // if (
+    //   stateBttle.pokemonRival.dataPokemon === undefined ||
+    //   stateBttle.pokemonUser.dataPokemon === undefined
+    // ) {
+    //   stateBttle.pokemonRival === "GameOver!!!"
+    //     ? (newState.phase = "user-win")
+    //     : null;
+    //   stateBttle.pokemonUser === "GameOver!!!"
+    //     ? (newState.phase = "rival-win")
+    //     : null;
+    //   if (
+    //     stateBttle.pokemonRival === "GameOver!!!" &&
+    //     stateBttle.pokemonUser === "GameOver!!!"
+    //   ) {
+    //     newState.phase = "draw";
+    //   }
+    // }
+
+    newState.battleField?.pokemonSelectedRival==="GameOver!!!"
+    ?newState.phase="user-win"
+    :null
+    newState.battleField?.pokemonSelectedUser==="GameOver!!!"
+    ?newState.phase="rival-win"
+    :null
+
+    newState.battleField?.pokemonSelectedRival==="GameOver!!!"&&
+    newState.battleField?.pokemonSelectedUser==="GameOver!!!"
+    ?newState.phase = "draw":null
+    
+
+    return newState;
+  },
+  SelectorPokemonTeamRival: (team, count = 0) => {
+    if (count === 50) {
+      return "GameOver!!!";
+    }
     let index = Math.round(Math.random() * team.length);
     if (index >= team.length || index < 0) {
       index = 0;
     }
-
     //console.log("index  :", index, team[index]);
     if (team[index].alive) {
+      console.log("Selector _________", team[index]);
       return team[index];
     } else {
-      return generate.SelectorPokemonTeamRival(team);
+      return generate.SelectorPokemonTeamRival(team, count + 1);
     }
   },
   rivalLevel: (user, addLevel = 0) => {
@@ -300,7 +346,7 @@ export const generate = {
   },
   getStat: (pokemon, typeStack) => {
     //console.log("in generate", pokemon, typeStack);
-    if (pokemon!==undefined) {
+    if (pokemon !== undefined) {
       let nivel = pokemon.level;
       let statBase = pokemon[`base${typeStack}`];
       let iv = pokemon[`scale${typeStack}`];

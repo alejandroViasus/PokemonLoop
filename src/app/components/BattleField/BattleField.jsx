@@ -1,19 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { initialStateBattle, set, battle,get } from "./batleField";
+import { initialStateBattle, set, battle, get } from "./batleField";
 
 //components
 import AreaBattle from "../AreaBattle/AreaBattle";
 import { valuesPokemon } from "@/Assets/funcions";
 
-function BattleField({ localState, trainers = ["User", "Rival"] }) {
+function BattleField({
+  localState,
+  trainers = ["User", "Rival"],
+  handlerPhase,
+}) {
   const [state, setState] = useState(initialStateBattle(localState, trainers));
 
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    const tail = `tail_${valuesPokemon.componentBattle.size.tail - 1}`;
+    const positionPokemonX = state.pokemonUser.position.x.position.pokemon;
+    const positionTailX = state.pokemonUser.position.x.position[tail];
+    const positionPokemonY = state.pokemonUser.position.y.position.pokemon;
+    const positionTailY = state.pokemonUser.position.y.position[tail];
+    if (
+      positionPokemonX === positionTailX &&
+      positionPokemonY === positionTailY &&
+      !state.general.figth.move
+    ) {
+      const pokemonUser = state.pokemonuser;
+      
+      const newState = { ...state };
+      newState.general.figth.state=false
+      
+      console.log(newState, "FINAL FIGTH !!!");
+      handlerPhase("login-phase",newState);
+      setState(newState)
+      // battle.setState({
+      //   ...newState,
+      //   general: {
+      //     ...newState.general,
+      //     figth: { ...newState.general.figth, state: false },
+      //   },
+      // });
+    }
+  }, [state.pokemonUser.position]);
 
   useEffect(() => {
-    console.log("localState", localState);
+    //console.log("localState", localState);
     setState(initialStateBattle(localState, trainers));
   }, [localState]);
 
@@ -50,20 +79,16 @@ function BattleField({ localState, trainers = ["User", "Rival"] }) {
     // if (!state.general.figth.pause && state.general.figth.state) {
     //   const pokemonUser = document.getElementById(valuesPokemon.componentBattle.id.pokemon);
     //   const pokemonRival = document.getElementById(valuesPokemon.componentBattle.id.rival);
-
     //   console.log( 'in State',pokemonUser)
-
     //   if (pokemonUser) {
     //     pokemonUser.style.transform = `translate(${state.pokemonUser.position.x.position.pokemon}px, ${state.pokemonUser.position.y.position.pokemon}px)`;
     //     pokemonRival.style.transform = `translate(${state.pokemonRival.position.x.position.pokemon}px, ${state.pokemonRival.position.y.position.pokemon}px)`;
     //   }
     // }
   }, [
-    
     state.pokemonUser?.position.x.position.pokemon,
     state.pokemonUser?.position.y.position.pokemon,
   ]);
-  
 
   const handlerPause = () => {
     setState(set.pause(state));
@@ -91,6 +116,20 @@ function BattleField({ localState, trainers = ["User", "Rival"] }) {
       ) : null}
 
       <AreaBattle localState={state} />
+
+      <div>
+        <h1>
+          {" "}
+          {state.pokemonUser.dataPokemon.name} :
+          {state.pokemonUser.stats.HealdActual}
+        </h1>
+        <h1>
+          {" "}
+          {state.pokemonRival.dataPokemon.name} :
+          {state.pokemonRival.stats.HealdActual}
+        </h1>
+      </div>
+
       <button onClick={handlerPause}>
         {" "}
         {!state.general.figth.pause ? "Pause" : "Play"}
