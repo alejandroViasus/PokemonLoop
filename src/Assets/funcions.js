@@ -44,23 +44,98 @@ export const valuesPokemon = {
       big: { value: 100, sizeTeam: 4 },
     },
   },
+  // componentBattle: {
+  //   sizeTeam: 5,
+  //   limitSpeed: 1,
+  //   size: {
+  //     tail: 30,
+  //     max: 2.5,
+  //     scale: 50, //escala de tamanios en pixels (px)
+  //     battleField: {
+  //       margin: (dimension.width * dimension.margin) / 100,
+  //       height: dimension.height,
+  //       width: dimension.width,
+  //     },
+  //   },
+  //   id: {
+  //     pokemon: "id_pokemonUser",
+  //     rival: "id_pokemonRival",
+  //     battleField: "id_battleField",
+  //   },
+  // },
   componentBattle: {
-    sizeTeam: 5,
-    limitSpeed: 1,
-    size: {
-      tail: 30,
-      max: 2.5,
-      scale: 50, //escala de tamanios en pixels (px)
-      battleField: {
-        margin: (dimension.width * dimension.margin) / 100,
-        height: dimension.height,
-        width: dimension.width,
+    time: {
+      PhaseSelectionCardMove: 10000,
+      fractionMove: 16,
+    },
+    modes: ["PvsCPU", "PvsP", "League Pokemon"],
+    dificult: {
+      easy: {
+        levelDifferenceLeague: 2,
+        levelDifference: -2,
+        positive: false,
+        minProbability: 0,
+      },
+      medium: {
+        levelDifferenceLeague: 4,
+        levelDifference: 4,
+        positive: true,
+        minProbability: 0.5,
+      },
+      hard: {
+        levelDifferenceLeague: 8,
+        levelDifference: 8,
+        positive: true,
+        minProbability: 0.95,
+      },
+      leader: {
+        levelDifferenceLeague: 12,
+        levelDifference: 12,
+        positive: true,
+        minProbability: 0.98,
+      },
+      master: {
+        levelDifferenceLeague: 20,
+        levelDifference: 20,
+        positive: true,
+        minProbability: 1,
       },
     },
-    id: {
-      pokemon: "id_pokemonUser",
-      rival: "id_pokemonRival",
-      battleField: "id_battleField",
+    boleanResponse: ["Yes", "No"],
+    redirection: {
+      urlHome: { title: "Go to Home", url: "/" },
+      urlCards: { title: "Go to Cards", url: "/cards" },
+    },
+    typeAttack: (attack) => {
+      if (attack) {
+        return attack;
+      } else {
+        const selector = Math.random();
+        return selector < 0.5 ? "" : "Special";
+      }
+    },
+    phases: {
+      values: ["selectorMode", "team", "selectPokemon"],
+    },
+    oponents: {
+      trainers: ["user", "rival"],
+    },
+
+    size: {
+      tail:23,
+      team: 5,
+      cardsDirection: 8,
+      battlefield: {
+        height: 500,
+        with: 1000,
+      },
+    },
+    poverMove: {
+      max: 100,
+    },
+    directions: {
+      x: ["left", "rigth"],
+      y: ["up", "down"],
     },
   },
   componentSentToOak: {
@@ -126,7 +201,7 @@ export const valuesPokemon = {
         815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828,
         829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842,
         843, 844, 845, 846, 847, 848, 849, 850, 883, 887, 888, 889, 984, 990,
-        991, 992, 993, 994, 995, 1007,
+        991, 992, 993, 994, 995, 1006, 1007,
       ],
     },
   },
@@ -141,6 +216,14 @@ export const valuesPokemon = {
     Galar: [810, 813, 816],
     Paldea: [906, 909, 912],
   },
+  baseStats: [
+    "Heald",
+    "Attack",
+    "Deffense",
+    "SpecialAttack",
+    "SpecialDeffense",
+    "Speed",
+  ],
 };
 
 export const pokemonGet = {
@@ -203,6 +286,24 @@ export const pokemonGet = {
       }
     }
     return noPokedex;
+  },
+  levelRival: (trainer, general) => {
+    let levelpokemon = trainer.level;
+
+    if (general !== undefined) {
+      const dificult = general?.dificult;
+      const diferenceLevel =
+        valuesPokemon.componentBattle.dificult[dificult].levelDifference;
+      const levelDifferenceLeague =
+        valuesPokemon.componentBattle.dificult[dificult].levelDifferenceLeague;
+
+      console.log("in level pokemon", trainer);
+      levelpokemon =
+        levelpokemon +
+        Math.round(Math.random() * (levelpokemon + diferenceLevel)) +
+        levelDifferenceLeague * trainer.league;
+    }
+    return levelpokemon;
   },
   level: (levelTrainer = 1, difficult = 0) => {
     const probability = Math.random();
@@ -268,12 +369,12 @@ export const generate = {
   gameOver: (state, stateBttle) => {
     const newState = { ...state };
 
-
-    //! newState.battleField?.pokemonSelectedRival aparece como undefinded y no podemos hacer la validacion pa terminar el combate 
-     console.log("in validation game..........................");
-     console.log("stateBattle  :", stateBttle);
-     console.log("New State  :", newState);
-     console.log("in validation game..........................");
+    //! newState.battleField?.pokemonSelectedRival aparece como undefinded y no podemos hacer la validacion pa terminar el combate
+    console.log("in validation game.........................A.");
+    console.log("stateBattle  :", stateBttle);
+    console.log("New State  :", newState.battlefield);
+    console.log("battlefield  :", newState);
+    console.log("in validation game.........................Z.");
 
     // if (
     //   stateBttle.pokemonRival.dataPokemon === undefined ||
@@ -293,17 +394,17 @@ export const generate = {
     //   }
     // }
 
-    newState.battleField?.pokemonSelectedRival==="GameOver!!!"
-    ?newState.phase="user-win"
-    :null
-    newState.battleField?.pokemonSelectedUser==="GameOver!!!"
-    ?newState.phase="rival-win"
-    :null
+    newState.battlefield?.pokemonSelectedRival === "GameOver!!!"
+      ? (newState.phase = "user-win")
+      : null;
+    newState.battlefield?.pokemonSelectedUser === "GameOver!!!"
+      ? (newState.phase = "rival-win")
+      : null;
 
-    newState.battleField?.pokemonSelectedRival==="GameOver!!!"&&
-    newState.battleField?.pokemonSelectedUser==="GameOver!!!"
-    ?newState.phase = "draw":null
-    
+    newState.battlefield?.pokemonSelectedRival === "GameOver!!!" &&
+    newState.battlefield?.pokemonSelectedUser === "GameOver!!!"
+      ? (newState.phase = "draw")
+      : null;
 
     return newState;
   },
@@ -404,7 +505,7 @@ export const generate = {
     }
   },
 
-  newPokemon: (dataPokemon, trainer) => {
+  newPokemon: (dataPokemon, trainer, general) => {
     let height = Math.round();
 
     //console.log("Trainer in generate.newPokemon", dataPokemon,trainer)
@@ -417,6 +518,7 @@ export const generate = {
     newPokemon.favorite = false;
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
     newPokemon.actualStack = 0;
+    //newPokemon.level = pokemonGet.levelRival(trainer, general) || pokemonGet.level(trainer.level) + 1;
     newPokemon.level = pokemonGet.level(trainer.level) + 1;
     newPokemon.weight = (dataPokemon.weight * 0.1).toFixed(3);
     newPokemon.height = (dataPokemon.height * 0.1).toFixed(3);

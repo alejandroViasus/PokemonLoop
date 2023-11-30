@@ -48,7 +48,7 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
 
   const handleChange = () => {
     if (
-      actualTeam.length < valuesPokemon.componentBattle.sizeTeam ||
+      actualTeam.length < valuesPokemon.componentBattle.size.team ||
       state.team === true ||
       porperty === "favorite"
     ) {
@@ -71,21 +71,22 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
         });
     }
   };
-
   //console.log("buton Team", state.name,state.team);
-
   return (
     <div>
       {state === null ? null : (
         <div>
-          <div>
-            {actualTeam.length}/{valuesPokemon.componentBattle.sizeTeam}
-          </div>
+          {porperty === "team" ? (
+            <div>
+              {actualTeam.length}/{valuesPokemon.componentBattle.size.team}
+            </div>
+          ) : null}
           <button
             onClick={handleChange}
             disabled={
-              ((!state?.team &&
-                actualTeam.length >= valuesPokemon.componentBattle.sizeTeam) && porperty === "team")
+              !state?.team &&
+              actualTeam.length >= valuesPokemon.componentBattle.size.team &&
+              porperty === "team"
             }
           >
             {state[porperty] ? `${porperty}` : "...." || ""}

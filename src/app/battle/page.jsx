@@ -1,98 +1,42 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { useSelector, useDispatch } from "react-redux";
-import Image from "next/image";
 
-import { globalStateFormat } from "@/Assets/globalStateFormat";
-import { generate, valuesPokemon, pokemonGet } from "@/Assets/funcions";
-import { trainers } from "@/Assets/trainers";
-import { battle } from "../components/BattleField/batleField";
+import { generate, initialStateBattle } from "./battle";
+import { generate as generateFunction } from "@/Assets/funcions";
+import { valuesPokemon } from "@/Assets/funcions";
 
-//? ---- components
+//! import component
 
-import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
-import BattlePhaseSelection from "../components/BattlePhaseSelection/BattlePhaseSelection";
-import BattlePhaseDelay from "../components/BattlePhaseDelay/BattlePhaseDelay";
-import BattleArea from "../components/BattleArea/BattleArea";
-import FilleAlertTeam from "../components/FileAlertTeam/FilleAlertTeam";
-import FileAlertCeroTeam from "../components/FileAlertCeroTeam/FileAlertCeroTeam";
-import CardBaseMini from "../components/CardBaseMini/CardBaseMini";
-import BattleField from "../components/BattleField/BattleField";
+import SelectorAlert from "../components/battle/SelectorAlert/SelectorAlert";
+import SelectorMode from "../components/battle/SelectorMode/SelectorMode";
+import SelectPokemon from "../components/battle/SelectPokemon/SelectPokemon";
+import BattleField from "../components/battle/BattleField/BattleField";
 
-function Page() {
-  const dispatch = useDispatch();
+function page() {
   const globalState = useSelector((state) => state.valueState);
-  const urlHome = "/";
-  const urlCards = `/cards?id=${globalState.user._id}`;
   const searchParams = useSearchParams();
+  const userId = searchParams.get("id");
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
-  const initialState = {
-    phase: "login-phase",
-    trainer: {
-      user: globalState.user,
-      team: globalState.teamUser,
-    },
-    rival: {
-      user: {},
-      team: [],
-    },
-    battlefield: {
-      pokemonSelectedRival: {},
-      pokemonSelectedUser: {},
-    },
-  };
+  // vamos a crear unas cartas de movimiento aleatoria con posiciones y aceleraciones aleatoria
+  const [state, setState] = useState(initialStateBattle(globalState));
 
   useEffect(() => {
-    //*valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
+    //console.log("state", state);
+    //console.log("globalState", globalState);
+    //console.log(".................battle");
     if (globalState.user._id == 0) {
-      router.push(`${urlHome}`); //si no hay un usuario logueado, redirijo al login
-    } else {
-      null;
+      router.push(`${valuesPokemon.componentBattle.redirection.urlHome.url}`);
     }
   }, []);
 
-  const [state, setState] = useState(initialState); //? state - state
-
-  const initialStatePhase = {
-    ceroTeam: state.trainer?.team.length == "0",
-    team:
-      state.trainer?.team.length === valuesPokemon.componentBattle.sizeTeam
-        ? "Yes"
-        : "Validation",
-  };
-  const [phase, setPhase] = useState(initialStatePhase); //? state - phases
-
   useEffect(() => {
-    //console.log("Ok");
-    //*si hay un usuario creamos un rival aleatorio
-    let levelRival = generate.rivalLevel(globalState.user);
-    let generateRival = { ...globalState.user };
-    generateRival.level = levelRival.levelRival;
-    let dificult = levelRival.dificult;
-    const keysImageTrainer = Object.keys(trainers);
-    let picture = Math.round((keysImageTrainer.length - 1) * Math.random());
-    if (picture <= 0) {
-      console.log("a", picture);
-      picture <= 0 ? (picture = 1) : null;
-    }
-    if (picture >= keysImageTrainer.length) {
-      console.log("b", picture);
-      picture >= keysImageTrainer.length
-        ? (picture = keysImageTrainer.length - 1)
-        : null;
-    }
-    generateRival.pictureTrainer = keysImageTrainer[picture];
-    generateRival.theme = trainers[keysImageTrainer[picture]]?.typePreference;
-    const teamRival = [];
-    for (let i = 0; i < valuesPokemon.componentBattle.sizeTeam; i++) {
-      teamRival.push(pokemonGet.noPokedex());
-    }
-
-    //!
-    //*validar que los se genero un arreglo de noPokedex de los posibles pokemones para el equipo rival , para despues crear los pokemones
+    //! usamos este UseEffect para crear el Equipo Pokemon riva , asignandole propiuedades unicas como las baseStatEnffort level (segun level de entrenador)
+    const newState = { ...state };
+    //console.log("Ok", newState);
+    const teamRival = state.rival.noPokedexTeamPokemon;
     const fetchArray = teamRival?.map((noPokedex) =>
       fetch(`https://pokeapi.co/api/v2/pokemon/${noPokedex}`)
     );
@@ -102,10 +46,13 @@ function Page() {
           Promise.all(responses.map((response) => response.json()))
         )
         .then((data) => {
-          //console.log("Data", data);
-          let createTeam = [];
+          const createTeam = [];
           data.map((pokemon) => {
-            let referencePokemon = generate.newPokemon(pokemon, generateRival);
+            let referencePokemon = generateFunction.newPokemon(
+              pokemon,
+              newState.rival.dataTrainer,
+              newState.general
+            );
             referencePokemon._id = `rival${
               Math.random() * (referencePokemon.id || 1)
             }${referencePokemon.name}${
@@ -113,140 +60,98 @@ function Page() {
             }`;
             createTeam.push(referencePokemon);
           });
-          setState({
-            ...state,
-            rival: {
-              ...state.rival,
-              user: generateRival,
-              team: createTeam,
-            },
-            battlefield: {
-              ...state.battlefield,
-              dificult,
-              bioma: generate.bioma(),
-              pokemonSelectedRival:
-                generate.SelectorPokemonTeamRival(createTeam),
-              pokemonSelectedUser: globalState.teamUser[0],
-            },
-          });
+
+          //console.log('TEAM POKEMON =' ,createTeam)
+          newState.rival.teamPokemon = createTeam;
+          //console.log("Ok___", newState);
+
+          //! se crean los stats de todos los pokemon de cada entrnador
+          newState.user.statsTeam = generate.stats(newState.user.teamPokemon);
+          newState.rival.statsTeam = generate.stats(newState.rival.teamPokemon);
+
+          setState({ ...newState });
         });
     }
-    //console.log("fetchArray", fetchArray);
-  }, [globalState.user._id == 0]);
+  }, [state.rival?.noPokedexTeamPokemon]);
 
-  const handlerSelect = (pokemon) => {
-    console.log(user);
-    setState({
-      ...state,
-      battlefield: { ...state.battlefield, pokemonSelectedUser: pokemon },
-    });
-  };
+  useEffect(() => {
+    const newState = { ...state };
+    //! se aparto esta sona para elejir un pokemon aleatorio para el usuario y el rival
+    newState.game.user.idpokemonSelect = generate.selecRandomAlivePokemon(
+      newState.user.teamPokemon
+    );
+    newState.game.rival.idpokemonSelect = generate.selecRandomAlivePokemon(
+      newState.rival.teamPokemon
+    );
+    console.log("ActualState", newState);
+    setState({ ...newState });
+  }, [state.rival.teamPokemon]);
 
-  const handlerCeroTeam = (value) => {
-    value === "home" ? router.push(`${urlHome}`) : null;
-    value === "cards" ? router.push(`${urlCards}`) : null;
-  };
-
-  const handleAlertTeam = (value) => {
-    setPhase({
-      ...alert,
-      team: value,
-    });
-  };
-  const handlerPhase = (value, stateBttle) => {
-    //! estamos cambiando el estado de los pokemones con el danio recivido y si esta vivo aun
-
-    // ESTAMOS BUSCANDO EL POKEMON EN EL EQUIUPOOI POKEMON PARA  EDIDR EL ESTADO AL POKEMON QUE ESTUVO EN LA BATALLA
-    if (stateBttle !== undefined) {
-      let newState = { ...state };
-      console.log("newState...", newState);
-      newState.phase = value;
-
-      newState.trainer.team = battle.pokemonAlive(
-        stateBttle.pokemonUser,
-        newState.trainer.team
-      );
-      newState.rival.team = battle.pokemonAlive(
-        stateBttle.pokemonRival,
-        newState.rival.team
-      );
-
-      newState.battlefield.pokemonSelectedRival =
-        generate.SelectorPokemonTeamRival(newState.rival.team);
-      newState.battlefield.pokemonSelectedUser =
-        generate.SelectorPokemonTeamRival(newState.trainer.team);
-
-      newState=generate.gameOver(newState,stateBttle);
-
-      console.log("newState...",newState);
-      return setState(newState);
+  const handlerPhase = (value, property) => {
+    if (property !== undefined) {
+      const newState = { ...state };
+      newState.phase[property] = value;
+      setState(newState);
     }
-
-    return setState({ ...state, phase: value });
+  };
+  const handlerSelect = (index, user) => {
+    if (user === "user") {
+      const newState = { ...state };
+      newState.game[user].idpokemonSelect = index;
+      setState(newState);
+    }
   };
 
-  //console.log("ALERT ?????????????????", state);
   return (
-    <div>
-      {/* <section>
-        <NavigationMenu />
-      </section> */}
+    <div
+      style={{
+        position: "realtive",
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {
+        //!Validaciones de las fases
+      }
 
-      <section>
-        {phase.ceroTeam ? (
-          <FileAlertCeroTeam handlerCeroTeam={handlerCeroTeam} />
-        ) : null}
-      </section>
-      <section>
-        {phase.team == "Validation" ? (
-          <FilleAlertTeam handleAlertTeam={handleAlertTeam} />
-        ) : null}
-        {phase.team == "No" ? (
-          <FileAlertCeroTeam
-            handlerCeroTeam={handlerCeroTeam}
-            description="What do you want"
-          />
-        ) : null}
-      </section>
-      <section>
-        {phase.team == "Yes" &&
-        phase.ceroTeam === false &&
-        state.phase === "login-phase" ? (
-          <div>
-            {" "}
-            <BattlePhaseSelection
-              localState={state}
-              handlerSelect={handlerSelect}
-              handlerPhase={handlerPhase}
-            />
-          </div>
-        ) : null}
-      </section>
+      {state.phase?.team === "Yes" ? <BattleField state={state} /> : null}
 
-      <section
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "rgba(22,22,22,0.1)",
-          color: "rgba(222,222,222,1)",
-        }}
-      >
-        <BattleField localState={state} handlerPhase={handlerPhase} />
-        {state.phase === "delay" ? (
-          <BattlePhaseDelay handlerPhase={handlerPhase} />
-        ) : null}
+      {state.phase?.selectPokemon === "" && state.phase?.team === "Yes" ? (
+        <SelectPokemon
+          state={state}
+          handler={handlerPhase}
+          handlerSelect={handlerSelect}
+        />
+      ) : null}
+      {state.phase?.selectorMode === "" ? (
+        <SelectorMode
+          handler={handlerPhase}
+          phase={valuesPokemon.componentBattle.phases.values[0]}
+          title="Select Mode"
+        />
+      ) : null}
 
-        <button onClick={() => handlerPhase("login-phase")}> again</button>
-      </section>
+      {state.phase?.team === "" ? (
+        <SelectorMode
+          handler={handlerPhase}
+          phase={valuesPokemon.componentBattle.phases.values[1]}
+          title="Your Pokémon team is small, do you want to continue?"
+        />
+      ) : null}
+      {state.phase?.team === "No" ? (
+        <SelectorMode
+          handler={handlerPhase}
+          phase={valuesPokemon.componentBattle.phases.values[1]}
+          title="What do u want"
+          redirection={valuesPokemon.componentBattle.redirection}
+          id={userId}
+        />
+      ) : null}
     </div>
   );
 }
 
-export default Page;
+export default page;
