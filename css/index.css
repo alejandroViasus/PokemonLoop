@@ -8,3 +8,24 @@ html {
   height: 100%;
   background-color: grey;
 }
+/*stylesGeneralBattle*/
+.bg-alert-battle-initial-validation {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: #505050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bg-alert-battle-initial-validation .area-alert-render {
+  width: 100%;
+  height: 50%;
+  background-color: #505050;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

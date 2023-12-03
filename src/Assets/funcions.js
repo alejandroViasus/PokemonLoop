@@ -65,8 +65,9 @@ export const valuesPokemon = {
   // },
   componentBattle: {
     time: {
-      PhaseSelectionCardMove: 10000,
-      fractionMove: 16,
+      turn:12000,
+      delay:1000,
+      frame: 16,
     },
     modes: ["PvsCPU", "PvsP", "League Pokemon"],
     dificult: {
@@ -111,7 +112,7 @@ export const valuesPokemon = {
         return attack;
       } else {
         const selector = Math.random();
-        return selector < 0.5 ? "" : "Special";
+        return selector < 0.5 ? "Normal" : "Special";
       }
     },
     phases: {
@@ -122,13 +123,21 @@ export const valuesPokemon = {
     },
 
     size: {
-      tail:23,
+      tail: 23,
       team: 5,
-      cardsDirection: 8,
+      cardsDirection: 3,
       battlefield: {
         height: 500,
-        with: 1000,
+        width: 1000,
       },
+      boadrCards: {
+        height: 200,
+        width: 1000,
+      },
+      cardVector:{
+        height: 100,
+        width: 100,
+      }
     },
     poverMove: {
       max: 100,
