@@ -14,27 +14,27 @@ const dimension = {
 
 export const valuesPokemon = {
   levelsTrainers: {
-    inferior: {
+    easy: {
       probability: 0,
-      addFractionLevel: 0.1,
+      addFractionLevel: 1,
       baseLevel: 0.9,
       restriction: "all",
     },
     equal: {
-      probability: 0.35,
-      addFractionLevel: 0.5,
+      probability: 0.5,
+      addFractionLevel: 1.6,
       baseLevel: 1,
       restriction: "all",
     },
-    superior: {
-      probability: 0.95,
-      addFractionLevel: 1,
+    hard: {
+      probability: 0.77,
+      addFractionLevel: 2.5,
       baseLevel: 1.2,
       restriction: "pokerfull",
     },
     master: {
-      probability: 0.98,
-      addFractionLevel: 2,
+      probability: 0.99,
+      addFractionLevel: 4,
       baseLevel: 3,
       restriction: "legendary",
     },
@@ -63,88 +63,127 @@ export const valuesPokemon = {
   //     battleField: "id_battleField",
   //   },
   // },
-  componentBattle: {
-    time: {
-      turn:12000,
-      delay:1000,
-      frame: 16,
-    },
-    modes: ["PvsCPU", "PvsP", "League Pokemon"],
-    dificult: {
-      easy: {
-        levelDifferenceLeague: 2,
-        levelDifference: -2,
-        positive: false,
-        minProbability: 0,
-      },
-      medium: {
-        levelDifferenceLeague: 4,
-        levelDifference: 4,
-        positive: true,
-        minProbability: 0.5,
-      },
-      hard: {
-        levelDifferenceLeague: 8,
-        levelDifference: 8,
-        positive: true,
-        minProbability: 0.95,
-      },
-      leader: {
-        levelDifferenceLeague: 12,
-        levelDifference: 12,
-        positive: true,
-        minProbability: 0.98,
-      },
-      master: {
-        levelDifferenceLeague: 20,
-        levelDifference: 20,
-        positive: true,
-        minProbability: 1,
-      },
-    },
-    boleanResponse: ["Yes", "No"],
-    redirection: {
-      urlHome: { title: "Go to Home", url: "/" },
-      urlCards: { title: "Go to Cards", url: "/cards" },
-    },
-    typeAttack: (attack) => {
-      if (attack) {
-        return attack;
-      } else {
-        const selector = Math.random();
-        return selector < 0.5 ? "Normal" : "Special";
-      }
-    },
-    phases: {
-      values: ["selectorMode", "team", "selectPokemon"],
-    },
-    oponents: {
-      trainers: ["user", "rival"],
-    },
+  // componentBattle: {
+  //   time: {
+  //     turn:12000,
+  //     delay:1000,
+  //     frame: 16,
+  //   },
+  //   modes: ["PvsCPU", "PvsP", "League Pokemon"],
+  //   dificult: {
+  //     easy: {
+  //       levelDifferenceLeague: 2,
+  //       levelDifference: -2,
+  //       positive: false,
+  //       minProbability: 0,
+  //     },
+  //     medium: {
+  //       levelDifferenceLeague: 4,
+  //       levelDifference: 4,
+  //       positive: true,
+  //       minProbability: 0.5,
+  //     },
+  //     hard: {
+  //       levelDifferenceLeague: 8,
+  //       levelDifference: 8,
+  //       positive: true,
+  //       minProbability: 0.95,
+  //     },
+  //     leader: {
+  //       levelDifferenceLeague: 12,
+  //       levelDifference: 12,
+  //       positive: true,
+  //       minProbability: 0.98,
+  //     },
+  //     master: {
+  //       levelDifferenceLeague: 20,
+  //       levelDifference: 20,
+  //       positive: true,
+  //       minProbability: 1,
+  //     },
+  //   },
+  //   boleanResponse: ["Yes", "No"],
+  //   redirection: {
+  //     urlHome: { title: "Go to Home", url: "/" },
+  //     urlCards: { title: "Go to Cards", url: "/cards" },
+  //   },
+  //   typeAttack: (attack) => {
+  //     if (attack) {
+  //       return attack;
+  //     } else {
+  //       const selector = Math.random();
+  //       return selector < 0.5 ? "Normal" : "Special";
+  //     }
+  //   },
+  //   phases: {
+  //     values: ["selectorMode", "team", "selectPokemon"],
+  //   },
+  //   oponents: {
+  //     trainers: ["user", "rival"],
+  //   },
 
+  //   size: {
+  //     tail: 23,
+  //     team: 5,
+  //     cardsDirection: 3,
+  //     battlefield: {
+  //       height: 500,
+  //       width: 1000,
+  //     },
+  //     boadrCards: {
+  //       height: 200,
+  //       width: 1000,
+  //     },
+  //     cardVector:{
+  //       height: 100,
+  //       width: 100,
+  //     }
+  //   },
+  //   poverMove: {
+  //     max: 100,
+  //   },
+  //   directions: {
+  //     x: ["left", "rigth"],
+  //     y: ["up", "down"],
+  //   },
+  // },
+
+  componentBattle: {
+    limitSpeedL: {
+      max: 50,
+      min: 5,
+    },
+    areaBattlefield: {
+      size: {
+        width: dimension.width,
+        height: dimension.height,
+      },
+    },
+    groupCards: {
+      size: 8,
+      dimension: {
+        height: 120,
+        width: 80,
+      },
+      maxPower: 300,
+      minPower: 80,
+    },
     size: {
-      tail: 23,
       team: 5,
-      cardsDirection: 3,
-      battlefield: {
-        height: 500,
-        width: 1000,
-      },
-      boadrCards: {
-        height: 200,
-        width: 1000,
-      },
-      cardVector:{
-        height: 100,
-        width: 100,
-      }
+      pokemonBaseSize: 30,
+      tailInGame: 30,
     },
-    poverMove: {
-      max: 100,
-    },
-    directions: {
-      x: ["left", "rigth"],
-      y: ["up", "down"],
+    initialPosition: {
+      user: {
+        y: (1 * dimension.height) / 2,
+        x: (1 * dimension.width) / 8,
+        rotation: 0,
+      },
+      rival: {
+        y: (1 * dimension.height) / 2,
+        x: (7 * dimension.width) / 8,
+        rotation: 0,
+      },
     },
   },
   componentSentToOak: {
@@ -479,7 +518,21 @@ export const generate = {
         return Math.round(stat);
       } else {
         // Cálculo de otras estadísticas (como ataque y defensa)
-        const stat = 5 + (nivel / 100) * (statBase * iv * 2 + iv + pe) + nivel;
+        let stat = 5 + (nivel / 100) * (statBase * iv * 2 + iv + pe) + nivel;
+
+        if (
+          typeStack === "Speed" &&
+          stat > valuesPokemon.componentBattle.limitSpeedL.max
+        ) {
+          stat = valuesPokemon.componentBattle.limitSpeedL.max;
+        }
+        if (
+          typeStack === "Speed" &&
+          stat < valuesPokemon.componentBattle.limitSpeedL.min
+        ) {
+          stat = valuesPokemon.componentBattle.limitSpeedL.min;
+        }
+
 
         return Math.round(stat);
       }
@@ -556,6 +609,9 @@ export const generate = {
     newPokemon.baseSpecialDeffense = dataPokemon.stats[4].base_stat;
     newPokemon.baseSpeed = dataPokemon.stats[5].base_stat;
 
+    if (newPokemon.shiny === 1) {
+      console.log("No Pokedex", newPokemon.noPokedex);
+    }
     return newPokemon;
   },
 };

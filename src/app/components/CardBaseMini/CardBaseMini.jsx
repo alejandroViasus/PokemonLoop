@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { imagesPokemon } from "@/Assets/funcions";
-import Image from "next/image";
-
-function CardBaseMini({ pokemon, handlerSelect, user = "rival"  ,index,globalIndex}) {
+import Image from "next/image";function CardBaseMini({ pokemon, handlerSelect, user = "rival"  ,index , globalIndex=0}) {
   //console.log(pokemon.alive)
   
 const tone='180,10,175';
-const gama=globalIndex===index?'1':'0.2'
+const gama= globalIndex===index?'1':'0.2'
 const color=`rgba(${tone},${gama})`
 
   return (

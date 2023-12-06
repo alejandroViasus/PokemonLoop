@@ -2,3 +2,5 @@ se me ocurrio , para solucionar el problema de la funcionalidad de las cartas y 
 faltan validaciones para el aumento de nivel y la idea es que por cada nivel el usuario consiga una caja
 
 //? se necesita una tabla de debilidades para el componente cards
+
+//? store que permira comprar frutas que aumenten las Stats de un pokemon (las frutas van a variar dependiendo del stat al que se encuentre el pokemon actual  es decir , un stat 1 no va necesitar tantas  frurtas  como un pocemon con stats 30 stats)

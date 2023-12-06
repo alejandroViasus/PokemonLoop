@@ -2,20 +2,24 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { battle } from "./battle";
-
 import { useSearchParams, useRouter } from "next/navigation";
+
+import { valuesPokemon } from "@/Assets/funcions";
+import { generate as generateFunction } from "@/Assets/funcions";
 
 //Components
 import CheckInTeam from "../components/BattleComponents/CheckInTeam/CheckInTeam";
 import SelectMode from "../components/BattleComponents/SelectMode/SelectMode";
 import RedirectionTeam from "../components/BattleComponents/RedirectionTeam/RedirectionTeam";
+import SelectPokemonTeam from "../components/BattleComponents/SelectPokemonTeam/SelectPokemonTeam";
+import BattleField from "../components/BattleComponents/BattleField/BattleField";
 function page() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const globalState = useSelector((state) => state.valueState);
   const [state, setState] = useState(battle.initialState(globalState));
   const urlHome = "/";
-  console.log(state);
+  //console.log(state);
 
   useEffect(() => {
     //valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
@@ -23,8 +27,90 @@ function page() {
       router.push(`${urlHome}`);
     }
   }, []);
+  useEffect(() => {
+    if (
+      (state.validation.team === 5 || state.validation.team === "continue") &&
+      state.validation.mode !== "" &&
+      state.phase !== battle.phases[1]
+    ) {
+      const newState = { ...state };
+
+      newState.phase = battle.phases[1];
+      setState(newState);
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (state.pokeRivaldex.length === 5) {
+      //console.log("Ready To Create Team Rival");
+
+      //!-------------------------------
+      const fetchArray = state.pokeRivaldex?.map((noPokedex) =>
+        fetch(`https://pokeapi.co/api/v2/pokemon/${noPokedex}`)
+      );
+      if (fetchArray !== undefined) {
+        const newState = { ...state };
+        Promise.all(fetchArray)
+          .then((responses) =>
+            Promise.all(responses.map((response) => response.json()))
+          )
+          .then((data) => {
+            const createTeam = [];
+            data.map((pokemon) => {
+              let referencePokemon = generateFunction.newPokemon(
+                pokemon,
+                newState.trainers.rival,
+                newState.general
+              );
+              referencePokemon._id = `rival${
+                Math.random() * (referencePokemon.id || 1)
+              }${referencePokemon.name}${
+                Math.random() * (referencePokemon.id || 1)
+              }`;
+              createTeam.push(referencePokemon);
+            });
+
+            //console.log('TEAM POKEMON =' ,createTeam)
+            newState.team.rival = createTeam;
+            setState({ ...newState });
+          });
+      }
+
+      //!-------------------------------
+    }
+  }, [state.pokeRivaldex]);
+
+  useEffect(() => {
+    if (state.team?.rival?.length === valuesPokemon.componentBattle.size.team) {
+      const newState = { ...state };
+      newState.selectorPokemon.user = battle.get.randomIndexPokemonSelector(state.team?.user);
+      newState.selectorPokemon.rival = battle.get.randomIndexPokemonSelector(state.team?.rival);
+      setState({ ...newState });
+    }
+  }, [state.team.rival]);
 
   const methods = {
+    selector: {
+      pokemon: (value, user = "rival") => {
+        if (user === "user") {
+          //console.log("SELECT", user, ":", value);
+          const newState = { ...state };
+          newState.selectorPokemon[user] = value;
+          setState(newState);
+        }
+      },
+      cardVector: (value, user = "rival") => {
+        const newState = { ...state };
+        newState.selectorCardVector[user] = value;
+        setState(newState);
+        //console.log('NewState' , newState.selectorCardVector[user])
+      },
+    },
+    changeInGame:(value)=>{
+      const newState = { ...state };
+      newState.inGame = value;
+      setState(newState);
+    },
     changePhase: (value) => {
       const newState = { ...state };
       newState.phase = value;
@@ -34,7 +120,7 @@ function page() {
     changeValidation: (value, property) => {
       const newState = { ...state };
       newState.validation[property] = value;
-      console.log("newState-validation :", newState);
+      //console.log("newState-validation :", newState);
       setState(newState);
     },
   };
@@ -45,16 +131,8 @@ function page() {
 
       // verifica si el equipo pokemon esta completo , si, ( si ) lo esta dejara pasar a la siguiente validacion , si (no) , permitira redireccionaar a Home o a login o continuar 
       // selecciona el modo de juego
-
       //! seleccion de pokemon
-      
       */}
-
-
-      {/*//! validation ModeGame */}
-      {state.validation.mode === "" ? (
-        <SelectMode globalState={globalState} methods={methods} />
-      ) : null}
 
       {/*//! validation si el equipo pokemon es muy pequenio y el usuario no quiere continuar */}
       {state.validation.team === "no" ? (
@@ -62,11 +140,26 @@ function page() {
       ) : null}
 
       {/*//! validation del tamanio del equipo pokemon */}
-      {state.validation.team < 5 ||
-      (state.validation.team !== "continue" &&
-        state.validation.team !== "no") ? (
+      {state.validation.team < 5 &&
+      state.validation.team !== "continue" &&
+      state.validation.team !== "no" ? (
         <CheckInTeam globalState={globalState} methods={methods} />
       ) : null}
+
+      {/*//! validation ModeGame */}
+      {state.validation.mode === "" ? (
+        <SelectMode globalState={globalState} methods={methods} />
+      ) : null}
+
+      {/*//! selection pokemon */}
+      {state.phase === battle.phases[1] && state.inGame === battle.inGame[0] ? (
+        <SelectPokemonTeam battleState={state} methods={methods} />
+      ) : null}
+      {/*//! componente BattleField */}
+      {state.phase === battle.phases[1] ? (
+        <BattleField battleState={state} methods={methods} />
+      ) : null}
+
     </div>
   );
 }
