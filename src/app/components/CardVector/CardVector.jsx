@@ -64,9 +64,9 @@ function CardVector({ card, index, battleState, methods }) {
           alt={`vector direction ${selectorType}`}
         />
       </div>
-      <h3>{selectorType}</h3>
-      <div>PWR : {card.power}</div>
-      <div>TYPE {card.typeAttack}</div>
+      {/* <h3>{selectorType}</h3> */}
+      <div>{card.power}</div>
+      <div>{card.typeAttack}</div>
     </div>
   );
 }

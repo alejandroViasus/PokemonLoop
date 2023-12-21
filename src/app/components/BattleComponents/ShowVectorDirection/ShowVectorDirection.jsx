@@ -1,7 +1,7 @@
 import { valuesPokemon } from "@/Assets/funcions";
 import React, { useState, useEffect } from "react";
 import pokemon from "../../../../../models/pokemon";
-import { battle } from "@/app/battle/battle";
+import { battle } from "@/app/battle/battlek";
 import { generate } from "@/Assets/funcions";
 
 function ShowVectorDirection({ battleState, user }) {

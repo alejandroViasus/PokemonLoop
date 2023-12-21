@@ -1,7 +1,7 @@
 import pokemon from "../../models/pokemon";
 import { pokemonFormat } from "./globalStateFormat";
 import { typesPokemon } from "./typesPokemon";
-
+import { battleVariables } from "@/app/battle/battle";
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -44,113 +44,10 @@ export const valuesPokemon = {
       big: { value: 100, sizeTeam: 4 },
     },
   },
-  // componentBattle: {
-  //   sizeTeam: 5,
-  //   limitSpeed: 1,
-  //   size: {
-  //     tail: 30,
-  //     max: 2.5,
-  //     scale: 50, //escala de tamanios en pixels (px)
-  //     battleField: {
-  //       margin: (dimension.width * dimension.margin) / 100,
-  //       height: dimension.height,
-  //       width: dimension.width,
-  //     },
-  //   },
-  //   id: {
-  //     pokemon: "id_pokemonUser",
-  //     rival: "id_pokemonRival",
-  //     battleField: "id_battleField",
-  //   },
-  // },
-  // componentBattle: {
-  //   time: {
-  //     turn:12000,
-  //     delay:1000,
-  //     frame: 16,
-  //   },
-  //   modes: ["PvsCPU", "PvsP", "League Pokemon"],
-  //   dificult: {
-  //     easy: {
-  //       levelDifferenceLeague: 2,
-  //       levelDifference: -2,
-  //       positive: false,
-  //       minProbability: 0,
-  //     },
-  //     medium: {
-  //       levelDifferenceLeague: 4,
-  //       levelDifference: 4,
-  //       positive: true,
-  //       minProbability: 0.5,
-  //     },
-  //     hard: {
-  //       levelDifferenceLeague: 8,
-  //       levelDifference: 8,
-  //       positive: true,
-  //       minProbability: 0.95,
-  //     },
-  //     leader: {
-  //       levelDifferenceLeague: 12,
-  //       levelDifference: 12,
-  //       positive: true,
-  //       minProbability: 0.98,
-  //     },
-  //     master: {
-  //       levelDifferenceLeague: 20,
-  //       levelDifference: 20,
-  //       positive: true,
-  //       minProbability: 1,
-  //     },
-  //   },
-  //   boleanResponse: ["Yes", "No"],
-  //   redirection: {
-  //     urlHome: { title: "Go to Home", url: "/" },
-  //     urlCards: { title: "Go to Cards", url: "/cards" },
-  //   },
-  //   typeAttack: (attack) => {
-  //     if (attack) {
-  //       return attack;
-  //     } else {
-  //       const selector = Math.random();
-  //       return selector < 0.5 ? "Normal" : "Special";
-  //     }
-  //   },
-  //   phases: {
-  //     values: ["selectorMode", "team", "selectPokemon"],
-  //   },
-  //   oponents: {
-  //     trainers: ["user", "rival"],
-  //   },
-
-  //   size: {
-  //     tail: 23,
-  //     team: 5,
-  //     cardsDirection: 3,
-  //     battlefield: {
-  //       height: 500,
-  //       width: 1000,
-  //     },
-  //     boadrCards: {
-  //       height: 200,
-  //       width: 1000,
-  //     },
-  //     cardVector:{
-  //       height: 100,
-  //       width: 100,
-  //     }
-  //   },
-  //   poverMove: {
-  //     max: 100,
-  //   },
-  //   directions: {
-  //     x: ["left", "rigth"],
-  //     y: ["up", "down"],
-  //   },
-  // },
-
+  
   componentBattle: {
     limitSpeedL: {
-      max: 50,
+      max: 20,
       min: 5,
     },
     areaBattlefield: {
@@ -161,12 +58,27 @@ export const valuesPokemon = {
     },
     groupCards: {
       size: 8,
+      shortCuts: {
+        cards: [
+          { key: "0", value: 0 },
+          { key: "1", value: 1 },
+          { key: "2", value: 2 },
+          { key: "3", value: 3 },
+          { key: "4", value: 4 },
+          { key: "5", value: 5 },
+          { key: "6", value: 6 },
+          { key: "7", value: 7 },
+          { key: "8", value: 8 },
+          { key: "9", value: 9 },
+        ],
+        endPhase: [{ key: " ", value: 9000 }],
+      },
       dimension: {
         height: 120,
         width: 80,
       },
-      maxPower: 300,
-      minPower: 80,
+      maxPower: 500,
+      minPower: 200,
     },
     size: {
       team: 5,
@@ -181,7 +93,7 @@ export const valuesPokemon = {
       },
       rival: {
         y: (1 * dimension.height) / 2,
-        x: (7 * dimension.width) / 8,
+        x: (8 * dimension.width) / 8,
         rotation: 0,
       },
     },
@@ -405,6 +317,7 @@ export const pokemonGet = {
 };
 
 export const generate = {
+
   bioma: () => {
     const biomas = Object.keys(typesPokemon);
     let selectorBioma = Math.round(Math.random() * biomas.length);
@@ -493,6 +406,16 @@ export const generate = {
     //console.log('prob',porbability, '...  level', levelRival ,user.level )
     return { levelRival: levelRival + addLevel, dificult };
   },
+  getSizePokemon:(pokemon)=>{
+    let size = pokemon.height* battleVariables.size.pokemon.scale.base
+    if(size<battleVariables.size.pokemon.scale.min){
+      size = battleVariables.size.pokemon.scale.min
+    }
+    if(size>battleVariables.size.pokemon.scale.max){
+      size= battleVariables.size.pokemon.scale.max
+    }
+    return size;
+  },
   getStat: (pokemon, typeStack) => {
     //console.log("in generate", pokemon, typeStack);
     if (pokemon !== undefined) {
@@ -532,7 +455,6 @@ export const generate = {
         ) {
           stat = valuesPokemon.componentBattle.limitSpeedL.min;
         }
-
 
         return Math.round(stat);
       }
