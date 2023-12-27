@@ -1,31 +1,327 @@
+.segure-width {
+  width: 1200px;
+}
+.percentage-100-width {
+  width: 100%;
+}
+.percentage-100-height {
+  height: 100%;
+}
+.vw100 {
+  width: 100vw;
+}
+.vh100 {
+  height: 100vh;
+}
+.text-decoration-none {
+  text-decoration: none;
+}
+.flex-all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.font-h1 {
+  font-family: "Roboto Mono", monospace;
+  font-family: "Quicksand", sans-serif;
+}
+.font-roboto {
+  font-family: "Roboto Mono", monospace;
+}
+.font-quicksand {
+  font-family: "Quicksand", sans-serif;
+}
+.border-radius-big {
+  border-radius: 16px;
+}
+@bg-blue :rgba (80,80,80,1);
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/quicksand/v31/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkKEo18E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/quicksand/v31/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkP8o18E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/quicksand/v31/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkM0o18E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/quicksand/v31/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkCEv18E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/quicksand/v31/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkBgv18E.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vuPQw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_XvqPQw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_gPqPQw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vqPQw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_7PqPQw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_AP2PQw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_Of2PQw.ttf) format('truetype');
+}
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+  font-family: "Quicksand", sans-serif;
 }
 html {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: grey;
 }
-/*stylesGeneralBattle*/
-.bg-alert-battle-initial-validation {
+body {
+  width: 100vw;
+  height: 100vh;
+}
+.content-home {
+  background-color: yellow;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.content-home .principal-details-home {
+  background-color: aqua;
+  height: 100%;
+}
+.content-sing-in {
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.content-sing-in .content-form {
+  background-color: red;
+  padding-top: 4%;
+  display: flex;
+}
+.content-sing-in .content-form .section {
+  padding-left: 4%;
+}
+.content-sing-in .content-form .section .item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.content-sing-in .content-form .section .item-form .title {
+  font-size: 35px;
+  font-weight: 300;
+}
+.content-sing-in .content-form .section .item-form .input-form {
+  color: inherit;
+  margin: 0;
+  border: none;
+  padding: 0;
+  background: none;
+  font-size: 25px;
+  font-weight: 500;
+}
+.content-sing-in .content-form .section .item-form .line {
+  height: 2px;
+}
+.content-sing-in .content-form .section .filter-type {
+  display: flex;
+  gap: 8%;
+}
+.content-sing-in .content-form .section .filter-type .title {
+  font-size: 35px;
+  font-weight: 300;
+}
+.content-navigation-menu {
+  justify-content: space-between;
+  height: 4vh;
+}
+.content-navigation-menu .content-image-navigation-menu {
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-navigation-menu .content-items-navigation {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0%;
+}
+.content-navigation-menu .button-login {
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+.content-navigation-menu .button-login .title {
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 600;
+}
+.content-navigation-menu-items {
+  width: 23%;
+  height: 100%;
+}
+.content-navigation-menu-items .title {
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+}
+.content-principal-detail-home {
+  background-color: violet;
+  height: 100%;
+  flex-direction: column;
+}
+.content-filterType .selectorType {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100vw;
   height: 100vh;
-  background-color: #505050;
+  background-color: rgba(22, 22, 22, 0.3);
+  gap: 1%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.bg-alert-battle-initial-validation .area-alert-render {
-  width: 100%;
-  height: 50%;
-  background-color: #505050;
+.content-filterType .selectorType .box {
+  height: 80%;
+  width: 80%;
+  background-color: rgba(222, 222, 222, 0.8);
+  flex-wrap: wrap;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.content-filterType .selectorType .box border .content-title {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-filterType .selectorType .box .types {
+  height: 80%;
+  width: 100%;
+  gap: 1%;
+  padding: 3%;
+  display: grid;
+  grid-template-columns: repeat(9, 2fr);
+}
+.content-filter-type-button {
+  border: 0px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.content-filter-type-button .image-bg {
+  position: absolute;
+  right: -20%;
+  top: 10%;
+  scale: 1.6;
+  transform: rotate(-5deg);
+  opacity: 0.1;
+}
+.content-filter-type-button .image-principal {
+  position: absolute;
+  bottom: 25%;
+}
+.content-filter-type-button .title-type {
+  width: 100%;
+  height: 20%;
+  position: absolute;
+  bottom: 0%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-filter-type-button .title-type .text {
+  font-size: 25px;
+  font-weight: 300;
+}
+.content-filter-type-button:hover {
+  background-color: blue;
+}
+.content-button-in {
+  background-color: aqua;
+  border: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+  height: 57px;
+  width: 108px;
+}
+.content-button-in .triangule {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid #fff;
+  /* Cambia el color según tus necesidades */
+  transform: rotate(180deg);
 }

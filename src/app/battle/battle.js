@@ -80,7 +80,7 @@ export const battleVariables = {
   timmer: {
     turn: {
       rival: 1000, //tiempo en la fase de seleccion de carta
-      user: 1000, //tiempo en la fase de seleccion de carta
+      user: 30000, //tiempo en la fase de seleccion de carta
       delay: 1000,
     },
     inMove: {
@@ -122,6 +122,82 @@ export const battleVariables = {
     hard: { rate: 0.9, value: "hard", difflevel: 8 },
     master: { rate: 0.95, value: " master", difflevel: 12 },
     legend: { rate: 0.99, value: "legend", difflevel: 16 },
+  },
+  baseExperience: {
+    winner: {
+      easy: {
+        experiencePokemon: 25,
+        experienceTrainer: 50,
+        pokeballs: 5,
+        box: 0,
+        coins: 20,
+      },
+      medium: {
+        experiencePokemon: 35,
+        experienceTrainer: 70,
+        pokeballs: 8,
+        box: 0,
+        coins: 30,
+      },
+      hard: {
+        experiencePokemon: 65,
+        experienceTrainer: 100,
+        pokeballs: 8,
+        box: 0,
+        coins: 80,
+      },
+      master: {
+        experiencePokemon: 150,
+        experienceTrainer: 200,
+        pokeballs: 10,
+        box: 0,
+        coins: 100,
+      },
+      legend: {
+        experiencePokemon: 300,
+        experienceTrainer: 200,
+        pokeballs: 15,
+        box: 0,
+        coins: 130,
+      },
+    },
+    loser: {
+      easy: {
+        experiencePokemon: 10,
+        experienceTrainer: 15,
+        pokeballs: 2,
+        box: 0,
+        coins: 5,
+      },
+      medium: {
+        experiencePokemon: 15,
+        experienceTrainer: 20,
+        pokeballs: 3,
+        box: 0,
+        coins: 10,
+      },
+      hard: {
+        experiencePokemon: 20,
+        experienceTrainer: 25,
+        pokeballs: 8,
+        box: 0,
+        coins: 15,
+      },
+      master: {
+        experiencePokemon: 50,
+        experienceTrainer: 50,
+        pokeballs: 10,
+        box: 0,
+        coins: 25,
+      },
+      legend: {
+        experiencePokemon: 100,
+        experienceTrainer: 80,
+        pokeballs: 15,
+        box: 0,
+        coins: 50,
+      },
+    },
   },
 };
 
@@ -385,13 +461,27 @@ export const assetBattle = {
             (3 * cardSelect.trainer.powerActual) /
             valuesPokemon.componentBattle.groupCards.maxPower;
 
+          const typeOfDeffense = cardSelect.typeAttack === "Normal" 
+          ?'Deffense'
+          :'SpecialDeffense'; //! 1.0 version Nueva
+          
+          const typeOfAttack = cardSelect.typeAttack === "Normal" 
+          ?'Attack'
+          :'SpecialAttack'; //! 1.1 version Nueva
+
           const defenseRival = generate.getStat(
             pokemonSelect.rival,
-            "Deffense"
+            typeOfDeffense //! 1.0 version Nueva
+            //"Deffense" //! 1.0 version Anterior
           );
 
+          
+
           const damage =
-            generate.getStat(pokemonSelect.trainer, "Attack") *
+            generate.getStat(pokemonSelect.trainer,
+              typeOfAttack //! 1.1 version Nueva
+              // "Attack"  //! 1.1 version Anterior
+              ) *
             scaleDamage4CardEnergy *
             scaleDamage4Types;
 
@@ -704,7 +794,7 @@ export const assetBattle = {
       turn: {
         timmer: 0,
         user: false,
-        looser:'',
+        loser: "",
       },
       phase: { time: 0, actual: 3, turn: 0, CountTurn: 0 },
       game: {

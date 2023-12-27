@@ -8,13 +8,13 @@ function CardVector({ card, index, battleState, methods }) {
   // console.log("battleState in cardVector......:", battleState, card);
   const type = `type${card.type}`;
   const selectorType =
-  battleState.team.user[battleState.selectorPokemon.user][type];
+    battleState.team.user[battleState.select.pokemon.user][type];
   return (
     <div
-    onClick={() => {
-      console.log("Methots: ....", battleState.selectorCardVector.user,index);
-        methods.selector.cardVector(index,'user')}
-      }
+      onClick={() => {
+        console.log("Methots: ....", battleState.select.cardVector.user, index);
+        methods.selector.cardVector(index, "user");
+      }}
       style={{
         height: `${valuesPokemon.componentBattle.groupCards.dimension.height}px`,
         width: `${valuesPokemon.componentBattle.groupCards.dimension.width}px`,

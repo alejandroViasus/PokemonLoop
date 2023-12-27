@@ -5,6 +5,7 @@ import Image from "next/image";
 //?------ COMPONENTS
 
 import FilterTypeButton from "../FilterTypeButton/FilterTypeButton";
+import FilterTypeButtonIn from "../FilterTypeButtonIn/FilterTypeButtonIn";
 
 function FilterType({ type = "None", handlerType }) {
   const initialState = {
@@ -21,13 +22,15 @@ function FilterType({ type = "None", handlerType }) {
   };
 
   const showFilter = alltypes.map((type) => {
-    return (
-      <FilterTypeButton
-      key={`typeIcon${type}`}
-        type={type}
-        handleState={handleState}
-      ></FilterTypeButton>
-    );
+    if (type !== "None") {
+      return (
+        <FilterTypeButton
+          key={`typeIcon${type}`}
+          type={type}
+          handleState={handleState}
+        ></FilterTypeButton>
+      );
+    }
   });
 
   //console.log(state);
@@ -37,14 +40,24 @@ function FilterType({ type = "None", handlerType }) {
   }, [state.type]);
 
   return (
-    <section>
+    <section className="content-filterType">
       {state.showFilter ? (
-        showFilter
+        <div className="selectorType ">
+          <div className="box border-radius-big">
+            <div className="content-title">
+              <h1 className="title">Select favorite type </h1>
+            </div>
+            <div className="types">{showFilter}</div>
+          </div>
+        </div>
       ) : (
-        <FilterTypeButton
-          type={state.type}
-          handleState={handleState}
-        ></FilterTypeButton>
+        <div>
+          {}
+          <FilterTypeButtonIn
+            type={state.type}
+            handleState={handleState}
+          ></FilterTypeButtonIn>
+        </div>
       )}
     </section>
   );

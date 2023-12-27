@@ -187,6 +187,8 @@ export const valuesPokemon = {
 };
 
 export const pokemonGet = {
+
+  
   shiny: () => {
     const tolerance = valuesPokemon.toleranceShiny;
     const value = Math.random() * tolerance;
@@ -501,6 +503,7 @@ export const generate = {
     newPokemon.trainer = trainer._id; //la data que llego del registro del nuevo usuario
     newPokemon.favorite = false;
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
+    newPokemon.experience = pokemonGet.stackLevel(levelPokemon);
     newPokemon.actualStack = 0;
     //newPokemon.level = pokemonGet.levelRival(trainer, general) || pokemonGet.level(trainer.level) + 1;
     newPokemon.level = pokemonGet.level(trainer.level) + 1;

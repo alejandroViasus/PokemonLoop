@@ -31,8 +31,19 @@ function PrincipalDetailUserHome() {
 
   //console.log(globalState);
   return (
-    <div>
-      <h1>{globalState.user.gametag}</h1>
+    <div
+      className="content-principal-detail-home 
+    percentage-100-width
+    percentage-100-height
+    flex-all-center
+
+    "
+    >
+    
+      <section className="section score">a</section>
+      <section className="section image">b</section>
+      <section className="section team">c</section>
+      {/* <h1>{globalState.user.gametag}</h1>
       <h1>{globalState.user._id}</h1>
 
       <div>
@@ -68,7 +79,7 @@ function PrincipalDetailUserHome() {
           height={sizeButtonHeight}
           style={{ width: "100%", height: "auto", objectFit: "cover" }}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

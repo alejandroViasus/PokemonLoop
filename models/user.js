@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema(
         },
         level:{
             type:Number,
-            required:true
+            required:false
         },
         league:{
             type:Number,

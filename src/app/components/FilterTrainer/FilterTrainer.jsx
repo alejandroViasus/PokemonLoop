@@ -45,7 +45,7 @@ function FilterTrainer({ trainer = "None", handlerTrainer }) {
         <FilterTrainerButton
           trainer={state.trainer}
           handleState={handleState}
-          format="vs"
+          format="image"
         ></FilterTrainerButton>
       )}
     </section>

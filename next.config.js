@@ -13,6 +13,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'images.wikidexcdn.net',
       'raw.githubusercontent.com',
+      'logodownload.org',
     ],
   },
   async headers() {

@@ -46,7 +46,7 @@ const pokemonSchema = mongoose.Schema(
 
     maxStack4level: {
       type: Number, // example (10+(ModelPokemon.level*2))
-      required: true,
+      required: false,
     },
     actualStack: {
       type: Number, // example 3
@@ -59,6 +59,10 @@ const pokemonSchema = mongoose.Schema(
     height: {
       type: Number, // example 16
       required: true,
+    },
+    level: {
+      type: Number, // example 16
+      required: false,
     },
     level: {
       type: Number, // example 16

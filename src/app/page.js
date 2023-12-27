@@ -7,11 +7,19 @@ import NavigationMenu from "./components/NavigationMenu/NavigationMenu";
 import PrincipalDetailUserHome from "./components/PrincipalDetailUserHome/PrincipalDetailUserHome";
 function page() {
   return (
-    <div>
-      <div>
+    <div
+      className="content-home 
+    percentage-100-width 
+    percentage-100-height
+    flex-all-center
+    "
+    >
+      <div className="all-percentage-100 ">
         <NavigationMenu />
       </div>
-      <div>
+      <div className="principal-details-home percentage-100-width
+      flex-all-center 
+      ">
         <PrincipalDetailUserHome />
       </div>
     </div>

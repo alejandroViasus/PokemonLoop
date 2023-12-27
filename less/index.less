@@ -1,17 +1,36 @@
 //!-------------------------------------- Variables
 
 @import url("./variables.less");
-*{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+  font-family: "Quicksand", sans-serif;
+ // font-weight: 600;
 }
 
-html{
-    width: 100%;
-    height: 100%;
-    background-color: grey;
+html {
+  width: 100vw;
+  height: 100vh;
+  background-color: grey;
 }
+body {
+  width: 100vw;
+  height: 100vh;
+  //background-color: red;
+}
+//!pages
+@import url("../src/app/styless.less");
+@import url("../src//app/sign-up/styles.less");
 
+//!components
+@import url("../src/app/components/NavigationMenu/style.less");
+@import url("../src/app/components/NavigationMenuItems/styles.less");
+@import url("../src/app/components/PrincipalDetailUserHome/styles.less");
+@import url("../src/app/components/BattleComponents/stylesGeneralBattle.less");
+@import url('../src/app/components/FilterType/styles.less');
+@import url('../src/app/components/FilterTypeButton/styles.less');
+@import url('../src/app/components/FilterTypeButtonIn/styless.less');
 
-/*stylesGeneralBattle*/@import url('../src/app/components/BattleComponents/stylesGeneralBattle.less'); 

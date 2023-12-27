@@ -8,6 +8,7 @@ import { generate } from "@/Assets/funcions";
 import BattleField from "../components/Battle/BattleField/BattleField";
 import BoxSelectPokemon from "../components/Battle/BoxSelectPokemon/BoxSelectPokemon";
 import EndGame from "../components/Battle/EndGame/EndGame";
+import ShowCardsVector from "../components/Battle/ShowCardsVector/ShowCardsVector";
 
 function Page() {
   const globalState = useSelector((state) => state.valueState);
@@ -87,12 +88,13 @@ function Page() {
 
   useEffect(() => {
     if (
-      state.phase.actual === 5
-      &&
-       state.team.user[state.select.pokemon.user].heald > 0 &&
-       state.team.rival[state.select.pokemon.rival].heald > 0
+      state.phase.actual === 5 &&
+      state.team.user[state.select.pokemon.user].heald > 0 &&
+      state.team.rival[state.select.pokemon.rival].heald > 0
     ) {
       const trainerTurn = state.turn.user ? "user" : "rival";
+
+      
       const cardSelected =
         state.vectorCards[trainerTurn][state.select.cardVector[trainerTurn]];
 
@@ -113,14 +115,13 @@ function Page() {
         console.log(newState, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         setState(newState);
       }
+    } else {
+      const newState = { ...state };
+      newState.phase.actual = 3;
+      (newState.position.user = assetBattle.get.initalPosition("user")),
+        (newState.position.rival = assetBattle.get.initalPosition("rival")),
+        setState(newState);
     }
-    else {
-       const newState = { ...state };
-       newState.phase.actual = 3;
-       newState.position.user=assetBattle.get.initalPosition("user"),
-       newState.position.rival=assetBattle.get.initalPosition("rival"),
-       setState(newState);
-     }
   }, [
     state.position.rival.pokemon.x,
     state.position.rival.pokemon.y,
@@ -135,12 +136,27 @@ function Page() {
         state.select.pokemon[trainer] = index;
         return setState(newState);
       },
+      cardVector: (index, trainer = "user") => {
+        const newState={...state}
+        // const newState = {
+        //   ...state,
+        //   select: {
+        //     ...state.select,
+        //     cardVector: {
+        //       ...state.select.cardVector,
+        //       user: index,
+        //     },
+        //   },
+        // };
+        newState.select.cardVector[trainer] = index;
+        return setState(newState);
+      },
     },
-    changeActualPhase: (value,trainer) => {
+    changeActualPhase: (value, trainer) => {
       const newState = { ...state };
-      console.log('TRAINER !!!!!!!!!!!!!!!!!' , trainer)
-      if(trainer!==undefined){
-        newState.turn.loser=trainer      
+      //console.log("TRAINER !!!!!!!!!!!!!!!!!", trainer);
+      if (trainer !== undefined) {
+        newState.turn.loser = trainer;
       }
       newState.phase.actual = value;
       return setState(newState);
@@ -174,6 +190,10 @@ function Page() {
           ].powerActual
         }
       </h1>
+      <button onClick={() => methods.changeActualPhase(0, "user")}>
+        WinTrainer
+      </button>
+
       <h1>
         {" "}
         collide {!state.turn.user ? "user" : "rival"}{" "}
@@ -221,12 +241,15 @@ function Page() {
         reduce Move
       </button>
 
-      {state.phase.actual === 0 ? <EndGame  battleState={state}/> : null}
+      {state.phase.actual === 0 ? <EndGame battleState={state} /> : null}
 
       <BattleField battleState={state} />
 
       {state.phase.actual === 3 ? (
         <BoxSelectPokemon battleState={state} methods={methods} />
+      ) : null}
+      {state.phase.actual === 4 && state.turn.user ? (
+        <ShowCardsVector battleState={state} methods={methods} />
       ) : null}
 
       <div>

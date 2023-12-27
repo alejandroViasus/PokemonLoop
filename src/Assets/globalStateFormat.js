@@ -36,6 +36,7 @@ export const pokemonFormat = {
   maxStack4level: undefined, //!----number
   actualStack: undefined, //!----number
   level: undefined, //!----number
+  experience:undefined,
   //other
   weight: undefined, //!----number
   height: undefined, //!----number

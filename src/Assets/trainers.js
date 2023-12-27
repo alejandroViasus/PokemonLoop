@@ -1,3 +1,240 @@
+
+
+import iconNone from "../../public/Assets/icons/type-none.svg";
+import iconArtist from "../../public/Assets/trainers/cards/body/artist.svg";
+import iconBugCatcher from "../../public/Assets/trainers/cards/body/bugCatcher.svg";
+import iconBugEnthusiast from "../../public/Assets/trainers/cards/body/bugEnthusiast.svg";
+import iconCyclist from "../../public/Assets/trainers/cards/body/cyclist.svg";
+import iconDiver from "../../public/Assets/trainers/cards/body/diver.svg";
+import iconGeologist from "../../public/Assets/trainers/cards/body/geologist.svg";
+import iconkindler from "../../public/Assets/trainers/cards/body/kindler.svg";
+import iconLittleBoy from "../../public/Assets/trainers/cards/body/littleBoy.svg";
+import iconLittleGirl from "../../public/Assets/trainers/cards/body/littleGirl.svg";
+import iconMacarra from "../../public/Assets/trainers/cards/body/macarra.svg";
+import iconMedium from "../../public/Assets/trainers/cards/body/medium.svg";
+import iconMissAutumn from "../../public/Assets/trainers/cards/body/missAutumn.svg";
+import iconMissSpring from "../../public/Assets/trainers/cards/body/missSpring.svg";
+import iconMissSummer from "../../public/Assets/trainers/cards/body/missSummer.svg";
+import iconMissWinter from "../../public/Assets/trainers/cards/body/missWinter.svg";
+import iconMountaineer from "../../public/Assets/trainers/cards/body/mountaineer.svg";
+import iconPokeCollector from "../../public/Assets/trainers/cards/body/pokeCollector.svg";
+import iconPokeFan from "../../public/Assets/trainers/cards/body/PokeFan.svg";
+import iconPokemonTaming from "../../public/Assets/trainers/cards/body/PokemonTaming.svg";
+import iconPrettyGirl from "../../public/Assets/trainers/cards/body/prettyGirl.svg";
+import iconRunner from "../../public/Assets/trainers/cards/body/runner.svg";
+import iconScientist from "../../public/Assets/trainers/cards/body/scientist.svg";
+import iconScientistGirl from "../../public/Assets/trainers/cards/body/scientistGirl.svg";
+import iconSwimmer from "../../public/Assets/trainers/cards/body/swimmer.svg";
+import iconTrainerPokemon from "../../public/Assets/trainers/cards/body/trainerPokemon.svg";
+import iconTurist from "../../public/Assets/trainers/cards/body/turist.svg";
+import iconWitch from "../../public/Assets/trainers/cards/body/witch.svg";
+import iconWomanDiver from "../../public/Assets/trainers/cards/body/womanDiver.svg";
+import iconYoungBoy from "../../public/Assets/trainers/cards/body/youngBoy.svg";
+import iconYoungGirl from "../../public/Assets/trainers/cards/body/youngGirl.svg";
+
+import iconArtistBattle from "../../public/Assets/trainers/cards/body/artistBattle.svg";
+import iconBugCatcherBattle from "../../public/Assets/trainers/cards/body/bugCatcherBattle.svg";
+import iconBugEnthusiastBattle from "../../public/Assets/trainers/cards/body/bugEnthusiastBattle.svg";
+import iconCyclistBattle from "../../public/Assets/trainers/cards/body/cyclistBattle.svg";
+import iconDiverBattle from "../../public/Assets/trainers/cards/body/diverBattle.svg";
+import iconGeologistBattle from "../../public/Assets/trainers/cards/body/geologistBattle.svg";
+import iconkindlerBattle from "../../public/Assets/trainers/cards/body/kindlerBattle.svg";
+import iconLittleBoyBattle from "../../public/Assets/trainers/cards/body/littleBoyBattle.svg";
+import iconLittleGirlBattle from "../../public/Assets/trainers/cards/body/littleGirlBattle.svg";
+import iconMacarraBattle from "../../public/Assets/trainers/cards/body/macarraBattle.svg";
+import iconMediumBattle from "../../public/Assets/trainers/cards/body/mediumBattle.svg";
+import iconMissAutumBattle from "../../public/Assets/trainers/cards/body/missAutumnBattle.svg";
+import iconMissSpringBattle from "../../public/Assets/trainers/cards/body/missSpringBattle.svg";
+import iconMissSummerBattle from "../../public/Assets/trainers/cards/body/missSummerBattle.svg";
+import iconMissWinterBattle from "../../public/Assets/trainers/cards/body/missWinterBattle.svg";
+import iconMountaineerBattle from "../../public/Assets/trainers/cards/body/mountaineerBattle.svg";
+import iconPokeCollectorBattle from "../../public/Assets/trainers/cards/body/pokeCollectorBattle.svg";
+import iconPokeFanBattle from "../../public/Assets/trainers/cards/body/PokeFanBattle.svg";
+import iconPokemonTamingBattle from "../../public/Assets/trainers/cards/body/PokemonTamingBattle.svg";
+import iconPrettyGirlBattle from "../../public/Assets/trainers/cards/body/prettyGirlBattle.svg";
+import iconRunnerBattle from "../../public/Assets/trainers/cards/body/runnerBattle.svg";
+import iconScientistBattle from "../../public/Assets/trainers/cards/body/scientistBattle.svg";
+import iconScientistGirlBattle from "../../public/Assets/trainers/cards/body/scientistGirlBattle.svg";
+import iconSwimmerBattle from "../../public/Assets/trainers/cards/body/swimmerBattle.svg";
+import iconTrainerPokemonBattle from "../../public/Assets/trainers/cards/body/trainerPokemonBattle.svg";
+import iconTuristBattle from "../../public/Assets/trainers/cards/body/turistBattle.svg";
+import iconWitchBattle from "../../public/Assets/trainers/cards/body/witchBattle.svg";
+import iconWomanDiverBattle from "../../public/Assets/trainers/cards/body/womanDiverBattle.svg";
+import iconYoungBoyBattle from "../../public/Assets/trainers/cards/body/youngBoyBattle.svg";
+import iconYoungGirlBattle from "../../public/Assets/trainers/cards/body/youngGirlBattle.svg";
+
+export const trainers = {
+  None: {
+    typePreference: "None",
+    image: iconNone,
+    battle: iconNone,
+  },
+  Artist: {
+    typePreference: "None",
+    image: iconArtist,
+    battle: iconArtistBattle,
+  },
+  BugCatcher: {
+    typePreference: "None",
+    image: iconBugCatcher,
+    battle: iconBugCatcherBattle,
+  },
+  BugEnthusiast: {
+    typePreference: "None",
+    image: iconBugEnthusiast,
+    battle: iconBugEnthusiastBattle,
+  },
+  Cyclist: {
+    typePreference: "None",
+    image: iconCyclist,
+    battle: iconCyclistBattle,
+  },
+  Diver: {
+    typePreference: "None",
+    image: iconDiver,
+    battle: iconDiverBattle,
+  },
+  Geologist: {
+    typePreference: "None",
+    image: iconGeologist,
+    battle: iconGeologistBattle,
+  },
+  Kindler: {
+    typePreference: "None",
+    image: iconkindler,
+    battle: iconkindlerBattle,
+  },
+  LittleBoy: {
+    typePreference: "None",
+    image: iconLittleBoy,
+    battle: iconLittleBoyBattle,
+  },
+  LittleGirl: {
+    typePreference: "None",
+    image: iconLittleGirl,
+    battle: iconLittleGirlBattle,
+  },
+  Macarra: {
+    typePreference: "None",
+    image: iconMacarra,
+    battle: iconMacarraBattle,
+  },
+  Medium: {
+    typePreference: "None",
+    image: iconMedium,
+    battle: iconMediumBattle,
+  },
+  MissAutumn: {
+    typePreference: "None",
+    image: iconMissAutumn,
+    battle: iconMissAutumBattle,
+  },
+  MissSpring: {
+    typePreference: "None",
+    image: iconMissSpring,
+    battle: iconMissSpringBattle,
+  },
+  MissSummer: {
+    typePreference: "None",
+    image: iconMissSummer,
+    battle: iconMissSummerBattle,
+  },
+  MisWinter: {
+    typePreference: "None",
+    image: iconMissWinter,
+    battle: iconMissWinterBattle,
+  },
+  Mountaineer: {
+    typePreference: "None",
+    image: iconMountaineer,
+    battle: iconMountaineerBattle,
+  },
+  PokeCollector: {
+    typePreference: "None",
+    image: iconPokeCollector,
+    battle: iconPokeCollectorBattle,
+  },
+  PokeFan: {
+    typePreference: "None",
+    image: iconPokeFan,
+    battle: iconPokeFanBattle,
+  },
+  PokemonTaming: {
+    typePreference: "None",
+    image: iconPokemonTaming,
+    battle: iconPokemonTamingBattle,
+  },
+  PrettyGirl: {
+    typePreference: "None",
+    image: iconPrettyGirl,
+    battle: iconPrettyGirlBattle,
+  },
+  Runner: {
+    typePreference: "None",
+    image: iconRunner,
+    battle: iconRunnerBattle,
+  },
+  Scientist: {
+    typePreference: "None",
+    image: iconScientist,
+    battle: iconScientistBattle,
+  },
+  ScientistGirl: {
+    typePreference: "None",
+    image: iconScientistGirl,
+    battle: iconScientistGirlBattle,
+  },
+  Swimmer: {
+    typePreference: "None",
+    image: iconSwimmer,
+    battle: iconSwimmerBattle,
+  },
+  TrainerPokemon: {
+    typePreference: "None",
+    image: iconTrainerPokemon,
+    battle: iconTrainerPokemonBattle,
+  },
+  Turist: {
+    typePreference: "None",
+    image: iconTurist,
+    battle: iconTuristBattle,
+  },
+  Witch: {
+    typePreference: "None",
+    image: iconWitch,
+    battle: iconWitchBattle,
+  },
+  WomanDiver: {
+    typePreference: "None",
+    image: iconWomanDiver,
+    battle: iconWomanDiverBattle,
+  },
+  YoungBoy: {
+    typePreference: "None",
+    image: iconYoungBoy,
+    battle: iconYoungBoyBattle,
+  },
+  iconYoungGirl: {
+    typePreference: "None",
+    image: iconYoungGirl,
+    battle: iconYoungGirlBattle,
+  },
+  
+
+};
+const example = {
+  A: {
+    typePreference: "Normal",
+    image: "",
+    mini: "",
+    vs: "",
+  },
+};
+
+
+
+/*
+
 import iconNone from "../../public/Assets/icons/type-none.svg";
 
 export const trainers = {
@@ -70,6 +307,7 @@ export const trainers = {
     vs: "https://images.wikidexcdn.net/mwuploads/wikidex/3/3e/latest/20141020164252/VS_M%C3%A9dium.png",
   },
 };
+
 const example = {
   A: {
     typePreference: "Normal",
@@ -78,3 +316,4 @@ const example = {
     vs: "",
   },
 };
+*/

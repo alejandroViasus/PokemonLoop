@@ -3,12 +3,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { updateTeam, updateUser } from "@/store/slice";
-import { useRouter } from "next/navigation";
+import { useRouter , usePathname} from "next/navigation";
 import { navigationItems } from "@/Assets/navigationItems";
 import Link from "next/link";
+import Image from "next/image";
 
 //? import Components
 import NavigationMenuItems from "../NavigationMenuItems/NavigationMenuItems";
+import { typesPokemon } from "@/Assets/typesPokemon";
 
 //? {
 //?user:{
@@ -30,10 +32,11 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   // creacion de variables
   const urlSingUp = "/sign-up";
   const router = useRouter();
+  const pathname = usePathname()
   const dispatch = useDispatch();
   const { user, error, isLoading } = useUser();
   const globalState = useSelector((state) => state.valueState);
-  //console.log(globalState);
+  console.log(pathname);
 
   //! useEffects
   useEffect(() => {
@@ -79,7 +82,7 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
         });
     }
   }, [globalState.version]);
-  
+
   useEffect(() => {
     //console.log("desde NavigationManu", globalState);
   }, [globalState.teamUser]);
@@ -87,32 +90,76 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   const keyNavigationItems = Object.keys(navigationItems);
 
   const menuNavigation = keyNavigationItems.map((item) => {
+    console.log(navigationItems[item].route(), navigationItems[item].route().includes(pathname))
     return (
       <NavigationMenuItems
         key={navigationItems[item].route(globalState.user._id)}
         item={navigationItems[item]}
         id={globalState.user._id}
+        theme ={[globalState.user.theme]}
       />
     );
   });
 
   return (
-    <section>
-      <div>
-        <h3>{globalState.user.email}</h3>
+    <section
+      className="
+      content-navigation-menu
+      vw100 
+      flex-all-center
+    "
+      style={{
+        backgroundColor: typesPokemon[globalState.user.theme].colors.primary,
+      }}
+    >
+      <div className="content-image-navigation-menu">
+        {/* <h3>{globalState.user.email}</h3>
         <h3>lvl {globalState.user.level}</h3>
         <h3>exp: {globalState.user.experience}</h3>
         <h3>pokeballs: {globalState.user.pokeballs}</h3>
         <h3>box: {globalState.user.box}</h3>
-        <h3>coins: {globalState.user.coins}</h3>
+        <h3>coins: {globalState.user.coins}</h3> */}
+
+        <Image
+          src={
+            "https://logodownload.org/wp-content/uploads/2017/08/pokemon-logo.png"
+          }
+          height={50}
+          width={150}
+          alt="logo Pokemon"
+          style={{
+            height: "80%",
+            width: "auto",
+          }}
+        />
+      </div>
+      {globalState.user._id !== "0" ? (
+        <div className="content-items-navigation">{menuNavigation}</div>
+      ) : null}
+
+      <div className="button-login">
         {globalState.user._id === "0" ? (
-          <Link href="/api/auth/login">Login</Link>
+          <Link
+            className="title"
+            href="/api/auth/login"
+            style={{
+              color: typesPokemon[globalState.user.theme].colors.text,
+            }}
+          >
+            <h3>LOGIN</h3>
+          </Link>
         ) : (
-          <Link href="/api/auth/logout">Logout</Link>
+          <Link
+            className="title"
+            href="/api/auth/logout"
+            style={{
+              color: typesPokemon[globalState.user.theme].colors.text,
+            }}
+          >
+            <h3>LOGOUT</h3>
+          </Link>
         )}
       </div>
-
-      {globalState.user._id !== "0" ? menuNavigation : null}
     </section>
   );
 }
