@@ -14,9 +14,16 @@ import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
 import FilterType from "../components/FilterType/FilterType";
 import FilterTrainer from "../components/FilterTrainer/FilterTrainer";
 import SuccesLogin from "../components/Succes-login/SuccesLogin";
+import CardMini from "../components/CardMini/CardMini";
+
 import FilterInitialPokemon from "../components/FilterInitialPokemon/FilterInitialPokemon";
 import FilterInitialPokemonCard from "../components/FilterInitialPokemonCard/FilterInitialPokemonCard";
+import CardTrainerShow from "../components/CardTrainerShow/CardTrainerShow";
+
 import { typesPokemon } from "@/Assets/typesPokemon";
+import { trainers } from "@/Assets/trainers";
+
+import Image from "next/image";
 
 function Page() {
   const dispatch = useDispatch();
@@ -26,11 +33,13 @@ function Page() {
 
   const globalState = useSelector((state) => state.valueState);
 
+  console.log(globalState,'.........................')
+
   const keyRegionPokemon = Object.keys(valuesPokemon.inicialesPokemon);
 
   const [initialP, setInitialP] = useState({
     region: keyRegionPokemon[0],
-    indexPokemon: 2,
+    indexPokemon: 1,
   });
 
   const initialState = {
@@ -38,6 +47,7 @@ function Page() {
     name: user?.name || `trainer${Math.round(Math.random() * 1000)}`,
     type: "None",
     trainer: "None",
+    indexTrainer: 0,
     initialPokemon:
       valuesPokemon.inicialesPokemon[initialP.region][initialP.indexPokemon],
     login: false,
@@ -64,7 +74,13 @@ function Page() {
   };
 
   const handlerBasicState = (e) => {
-    return setState({ ...state, [e.target.name]: e.target.value });
+    if (e.target.name === "name") {
+      if (e.target.value.length <= 20) {
+        return setState({ ...state, [e.target.name]: e.target.value });
+      }
+    } else {
+      return setState({ ...state, [e.target.name]: e.target.value });
+    }
   };
 
   const handlerType = (value) => {
@@ -168,6 +184,73 @@ function Page() {
   }, [state.email]);
 
   //console.log("STATE SIGN IN ", state);
+
+  const styleInput = {
+    color: `${typesPokemon[state.type].colors.textDark}`,
+    backgroundColor: `${typesPokemon[state.type].colors.secondary}`,
+  };
+
+  const styleSection = {
+    backgroundColor: `${typesPokemon[state.type].colors.secondary}`,
+  };
+
+  const styleBoxSection = {
+    width: "80%",
+    height: "90%",
+    //backgroundColor: `${typesPokemon[state.type].colors.background}`,
+    marginBottom: `10%`,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "",
+    alingItem: "center",
+    gap: "30px",
+  };
+
+  const styleContentBox = {
+    width: "100%",
+
+    display: "flex",
+    alingItem: "center",
+    justifyContent: "flex-start",
+    gap: "1px",
+
+    //backgroundColor: "blue",
+  };
+
+  const styleTitleText = {
+    alignSelf: "center",
+    gap: "16px",
+    color: `${typesPokemon[state.type].colors.textWhite}`,
+    fontWeight: 400,
+    justifyContent: "space-between",
+  };
+
+  const styleSubmitSection = {
+    width: "80%",
+    height: "4%",
+    //backgroundColor: `${typesPokemon[state.type].colors.background}`,
+    marginBottom: `10%`,
+  };
+
+  const styleSubmitButton = {
+    width: "100%",
+    padding: "15px",
+    backgroundColor: `${typesPokemon[state.type].colors.quaternary}`,
+    color: `${typesPokemon[state.type].colors.textWhite}`,
+
+    opacity:
+      state.email === "" ||
+      state.type === "None" ||
+      state.trainer === "None" ||
+      state.name.length < 4
+        ? "0.3"
+        : "1",
+  };
+
+  const styleImageTrainer = {
+    //backgroundColor:'red',
+  };
+
   return (
     <div className="content-sing-in vw100 vh100  flex-all-center">
       <NavigationMenu />
@@ -179,116 +262,247 @@ function Page() {
           style={{
             backgroundColor: `${typesPokemon[state.type].colors.background}`,
           }}
-          className="content-form segure-width 
+          className="content-form 
+          segure-width 
           percentage-100-height
           flex-all-center "
           onSubmit={(e) => e.preventDefault()}
         >
-          <section className="section  percentage-100-height percentage-100-width">
-            <div className="item-form percentage-100-width"
-             style={{
-              backgroundColor: `${typesPokemon[state.type].colors.primary}`,
+          <h1
+            className="font-button-in title font-quicksand"
+            style={{
+              color: `${typesPokemon[state.type].colors.primary}`,
+              fontSize: "30px",
+              margin: "0px",
+              padding: "0px",
             }}
-            >
-              <h3
-                className="title percentage-100-width font-quicksand"
-                style={{
-                  color: `${typesPokemon[state.type].colors.textWhite}`,
-                }}
-              >
-                {" "}
-                gameTag
-              </h3>
-              <input
-                style={{
-                  color: `${typesPokemon[state.type].colors.textDark}`,
-                }}
-                className="input-form font-quicksand"
-                type="text"
-                value={state.name}
-                name="name"
-                onChange={handlerBasicState}
-              />
-              <div
-                className="line percentage-100-width"
-                style={{
-                  backgroundColor: `${typesPokemon[state.type].colors.primary}`,
-                }}
-              ></div>
-            </div>
-            <div className="item-form percentage-100-width"
-             style={{
-              backgroundColor: `${typesPokemon[state.type].colors.secondary}`,
-            }}
-            >
-              <h3
-                className="title percentage-100-width font-quicksand"
-                style={{
-                  color: `${typesPokemon[state.type].colors.textWhite}`,
-                }}
-              >
-                {" "}
-                e-mail
-              </h3>
-              {state.email !== "" ? (
-                <p
-                  style={{
-                    color: `${typesPokemon[state.type].colors.textDark}`,
-                  }}
-                  className="input-form font-quicksand"
-                >
-                  {" "}
-                  {state.email}
-                </p>
-              ) : null}
-              <div
-                className="line percentage-100-width"
-                style={{
-                  backgroundColor: `${typesPokemon[state.type].colors.primary}`,
-                }}
-              ></div>
-            </div>
-          </section>
+          >
+            New Trainer
+          </h1>
 
-          <section className="section  percentage-100-height percentage-100-width">
-            <div
-              className="filter-type"
+          <div className="content-inputs  flex-all-center gap-big">
+            <section
+              className="
+            content-section-input
+            border-radius-big
+            flex-all-center 
+            "
               style={{
+                backgroundColor: `${typesPokemon[state.type].colors.primary}`,
+              }}
+            >
+              <div className="input flex-all-center ">
+                <h3
+                  className="title-x  percentage-100-width font-quicksand"
+                  style={styleTitleText}
+                >
+                  gameTag
+                </h3>
+                <input
+                  style={styleInput}
+                  className="
+                  border-radius-big
+                  input-form 
+                  percentage-100-width 
+                  font-quicksand
+                  "
+                  type="text"
+                  value={state.name}
+                  name="name"
+                  onChange={handlerBasicState}
+                />
+              </div>
+              <div className="input flex-all-center ">
+                <h3
+                  className="title-x percentage-100-width font-quicksand"
+                  style={styleTitleText}
+                >
+                  e-mail
+                </h3>
+
+                {state.email !== "" ? (
+                  <p
+                    style={styleInput}
+                    className="
+                  border-radius-big
+                  input-form 
+                  percentage-100-width 
+                  font-quicksand
+                  overflow-hidden
+                  "
+                  >
+                    {state.email}
+                  </p>
+                ) : (
+                  <div
+                    style={styleInput}
+                    className="
+                border-radius-big
+                input-form 
+                percentage-100-width 
+                font-quicksand
+                flex-all-center
+                "
+                  >
+                    <p style={{ color: "red" }}>
+                      validacion fallida , vuelve al{" "}
+                      <button onClick={() => router.push(`${urlHome}`)}>
+                        HOME
+                      </button>{" "}
+                    </p>
+                  </div>
+                )}
+              </div>
+              {/*//!----------------------------------------------------- boxSection */}
+              <div style={styleBoxSection}>
+                {/*//!----------------------------------------------------- contentBox */}
+                <div style={styleContentBox}>
+                  <h3
+                    className="title-x percentage-100-width font-quicksand"
+                    style={styleTitleText}
+                  >
+                    Theme
+                  </h3>
+                  <FilterType
+                    type={state.type}
+                    handlerType={handlerType}
+                  ></FilterType>
+                </div>
+                <div
+                  className="
+                border-radius-big
+                input-form 
+                percentage-100-width 
+                font-quicksand
+                flex-all-center
+                "
+                  style={styleContentBox}
+                >
+                  <h3
+                    className="title-x percentage-100-width font-quicksand"
+                    style={styleTitleText}
+                  >
+                    Trainer
+                  </h3>
+                  <FilterTrainer
+                    trainer={state.trainer}
+                    handlerTrainer={handlerTrainer}
+                    type={state.type}
+                  />
+                </div>
+                <div
+                  style={{
+                    //backgroundColor: "green",
+                    height: "100%",
+                    width: "100%",
+                    gap: "16px",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <h3
+                    className="title-x percentage-100-width font-quicksand
+                    flex-all-center
+                    
+                    "
+                    style={styleTitleText}
+                  >
+                    Initial Pokemon
+                    <FilterInitialPokemon
+                      theme={state.type}
+                      stateP={initialP}
+                      handlerInitialRegion={handlerInitialRegion}
+                      handlerInitialIndexPokemon={handlerInitialIndexPokemon}
+                    />
+                  </h3>
+
+                  <div
+                    className="
+                    border-radius-big
+                    flex-all-center
+                    "
+                    style={{
+                      backgroundColor: `${
+                        typesPokemon[state.type].colors.secondary
+                      }`,
+                      height: "100%",
+                      width: "100%",
+                      display: "flex",
+                      gap: "32px",
+                    }}
+                  >
+                    {valuesPokemon.inicialesPokemon[initialP.region].map(
+                      (pokemon) => {
+                        let exibition = true;
+                        if (state.initialPokemon == pokemon) {
+                          exibition = false;
+                        }
+                       
+                        return (
+                          <CardMini
+                            exibicion={exibition}
+                            key={`pokedexPokemonNo${pokemon}`}
+                            pokedex={pokemon}
+                            handlerInitialIndexPokemon={
+                              handlerInitialIndexPokemon
+                            }
+                            theme={state.type}
+                          />
+                        );
+                      }
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="flex-all-center" style={styleSubmitSection}>
+                <button
+                  style={styleSubmitButton}
+                  className="font-button-in border-radius-mid none-styles-button hover-scale"
+                  disabled={
+                    state.email === "" ||
+                    state.trainer === "None" ||
+                    state.name.length < 4
+                  }
+                  onClick={submit}
+                >
+                  Create Profile
+                </button>
+              </div>
+            </section>
+            <div
+              className="content-section-input
+            border-radius-big
+            flex-all-center 
+            overflow-hidden
+            "
+              style={{
+                flexDirection: "column",
                 backgroundColor: `${typesPokemon[state.type].colors.secondary}`,
               }}
             >
-              <h3
-                className="title font-quicksand"
-                style={{ color: `${typesPokemon[state.type].colors.quaternary}` }}
-              >
-                type {`( ${state.type} )`}
-              </h3>
-              <FilterType
-                type={state.type}
-                handlerType={handlerType}
-              ></FilterType>
-            </div>
-            <div className="filter-type"
-             style={{
-              backgroundColor: `${typesPokemon[state.type].colors.primary}`,
-            }}
-            >
-              <h1
-                className="title font-quicksand"
-                style={{
-                  color: `${typesPokemon[state.type].colors.tertiary}`,
-                }}
-              >
-                trainer {`( ${state.trainer} )`}
-              </h1>
-              <FilterTrainer
-                trainer={state.trainer}
-                handlerTrainer={handlerTrainer}
-              />
-            </div>
-          </section>
+              <h1 className="font-button-in"> trainer Card</h1>
 
-          <div>
+              <CardTrainerShow localState={state} />
+
+              {/* <h1
+              className="font-button-in"
+              >
+              {state.name}
+              </h1>
+              
+                <Image style={styleImageTrainer} src={trainers[state.trainer].image} width={550} height={550} alt={`image Trainer ${state.trainer}`}/> */}
+            </div>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}
+
+export default Page;
+
+{
+  /* <div>
             <div
               style={{
                 height: "80px",
@@ -357,10 +571,13 @@ function Page() {
               }}
             >
               BG
-            </div>
+            </div> 
           </div>
+            */
+}
 
-          {/* <div className="section percentage-100-height">
+{
+  /* <div className="section percentage-100-height">
            
            
           
@@ -395,9 +612,7 @@ function Page() {
             })}
           </dir>
 
-          {state.email === "" ? (
-            <h3>correo invalido , vuelve al menu principal</h3>
-          ) : null}
+         v
           <button
             disabled={
               state.email === "" ||
@@ -408,11 +623,5 @@ function Page() {
           >
             {" "}
             Create Profile{" "}
-          </button> */}
-        </form>
-      )}
-    </div>
-  );
+          </button> */
 }
-
-export default Page;

@@ -70,158 +70,158 @@ export const trainers = {
     battle: iconNone,
   },
   Artist: {
-    typePreference: "None",
+    typePreference: "Psychic",
     image: iconArtist,
     battle: iconArtistBattle,
   },
   BugCatcher: {
-    typePreference: "None",
+    typePreference: "Bug",
     image: iconBugCatcher,
     battle: iconBugCatcherBattle,
   },
   BugEnthusiast: {
-    typePreference: "None",
+    typePreference: "Bug",
     image: iconBugEnthusiast,
     battle: iconBugEnthusiastBattle,
   },
   Cyclist: {
-    typePreference: "None",
+    typePreference: "Fighting",
     image: iconCyclist,
     battle: iconCyclistBattle,
   },
   Diver: {
-    typePreference: "None",
+    typePreference: "Water",
     image: iconDiver,
     battle: iconDiverBattle,
   },
   Geologist: {
-    typePreference: "None",
+    typePreference: "Rock",
     image: iconGeologist,
     battle: iconGeologistBattle,
   },
   Kindler: {
-    typePreference: "None",
+    typePreference: "Fire",
     image: iconkindler,
     battle: iconkindlerBattle,
   },
   LittleBoy: {
-    typePreference: "None",
+    typePreference: "Normal",
     image: iconLittleBoy,
     battle: iconLittleBoyBattle,
   },
   LittleGirl: {
-    typePreference: "None",
+    typePreference: "Normal",
     image: iconLittleGirl,
     battle: iconLittleGirlBattle,
   },
   Macarra: {
-    typePreference: "None",
+    typePreference: "Dark",
     image: iconMacarra,
     battle: iconMacarraBattle,
   },
   Medium: {
-    typePreference: "None",
+    typePreference: "Psychic",
     image: iconMedium,
     battle: iconMediumBattle,
   },
   MissAutumn: {
-    typePreference: "None",
+    typePreference: "Flying",
     image: iconMissAutumn,
     battle: iconMissAutumBattle,
   },
   MissSpring: {
-    typePreference: "None",
+    typePreference: "Grass",
     image: iconMissSpring,
     battle: iconMissSpringBattle,
   },
   MissSummer: {
-    typePreference: "None",
+    typePreference: "Water",
     image: iconMissSummer,
     battle: iconMissSummerBattle,
   },
   MisWinter: {
-    typePreference: "None",
+    typePreference: "Ice",
     image: iconMissWinter,
     battle: iconMissWinterBattle,
   },
   Mountaineer: {
-    typePreference: "None",
+    typePreference: "Ground",
     image: iconMountaineer,
     battle: iconMountaineerBattle,
   },
+  
   PokeCollector: {
-    typePreference: "None",
+    typePreference: "Normal",
     image: iconPokeCollector,
     battle: iconPokeCollectorBattle,
   },
   PokeFan: {
-    typePreference: "None",
+    typePreference: "Fire",
     image: iconPokeFan,
     battle: iconPokeFanBattle,
   },
   PokemonTaming: {
-    typePreference: "None",
+    typePreference: "Dragon",
     image: iconPokemonTaming,
     battle: iconPokemonTamingBattle,
   },
   PrettyGirl: {
-    typePreference: "None",
+    typePreference: "Fairy",
     image: iconPrettyGirl,
     battle: iconPrettyGirlBattle,
   },
   Runner: {
-    typePreference: "None",
+    typePreference: "Electric",
     image: iconRunner,
     battle: iconRunnerBattle,
   },
   Scientist: {
-    typePreference: "None",
+    typePreference: "Ghost",
     image: iconScientist,
     battle: iconScientistBattle,
   },
   ScientistGirl: {
-    typePreference: "None",
+    typePreference: "Fairy",
     image: iconScientistGirl,
     battle: iconScientistGirlBattle,
   },
   Swimmer: {
-    typePreference: "None",
+    typePreference: "Water",
     image: iconSwimmer,
     battle: iconSwimmerBattle,
   },
   TrainerPokemon: {
-    typePreference: "None",
+    typePreference: "Fighting",
     image: iconTrainerPokemon,
     battle: iconTrainerPokemonBattle,
   },
   Turist: {
-    typePreference: "None",
+    typePreference: "Flying",
     image: iconTurist,
     battle: iconTuristBattle,
   },
   Witch: {
-    typePreference: "None",
+    typePreference: "Ghost",
     image: iconWitch,
     battle: iconWitchBattle,
   },
   WomanDiver: {
-    typePreference: "None",
+    typePreference: "Water",
     image: iconWomanDiver,
     battle: iconWomanDiverBattle,
   },
   YoungBoy: {
-    typePreference: "None",
+    typePreference: "Steel",
     image: iconYoungBoy,
     battle: iconYoungBoyBattle,
   },
-  iconYoungGirl: {
-    typePreference: "None",
+  YoungGirl: {
+    typePreference: "Poison",
     image: iconYoungGirl,
     battle: iconYoungGirlBattle,
   },
-  
-
 };
+
 const example = {
   A: {
     typePreference: "Normal",

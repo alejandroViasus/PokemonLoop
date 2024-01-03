@@ -36,7 +36,7 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   const dispatch = useDispatch();
   const { user, error, isLoading } = useUser();
   const globalState = useSelector((state) => state.valueState);
-  console.log(pathname);
+  
 
   //! useEffects
   useEffect(() => {
@@ -90,13 +90,17 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   const keyNavigationItems = Object.keys(navigationItems);
 
   const menuNavigation = keyNavigationItems.map((item) => {
-    console.log(navigationItems[item].route(), navigationItems[item].route().includes(pathname))
+    //console.log(navigationItems[item].route(),pathname, navigationItems[item].route().includes(pathname))
+    //console.log(navigationItems[item].route(),path, navigationItems[item].route()===path)
+    const path=`${pathname}?id=`
+    
     return (
       <NavigationMenuItems
         key={navigationItems[item].route(globalState.user._id)}
         item={navigationItems[item]}
         id={globalState.user._id}
         theme ={[globalState.user.theme]}
+        focus={navigationItems[item].route()===path?true:false}
       />
     );
   });

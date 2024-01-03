@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import FilterTypeButton from "../FilterTypeButton/FilterTypeButton";
 import FilterTypeButtonIn from "../FilterTypeButtonIn/FilterTypeButtonIn";
+import { valuesPokemon } from "@/Assets/funcions";
 
 function FilterType({ type = "None", handlerType }) {
   const initialState = {
@@ -22,15 +23,15 @@ function FilterType({ type = "None", handlerType }) {
   };
 
   const showFilter = alltypes.map((type) => {
-    if (type !== "None") {
-      return (
-        <FilterTypeButton
-          key={`typeIcon${type}`}
-          type={type}
-          handleState={handleState}
-        ></FilterTypeButton>
-      );
-    }
+    //if (type !== "None") {
+    return (  
+      <FilterTypeButton
+        key={`typeIcon${type}`}
+        type={type}
+        handleState={handleState}
+      ></FilterTypeButton>
+    );
+    //}
   });
 
   //console.log(state);
@@ -42,17 +43,17 @@ function FilterType({ type = "None", handlerType }) {
   return (
     <section className="content-filterType">
       {state.showFilter ? (
-        <div className="selectorType ">
-          <div className="box border-radius-big">
+        <div className="content-alert-standard">
+          <div className="bg-panel"></div>
+          <div className="panel-info ">
             <div className="content-title">
               <h1 className="title">Select favorite type </h1>
             </div>
-            <div className="types">{showFilter}</div>
+            <div className="info">{showFilter}</div>
           </div>
         </div>
       ) : (
         <div>
-          {}
           <FilterTypeButtonIn
             type={state.type}
             handleState={handleState}
