@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { globalStateFormat } from "@/Assets/globalStateFormat";
+import { pokemonGet } from "@/Assets/funcions";
 
 export const Slice = createSlice({
   name: "valueState",
@@ -9,7 +10,9 @@ export const Slice = createSlice({
       return { ...state, teamUser: action.payload.teamUser };
     },
     updateUser: (state, action) => {
-      return { ...state, user: action.payload.newUser };
+      const user= action.payload.newUser
+      user.level = pokemonGet.calcularNivel(user.experience)
+      return { ...state, user };
     },
     setListPokemons: (state, action) => {
       return {

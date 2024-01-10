@@ -42,7 +42,7 @@ function BoxSelector({handlerDone}) {
             body: JSON.stringify(newPokemon),
           })
             .then((resp) => resp.json())
-            //.then((data) => console.log("pokemonCreado", data))
+            .then((data) => console.log("pokemonCreado", data))
             .catch((err) => console.log("%__2__%%", err));
         })
         .catch((err) => console.log("%__1__%%", err));

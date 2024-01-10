@@ -143,6 +143,7 @@ function Page() {
               const dataPokemon = await responsePokemonData.json();
               newPokemon = generate.newPokemon(dataPokemon, data.data);
               newPokemon.team = true;
+              newPokemon.favorite=true;
               console.log("|||||||||||||", newPokemon);
               const responsePokemon = await fetch(
                 "/api/pokemon/create-pokemon",

@@ -9,6 +9,7 @@
 }
 .segure-width {
   width: 1200px;
+  width: 1400px;
 }
 .percentage-100-width {
   width: 100%;
@@ -57,7 +58,25 @@
   transition: all 0.3s;
 }
 .hover-scale:hover {
-  scale: 1.05;
+  scale: 1.03;
+}
+.hover-bg-black-hard {
+  padding: 10px 20px;
+  background-color: transparent;
+  transition: all 1s;
+}
+.hover-bg-black-hard:hover {
+  background-color: rgba(22, 22, 22, 0.3);
+  scale: 1.03;
+}
+.hover-bg-black-lite {
+  padding: 10px 20px;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+.hover-bg-black-lite:hover {
+  background-color: rgba(22, 22, 22, 0.05);
+  scale: 1;
 }
 .transition-small {
   transition: all 0.3s;
@@ -76,6 +95,22 @@
 .none-styles-button {
   background-color: transparent;
   border: 0px;
+  text-decoration: none;
+}
+.sidebar::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(22, 22, 22, 0.05);
+  border-radius: 32px 32px 32px 0px;
+  /* Cambia a tu color de fondo deseado */
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(22, 22, 22, 0.5);
+  border-radius: 0px 32px 32px 0px;
+  border-radius: 32px ;
+  transition: all 2s;
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  scale: 1.1;
 }
 @bg-blue :rgba (80,80,80,1);
 .content-alert-standard {

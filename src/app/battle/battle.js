@@ -1,7 +1,10 @@
 import { trainers } from "@/Assets/trainers";
 import { typesPokemon } from "@/Assets/typesPokemon";
 import { generate, pokemonGet, valuesPokemon } from "@/Assets/funcions";
+import { valuesPokemon as vp} from "@/Assets/funcions";
 import e from "cors";
+
+
 
 export const handlerState = {
   addTimmerTurn: (state, reset = false) => {
@@ -110,7 +113,7 @@ export const battleVariables = {
         width: 1153,
       },
     },
-    team: 5,
+    team: 4,
     pokemonsInBattle: {
       individual: 2,
       doubles: 4,

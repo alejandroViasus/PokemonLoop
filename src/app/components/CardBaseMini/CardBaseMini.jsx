@@ -10,6 +10,7 @@ const color=`rgba(${tone},${gama})`
 
   return (
     <div>
+      S
       {pokemon !== undefined  ? (
         <ul
           style={{

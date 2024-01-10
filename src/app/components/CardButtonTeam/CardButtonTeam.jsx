@@ -2,10 +2,16 @@ import React, { useState, useEffect } from "react";
 import { handlerVersion } from "@/store/slice";
 import { useSelector, useDispatch } from "react-redux";
 import { valuesPokemon } from "@/Assets/funcions";
+import Like from "@/app/Icons/Like";
+import Pokeball from "@/app/Icons/Pokeball";
+import Image from "next/image";
+import { typesPokemon } from "@/Assets/typesPokemon";
 
 function CardButtonTeam({ pokemon, porperty = "team" }) {
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state.valueState);
+ 
+
 
   const initialState = {
     team: pokemon.team || false,
@@ -42,7 +48,7 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
       (actualTeam.length >= valuesPokemon.componentBattle.sizeTeam &&
         pokemon.team === false &&
         porperty === "team") ||
-        pokemon.team === false
+      pokemon.team === false
     );
   }, [actualTeam]);
 
@@ -63,9 +69,8 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
         .then((response) => response.json())
         .then((data) => {
           //console.log("data", data.data);
-          const version = `v${data.data._id}${porperty}${
-            data.data[porperty] ? "true" : "false"
-          }`;
+          const version = `v${data.data._id}${porperty}${data.data[porperty] ? "true" : "false"
+            }`;
           //console.log("version", version);
           dispatch(handlerVersion({ state: globalState, version }));
         });
@@ -75,23 +80,33 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
   return (
     <div>
       {state === null ? null : (
-        <div>
-          {porperty === "team" ? (
-            <div>
-              {actualTeam.length}/{valuesPokemon.componentBattle.size.team}
-            </div>
-          ) : null}
-          <button
-            onClick={handleChange}
-            disabled={
-              !state?.team &&
-              actualTeam.length >= valuesPokemon.componentBattle.size.team &&
-              porperty === "team"
-            }
-          >
-            {state[porperty] ? `${porperty}` : "...." || ""}
-          </button>
-        </div>
+
+
+        <button
+          onClick={handleChange}
+          disabled={
+            !state?.team &&
+            actualTeam.length >= valuesPokemon.componentBattle.size.team &&
+            porperty === "team"
+          }
+
+          className="none-styles-button"
+          style={{
+            
+            scale: '1.5',
+           opacity:state[porperty]?'1':'0.3'
+          }
+          }
+        >
+          {/* {state[porperty] ? `${porperty}` : "...." || ""} */}
+          {porperty==='team'
+          ?
+          <Pokeball color={typesPokemon[pokemon.type1].colors.primary} />
+          :
+          <Like color={typesPokemon[pokemon.type1].colors.primary} />
+          }
+        </button>
+
       )}
     </div>
   );

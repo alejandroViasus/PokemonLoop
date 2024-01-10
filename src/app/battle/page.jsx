@@ -118,6 +118,7 @@ function Page() {
     } else {
       const newState = { ...state };
       newState.phase.actual = 3;
+      newState.turn.user = !newState.turn.user;
       (newState.position.user = assetBattle.get.initalPosition("user")),
         (newState.position.rival = assetBattle.get.initalPosition("rival")),
         setState(newState);

@@ -31,9 +31,9 @@ function CardsSelector({
 
   return (
     <div>
-      <button onClick={() => handlerSelector(index - 1)}>prev</button>
-      {state.miniItems.length >= 1 ? state.miniItems : null}
-      <button onClick={() => handlerSelector(index + 1)}>Next</button>
+      {/* <button onClick={() => handlerSelector(index - 1)}>prev</button> */}
+      {state.miniItems.length > 1 ? state.miniItems : null}
+      {/* <button onClick={() => handlerSelector(index + 1)}>Next</button> */}
     </div>
   );
 }

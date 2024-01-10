@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { handlerRender } from "@/store/slice";
-import { valuesPokemon } from "@/Assets/funcions";
+import { pokemonGet, valuesPokemon } from "@/Assets/funcions";
 
 
 
@@ -9,10 +9,12 @@ function SendToOak({ pokemon }) {
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state.valueState);
 
+// console.log(pokemon,']]]]]]]]]]]]]]]]]]]]]]]]]]]]]')
+
   const getValorationTrade = () => {
     if (pokemon) {
       let totalPointsToBox =
-        Math.round(pokemon.level * 0.5) +
+        Math.round(pokemonGet.calcularNivel(pokemon.experience) * 0.5) +
         Math.round(
           (pokemon.scaleHeald +
             pokemon.scaleAttack +
@@ -26,7 +28,7 @@ function SendToOak({ pokemon }) {
       let values = {
         coins:
           valuesPokemon.componentSentToOak.baseValue.coins +
-          Math.round(pokemon.level * 1.5) +
+          Math.round(pokemonGet.calcularNivel(pokemon.experience) * 1.5) +
           Math.round(
             pokemon.scaleHeald +
               pokemon.scaleAttack +
@@ -37,7 +39,7 @@ function SendToOak({ pokemon }) {
           ),
         pokeballs:
           valuesPokemon.componentSentToOak.baseValue.pokeball +
-          Math.round(pokemon.level * 0.5) +
+          Math.round(pokemonGet.calcularNivel(pokemon.experience) * 0.5) +
           Math.round(
             (pokemon.scaleHeald +
               pokemon.scaleAttack +

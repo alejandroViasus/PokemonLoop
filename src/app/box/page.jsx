@@ -107,7 +107,7 @@ function Page() {
     });
   };
 
-  console.log(state.selected);
+  // console.log(globalState);
   // console.log(
   //   "bag :",
   //   globalState.user?.bagPokemons,
@@ -116,6 +116,7 @@ function Page() {
   //   "bag<pokemons",
   //   globalState.user?.bagPokemons < globalState.pokemonsUser.length
   // );
+
   return (
     <div>
       <NavigationMenu />
@@ -150,7 +151,9 @@ function Page() {
           ) : null}
 
           {!state.selected && !state.trade ? (
-            <button onClick={handlerOpenBox}>
+            <button 
+            
+            onClick={handlerOpenBox}>
               <p>Find out which Pokémon it is {`(${state.userInfo.box})`}</p>
             </button>
           ) : null}

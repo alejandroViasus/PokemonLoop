@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -8,159 +9,232 @@ import Card from "../Card/Card";
 import CardEmpty from "../CardEmpty/CardEmpty";
 import CardsSelector from "../CardsSelector/CardsSelector";
 
-function CardsRender({ pokemons ,changeselect}) {
-  const [index, setIndex] = useState(
-    valuesPokemon.componentRenderCards.initialIndex
-  );
+function CardsRender({ pokemons, changeselect,pokemonSelected }) {
+
   const [showPokemons, setShowPokemons] = useState([]);
 
- 
+  const [index, setIndex] = useState(
+         valuesPokemon.componentRenderCards.initialIndex
+       );
 
   useEffect(() => {
-    //console.log('index',index)
-    const showPokemon = [];
-    const sizeRender = valuesPokemon.componentRenderCards.sizeRender;
-    let listPokemon = pokemons;
+        //console.log('index',index)
+        const showPokemon =[];
+        const sizeRender = valuesPokemon.componentRenderCards.sizeRender;
+        let listPokemon = pokemons;
 
-    for (let i = 0; i < sizeRender; i++) {
-      let iterator = (-sizeRender + i) + index * sizeRender;
-      const pokemon = pokemons[iterator];
+        
+    
+        for (let i = 0; i < sizeRender; i++) {
+          let iterator = (-sizeRender + i) + index * sizeRender;
+          const pokemon = pokemons[iterator];
+          console.log(pokemon?._id,'DDD');
+    
+    
+        
+    
+          if (pokemon) {
 
-      if (pokemon) {
-        showPokemon.push(
-          <div key={pokemon?._id} onClick={() => changeselect(pokemon)}>
-            -------------
-            <Card pokemon={pokemon} />
-            ----------
-          </div>
-        );
-      } else {
-        showPokemon.push(
-          <button
-            key={`${Math.random() * i}cardEmpty${Math.random() * i}`}
-            onClick={() => {}}
-          >
-            <CardEmpty />;
-          </button>
-        );
-      }
-    }
-    setShowPokemons(showPokemon);
-  }, [pokemons, index]);
 
-  const handlerSelector = (value) => {
-    if (
-      0 < value &&
-      value <=
-        Math.ceil(
-          pokemons.length / valuesPokemon.componentRenderCards.sizeRender
-        )
-    )
-      return setIndex(value);
-  };
+            // console.log(pokemonSelected._id, pokemon._id,pokemonSelected._id===pokemon._id )
+            showPokemon.push(
+              <buttom
+              className='none-styles-button '
+              key={`pokemonShow${pokemon?._id}`} onClick={() => changeselect(pokemon)}>
+              
+                <Card pokemon={pokemon} empty={false} selected={pokemon._id===pokemonSelected?._id?true:false} />
+              
+              </buttom>
+            );
+          } else {
+            showPokemon.push(
+              <button
+              className='none-styles-button'
+                key={`${Math.random() * i}cardEmpty${Math.random() * i}`}
+                onClick={() => { }}
+              >
+                
+                 {/* <Card pokemon={pokemon} empty={true} /> */}
+               
+              </button>
+            );
+          }
+        }
+    
+        setShowPokemons(showPokemon);
+      }, [pokemons, index]);
+    
+
+      const handlerSelector = (value) => {
+            if (
+              0 < value &&
+              value <=
+              Math.ceil(
+                pokemons.length / valuesPokemon.componentRenderCards.sizeRender
+              )
+            )
+              return setIndex(value);
+          };
 
   return (
-    <div>
-      <div>{showPokemons}</div>
-      <div>
-        <CardsSelector
-          index={index}
-          totalCards={pokemons.length}
-          handlerSelector={handlerSelector}
-        />
+    <div
+    className="flex-all-center"
+    style={{
+      //backgroundColor:'red',
+      height:'100%',
+      width:'60%',
+      flexDirection:'column'
+    }}
+    >
+      <div 
+      className="flex-all-center"
+      style={{
+        width:'100%',
+        height:'90%',
+        //backgroundColor:'green',
+        flexWrap: 'wrap',
+        columnGap: '32px',
+        rowGap: '32px',
+        //padding: '86px',
+        justifyContent:'left'
+      }}
+      >
+      {showPokemons}
       </div>
-    </div>
-  );
+      <div>
+      <CardsSelector
+           index={index}
+           totalCards={pokemons.length}
+           handlerSelector={handlerSelector}
+         />
+      </div>
+      </div>
+  )
 }
 
-export default CardsRender;
+export default CardsRender
+
+
+
+
+
+// "use client";
 
 // import React, { useState, useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
 // import { valuesPokemon } from "@/Assets/funcions";
 
-// //? COMPONENT
+// //? components
 // import Card from "../Card/Card";
 // import CardEmpty from "../CardEmpty/CardEmpty";
 // import CardsSelector from "../CardsSelector/CardsSelector";
-// import CardDetail from "../CardDetail/CardDetail";
 
-// function RenderCards() {
+// function CardsRender({ pokemons, changeselect }) {
+//   const [index, setIndex] = useState(
+//     valuesPokemon.componentRenderCards.initialIndex
+//   );
+//   const [showPokemons, setShowPokemons] = useState([]);
 
-//   const globalState = useSelector((state) => state.valueState);
-//   const initialState = {
-//     index: 1,
-//     sizeRender: valuesPokemon.componentRenderCards.sizeRender,
-//     selected: 0,
-//   };
-//   const [pokemonRender, setPokemonRender] = useState([]);
 
-//   const [state, setState] = useState(initialState);
-
-//   const changeselect = (value) => {
-//     setState({ ...state, selected: value });
-//   };
 
 //   useEffect(() => {
-//     getRenderPokemon();
-//   }, [state.index]);
+//     //console.log('index',index)
+//     const showPokemon = pokemons;
+//     const sizeRender = valuesPokemon.componentRenderCards.sizeRender;
+//     let listPokemon = pokemons;
 
-//   const getRenderPokemon = () => {
-//     const pokemonsRender = [];
-//     for (let i = 0; i < state.sizeRender; i++) {
-//       const iterator = -state.sizeRender + i + state.index * state.sizeRender;
-//       let pokemon = globalState?.pokemonsUser.slice().reverse()[iterator];
-//       //console.log(iterator, typeof iterator,pokemon)
-//       if (pokemon) {
-//         pokemonsRender.push(
-//           <button key={pokemon?._id} onClick={() => changeselect(iterator)}>
-//             <Card pokemon={pokemon} />
-//           </button>
-//         );
-//       } else {
-//         pokemonsRender.push(
-//           <button
-//             key={`${Math.random() * i}cardEmpty${Math.random() * i}`}
-//             onClick={() => {}}
-//           >
-//             <CardEmpty />;
-//           </button>
-//         );
-//       }
+//     for (let i = 0; i < sizeRender; i++) {
+//       let iterator = (-sizeRender + i) + index * sizeRender;
+//       const pokemon = pokemons[iterator];
+//       console.log(pokemon?._id,'DDD');
+
+
+//        showPokemon.push(<Card key={`pokemonShowCard${i}`} pokemon={pokemon!==undefined?pokemon:null} />)
+
+//       // if (pokemon) {
+//       //   showPokemon.push(
+//       //     <buttom key={pokemon?._id} onClick={() => changeselect(pokemon)}>
+//       //       -------------
+//       //       <Card pokemon={pokemon}  />
+//       //       ----------
+//       //     </buttom>
+//       //   );
+//       // } else {
+//       //   showPokemon.push(
+//       //     <button
+//       //       key={`${Math.random() * i}cardEmpty${Math.random() * i}`}
+//       //       onClick={() => { }}
+//       //     >
+//       //       <CardEmpty />;
+//       //     </button>
+//       //   );
+//       // }
 //     }
-//     setPokemonRender(pokemonsRender);
-//   };
+
+//     setShowPokemons(showPokemon);
+//   }, [pokemons, index]);
+
 //   const handlerSelector = (value) => {
 //     if (
 //       0 < value &&
-//       value <= Math.ceil(globalState.pokemonsUser.length / state.sizeRender)
+//       value <=
+//       Math.ceil(
+//         pokemons.length / valuesPokemon.componentRenderCards.sizeRender
+//       )
 //     )
-//       return setState({ ...state, index: value });
+//       return setIndex(value);
 //   };
 
+//   console.log('showPokemons',showPokemons)
 //   return (
-//     <section>
-//       RenderCards
-//       <div>
-//         <div>{pokemonRender}</div>
-//         <div>
-//           <CardsSelector
-//             index={state.index}
-//             totalCards={globalState.pokemonsUser.length}
-//             handlerSelector={handlerSelector}
-//           />
-//         </div>
-//       </div>
-//       <div>
-//         <h1>pokemon selected: { globalState.pokemonsUser.slice().reverse()[state.selected]?.name}</h1>
-//         <CardDetail
-//           pokemon={
-//             globalState.pokemonsUser.slice().reverse()[state.selected]
-//           }
+//     <div
+//       className="flex-all-center"
+//       style={{
+//         width: '70%',
+//         height: '90%',
+//         backgroundColor: "yellow",
+//         flexDirection: 'column',
+//         justifyContent: 'flex-start'
+//       }}
+//     >
+//       <div
+//         style={{
+//           width: '100%',
+//           height: '5%',
+//           backgroundColor: 'green'
+//         }}
+//       >filters</div>
+//       <div
+//         className="flex-all-center"
+//         style={{
+//           width: '100%',
+//           height: 'auto',
+//           backgroundColor: 'purple',
+//           padding:'32px',
+//           gap: '32px',
+//           rowGap: '32px', 
+//           flexWrap: 'wrap',
+         
+//         }}
+//       >
+//         {showPokemons}</div>
+//       <div
+//         className="flex-all-center"
+//         style={{
+//           width: '100%',
+//           height: '5%',
+//           backgroundColor: 'green'
+//         }}
+//       >
+//         <CardsSelector
+//           index={index}
+//           totalCards={pokemons.length}
+//           handlerSelector={handlerSelector}
 //         />
 //       </div>
-//     </section>
+//     </div>
 //   );
 // }
 
-// export default RenderCards;
+// export default CardsRender;
+
+

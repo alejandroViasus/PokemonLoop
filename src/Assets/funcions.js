@@ -44,7 +44,7 @@ export const valuesPokemon = {
       big: { value: 100, sizeTeam: 4 },
     },
   },
-  
+
   componentBattle: {
     limitSpeedL: {
       max: 20,
@@ -81,7 +81,7 @@ export const valuesPokemon = {
       minPower: 200,
     },
     size: {
-      team: 5,
+      team: 4,
       pokemonBaseSize: 30,
       tailInGame: 30,
     },
@@ -116,6 +116,7 @@ export const valuesPokemon = {
   },
   toleranceShiny: 5,
   maxNumberPokedex: 1007, //Valor maximo de la pokedex para buscar pokemones
+  maxNumberPokedex: 920, //Valor maximo de la pokedex para buscar pokemones
   minNumberPokedex: 1, //valor minimo de la pokedex para buscar pokemones
   maxLevelTrainer: 100, //nivel maximo del entrenador
   minLevelTrainer: 1, //nivel minimo del entrenador
@@ -160,7 +161,7 @@ export const valuesPokemon = {
         801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814,
         815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828,
         829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842,
-        843, 844, 845, 846, 847, 848, 849, 850, 883, 887, 888, 889, 984, 990,
+        843, 844, 845, 846, 847, 848, 849, 850, 883, 887, 888, 889, 984, 894, 990,
         991, 992, 993, 994, 995, 1006, 1007,
       ],
     },
@@ -184,11 +185,44 @@ export const valuesPokemon = {
     "SpecialDeffense",
     "Speed",
   ],
+  rateRarity: ['common', 'uncommon', 'rare', 'epic', 'legendary', 'mythic']
 };
 
 export const pokemonGet = {
+  valuePokemon: (pokemon) => {
+    let totalPounts =
+      pokemon.scaleAttack +
+      pokemon.scaleDeffense +
+      pokemon.effortHeald +
+      pokemon.scaleSpecialAttack +
+      pokemon.scaleSpecialDeffense;
 
+    return (
+      1 + Math.round(totalPounts / valuesPokemon.probabilitiScale.epic.value)
+    );
+  },
+  calcularNivel: (experiencia) => {
+    let nivel = 1;
+    let experienciaBase = 50;
   
+    while (experiencia >= experienciaBase) {
+      experienciaBase = Math.round(experienciaBase + experienciaBase * 0.2);
+      nivel++;
+    }
+  
+    return nivel;
+  },
+
+  calcularExperiencia: (nivel) => {
+    let experienciaBase = 50;
+
+    for (let i = 2; i <= nivel; i++) {
+      experienciaBase = Math.round(experienciaBase + experienciaBase * 0.2);
+    }
+  
+    return experienciaBase;
+  },
+
   shiny: () => {
     const tolerance = valuesPokemon.toleranceShiny;
     const value = Math.random() * tolerance;
@@ -267,17 +301,20 @@ export const pokemonGet = {
     }
     return levelpokemon;
   },
-  level: (levelTrainer = 1, difficult = 0) => {
+  level: (experienceTrainer = 1, difficult = 0) => {
     const probability = Math.random();
+    const levelTrainer = pokemonGet.calcularNivel(experienceTrainer);
+    console.log('level', levelTrainer)
+
     let levelPokemon = levelTrainer;
     const keysProbability = Object.keys(valuesPokemon.probabilitiLevel);
     keysProbability.map((key) => {
       if (probability > valuesPokemon.probabilitiLevel[key].probability) {
         levelPokemon = Math.round(
           Math.random() *
-            (levelPokemon * difficult +
-              levelTrainer +
-              valuesPokemon.probabilitiLevel[key].value)
+          (levelPokemon * difficult +
+            levelTrainer +
+            valuesPokemon.probabilitiLevel[key].value)
         );
       }
       return levelPokemon;
@@ -309,7 +346,7 @@ export const pokemonGet = {
       if (probability > valuesPokemon.probabilitiScale[key].probability) {
         scalePokemon = Math.round(
           Math.random() *
-            (levelTrainer + valuesPokemon.probabilitiScale[key].value)
+          (levelTrainer + valuesPokemon.probabilitiScale[key].value)
         );
       }
       return scalePokemon;
@@ -319,7 +356,6 @@ export const pokemonGet = {
 };
 
 export const generate = {
-
   bioma: () => {
     const biomas = Object.keys(typesPokemon);
     let selectorBioma = Math.round(Math.random() * biomas.length);
@@ -365,7 +401,7 @@ export const generate = {
       : null;
 
     newState.battlefield?.pokemonSelectedRival === "GameOver!!!" &&
-    newState.battlefield?.pokemonSelectedUser === "GameOver!!!"
+      newState.battlefield?.pokemonSelectedUser === "GameOver!!!"
       ? (newState.phase = "draw")
       : null;
 
@@ -398,9 +434,9 @@ export const generate = {
         dificult = level;
         levelRival = Math.round(
           levelRival * valuesPokemon.levelsTrainers[level].baseLevel +
-            (levelRival / 1.5) *
-              (Math.random() *
-                valuesPokemon.levelsTrainers[level].addFractionLevel)
+          (levelRival / 1.5) *
+          (Math.random() *
+            valuesPokemon.levelsTrainers[level].addFractionLevel)
         );
       }
     });
@@ -408,20 +444,20 @@ export const generate = {
     //console.log('prob',porbability, '...  level', levelRival ,user.level )
     return { levelRival: levelRival + addLevel, dificult };
   },
-  getSizePokemon:(pokemon)=>{
-    let size = pokemon.height* battleVariables.size.pokemon.scale.base
-    if(size<battleVariables.size.pokemon.scale.min){
-      size = battleVariables.size.pokemon.scale.min
+  getSizePokemon: (pokemon) => {
+    let size = pokemon.height * battleVariables.size.pokemon.scale.base;
+    if (size < battleVariables.size.pokemon.scale.min) {
+      size = battleVariables.size.pokemon.scale.min;
     }
-    if(size>battleVariables.size.pokemon.scale.max){
-      size= battleVariables.size.pokemon.scale.max
+    if (size > battleVariables.size.pokemon.scale.max) {
+      size = battleVariables.size.pokemon.scale.max;
     }
     return size;
   },
   getStat: (pokemon, typeStack) => {
     //console.log("in generate", pokemon, typeStack);
     if (pokemon !== undefined) {
-      let nivel = pokemon.level;
+      let nivel = pokemonGet.calcularNivel(pokemonGet.calcularNivel(pokemon.experience));
       let statBase = pokemon[`base${typeStack}`];
       let iv = pokemon[`scale${typeStack}`];
       //iv = 30;
@@ -465,7 +501,7 @@ export const generate = {
   getStackReference: (pokemon, typeStack) => {
     //console.log(pokemon, typeStack);
 
-    let nivel = pokemon.level;
+    let nivel = pokemonGet.calcularNivel(pokemon.experience);
     let statBase = pokemon[`base${typeStack}`];
     let iv = 30;
     //iv = 30;
@@ -495,7 +531,10 @@ export const generate = {
     let height = Math.round();
 
     //console.log("Trainer in generate.newPokemon", dataPokemon,trainer)
-    const levelPokemon = pokemonGet.level(trainer.level);
+    const levelPokemon = pokemonGet.level(trainer.experience);
+    const exp = pokemonGet.calcularExperiencia(levelPokemon)
+    console.log('exp', exp, 'level', levelPokemon, 'fbLevel', pokemonGet.calcularNivel(exp))
+
     const newPokemon = { ...pokemonFormat };
     newPokemon.shiny = pokemonGet.shiny();
     newPokemon.noPokedex = pokemonGet.noPokedex(trainer.level, dataPokemon.id);
@@ -503,10 +542,10 @@ export const generate = {
     newPokemon.trainer = trainer._id; //la data que llego del registro del nuevo usuario
     newPokemon.favorite = false;
     newPokemon.maxStack4level = pokemonGet.stackLevel(levelPokemon);
-    newPokemon.experience = pokemonGet.stackLevel(levelPokemon);
+    newPokemon.experience = exp;
     newPokemon.actualStack = 0;
     //newPokemon.level = pokemonGet.levelRival(trainer, general) || pokemonGet.level(trainer.level) + 1;
-    newPokemon.level = pokemonGet.level(trainer.level) + 1;
+    newPokemon.level = pokemonGet.level(trainer.level) ;
     newPokemon.weight = (dataPokemon.weight * 0.1).toFixed(3);
     newPokemon.height = (dataPokemon.height * 0.1).toFixed(3);
     newPokemon.type1 = pokemonGet.type(0, dataPokemon.types);
@@ -534,8 +573,9 @@ export const generate = {
     newPokemon.baseSpecialDeffense = dataPokemon.stats[4].base_stat;
     newPokemon.baseSpeed = dataPokemon.stats[5].base_stat;
 
+    console.log('isPokemon!!!!!!!!!!!!!!!!!!!', newPokemon)
     if (newPokemon.shiny === 1) {
-      console.log("No Pokedex", newPokemon.noPokedex);
+      console.log("No Pokedex !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", newPokemon.noPokedex);
     }
     return newPokemon;
   },
@@ -550,12 +590,20 @@ export const imagesPokemon = {
     return shiny
       ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`
       : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${noPokedex}.png` ||
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`;
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`;
   },
 
   pixel: (noPokedex = 1, shiny = 0) => {
     return shiny
-      ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${noPokedex}`
-      : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`;
+      ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`
+      : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${noPokedex}.png`;
   },
+  gif: (noPokedex = 1, shiny = 0) => {
+    return shiny
+    ?`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/${noPokedex}.gif`
+    :`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${noPokedex}.gif`
+  },
+  svg:(noPokedex = 1, shiny = 0)=>{
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${noPokedex}.svg`
+  }
 };

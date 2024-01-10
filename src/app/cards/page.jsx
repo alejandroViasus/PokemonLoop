@@ -9,6 +9,7 @@ import { valuesPokemon } from "@/Assets/funcions";
 import NavigationMenu from "../components/NavigationMenu/NavigationMenu";
 import CardsRender from "../components/CardsRender/CardsRender";
 import CardDetail from "../components/CardDetail/CardDetail";
+import { typesPokemon } from "@/Assets/typesPokemon";
 function page() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -65,21 +66,39 @@ function page() {
   const changeselect = (pokemon) => {
     setPokemonSelected(pokemon);
   };
-
+console.log(globalState.user.theme)
   return (
-    <section>
+    <section
+      className="percentage-100-width percentage-100-height flex-all-center"
+      style={{
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        backgroundColor:`${typesPokemon[globalState.user.theme].colors.background}`,
+        
+      }}
+    >
       <div>
         <NavigationMenu />
       </div>
-      <div> TEAM : {valuesPokemon.componentBattle.sizeTeam} / {globalState.teamUser.length}</div>
+      {/* <div> TEAM : {valuesPokemon.componentBattle.sizeTeam} / {globalState.teamUser.length}</div> */}
 
-      <div>{pokemonSelected?.name}</div>
-      <div style={{ display: "flex" }}>
+      {/* <div>{pokemonSelected?.name}</div> */}
+
+      <div className="segure-width 
+      percentage-100-height  
+      
+      flex-all-center"
+        style={{
+           //backgroundColor: 'blue',
+          // gap:'10px'
+        }}>
         <CardsRender
+        pokemonSelected={pokemonSelected}
           pokemons={listPokemons?.slice().reverse()}
           changeselect={changeselect}
+          theme={globalState.user.theme}
         />
-        <CardDetail pokemon={pokemonSelected} />
+        <CardDetail pokemon={pokemonSelected}  theme={globalState.user.theme}/>
       </div>
     </section>
   );

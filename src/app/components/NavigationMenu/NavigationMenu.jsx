@@ -1,16 +1,17 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { updateTeam, updateUser } from "@/store/slice";
-import { useRouter , usePathname} from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { navigationItems } from "@/Assets/navigationItems";
+import { typesPokemon } from "@/Assets/typesPokemon";
 import Link from "next/link";
 import Image from "next/image";
 
 //? import Components
 import NavigationMenuItems from "../NavigationMenuItems/NavigationMenuItems";
-import { typesPokemon } from "@/Assets/typesPokemon";
+import Settings from "../Settings/Settings";
 
 //? {
 //?user:{
@@ -28,7 +29,7 @@ import { typesPokemon } from "@/Assets/typesPokemon";
 //?   }
 //? }
 
-function NavigationMenu({ iNeedInfoUser = () => {} }) {
+function NavigationMenu({ iNeedInfoUser = () => { } }) {
   // creacion de variables
   const urlSingUp = "/sign-up";
   const router = useRouter();
@@ -36,7 +37,7 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   const dispatch = useDispatch();
   const { user, error, isLoading } = useUser();
   const globalState = useSelector((state) => state.valueState);
-  
+
 
   //! useEffects
   useEffect(() => {
@@ -66,7 +67,7 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
 
   useEffect(() => {
     const newUser = { ...globalState.user, email: user?.email || undefined };
-    //console.log("NEW USER", newUser);
+    // console.log("NEW USER", newUser);
     iNeedInfoUser(user);
     dispatch(updateUser({ state: globalState, newUser: newUser }));
   }, [user]);
@@ -92,15 +93,15 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
   const menuNavigation = keyNavigationItems.map((item) => {
     //console.log(navigationItems[item].route(),pathname, navigationItems[item].route().includes(pathname))
     //console.log(navigationItems[item].route(),path, navigationItems[item].route()===path)
-    const path=`${pathname}?id=`
-    
+    const path = `${pathname}?id=`
+
     return (
       <NavigationMenuItems
         key={navigationItems[item].route(globalState.user._id)}
         item={navigationItems[item]}
         id={globalState.user._id}
-        theme ={[globalState.user.theme]}
-        focus={navigationItems[item].route()===path?true:false}
+        theme={[globalState.user.theme]}
+        focus={navigationItems[item].route() === path ? true : false}
       />
     );
   });
@@ -114,6 +115,7 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
     "
       style={{
         backgroundColor: typesPokemon[globalState.user.theme].colors.primary,
+        height: '55px',
       }}
     >
       <div className="content-image-navigation-menu">
@@ -128,7 +130,7 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
           src={
             "https://logodownload.org/wp-content/uploads/2017/08/pokemon-logo.png"
           }
-          height={50}
+          height={70}
           width={150}
           alt="logo Pokemon"
           style={{
@@ -137,32 +139,21 @@ function NavigationMenu({ iNeedInfoUser = () => {} }) {
           }}
         />
       </div>
+
+
       {globalState.user._id !== "0" ? (
         <div className="content-items-navigation">{menuNavigation}</div>
-      ) : null}
+        ) : null}
 
-      <div className="button-login">
-        {globalState.user._id === "0" ? (
-          <Link
-            className="title"
-            href="/api/auth/login"
-            style={{
-              color: typesPokemon[globalState.user.theme].colors.text,
-            }}
-          >
-            <h3>LOGIN</h3>
-          </Link>
-        ) : (
-          <Link
-            className="title"
-            href="/api/auth/logout"
-            style={{
-              color: typesPokemon[globalState.user.theme].colors.text,
-            }}
-          >
-            <h3>LOGOUT</h3>
-          </Link>
-        )}
+
+       
+
+      <div className="button-login"
+        style={{
+          width: '15%'
+        }}
+      >
+        <Settings globalState={globalState} />
       </div>
     </section>
   );

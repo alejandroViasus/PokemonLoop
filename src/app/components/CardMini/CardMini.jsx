@@ -71,7 +71,7 @@ function CardMini({
     height: "85%",
     width: "75%",
     borderRadius: "0px 0px 0px 8px",
-    backgroundColor: typesPokemon[state.type]?.colors.primary,
+    backgroundColor: typesPokemon[state.type]?.colors.background,
 
     overflow: "hidden",
   };

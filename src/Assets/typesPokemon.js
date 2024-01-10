@@ -61,7 +61,7 @@ export const typesPokemon = {
       Fairy: "0",
     },
     colors: {
-      primary: "rgba(204, 61, 75, 0.9)", // Rojo oscuro pastel para la Pokébola
+      primary: "rgba(204, 61, 75, 1)", // Rojo oscuro pastel para la Pokébola
       secondary: "rgba(230, 230, 230, 1)", // Blanco menos saturado
       tertiary: "rgba(30, 30, 30, 1)", // Negro menos saturado
       quaternary: "rgba(180, 51, 65,1)",
@@ -102,7 +102,7 @@ export const typesPokemon = {
       textDark: "rgba(20, 60, 40, 1)", // Nuevo tono oscuro
       textWhite: "rgba(210, 230, 190, 1)", // Nuevo tono claro
 
-      background: "rgba(210, 220, 200, 0.8)", // Ajustado para adaptarse al nuevo tono verde
+      background: "rgba(210, 220, 200, 1)", // Ajustado para adaptarse al nuevo tono verde
     },
   },
   Dark: {
@@ -134,9 +134,9 @@ export const typesPokemon = {
       quaternary: "rgba(32, 32, 64, 1)",
 
       textDark: "rgba(20, 20, 40, 1)",
-      textWhite: "rgba(200, 200, 220, 1)",
+      textWhite: "rgba(120, 120, 140, 1)",
 
-      background: "rgba(180, 180, 210, 0.8)",
+      background: "rgba(180, 180, 210, 1)",
     },
   },
   Dragon: {
@@ -162,7 +162,7 @@ export const typesPokemon = {
       Fairy: "0.5",
     },
     colors: {
-      primary: "rgba(96, 160, 184, 0.9)", // Color principal ajustado para ser más oscuro y pastel
+      primary: "rgba(96, 160, 184, 1)", // Color principal ajustado para ser más oscuro y pastel
       secondary: "rgba(150, 205, 230, 1)", // Color complementario para resaltar el color principal (azul claro pastel)
       tertiary: "rgba(150, 200, 230, 1)", // Color adicional para detalles extra en la tarjeta (gris azulado pastel)
 
@@ -197,15 +197,15 @@ export const typesPokemon = {
       Fairy: "1",
     },
     colors: {
-      primary: "rgba(255, 204, 102, 0.9)", // Amarillo pastel para Eléctrico
-      secondary: "rgba(102, 153, 255, 0.9)", // Azul pastel más oscuro
-      tertiary: "rgba(255, 170, 102, 0.9)", // Amarillo terciario
-      quaternary: "rgba(255, 184, 77, 0.9)", // Azul terciario
+      primary: "rgba(255, 204, 102, 1)", // Amarillo pastel para Eléctrico
+      secondary: "rgba(102, 153, 255, 1)", // Azul pastel más oscuro
+      tertiary: "rgba(255, 170, 102, 1)", // Amarillo terciario
+      quaternary: "rgba(255, 184, 77, 1)", // Azul terciario
 
       textDark: "rgba(20, 20, 40, 1)", // Tono oscuro estándar
       textWhite: "rgba(0, 0, 40, 1)", // Azul oscuro para textWhite
 
-      background: "rgba(220, 220, 240, 0.8)", // Ajustado para adaptarse al nuevo tono predominante
+      background: "rgba(220, 220, 240, 1)", // Ajustado para adaptarse al nuevo tono predominante
     
     },
   },
@@ -232,15 +232,15 @@ export const typesPokemon = {
       Fairy: "1",
     },
     colors: {
-      primary: "rgba(223, 105, 160, 0.9)", // Rosa oscuro ajustado como nuevo color primario
-      secondary: "rgba(238, 184, 200, 0.9)", // Rosa pastel menos saturado
-      tertiary: "rgba(255, 153, 179, 0.9)", // Rosa claro menos saturado (subido ligeramente)
-      quaternary: "rgba(239, 160, 184, 0.9)", // Rojo oscuro menos saturado
+      primary: "rgba(223, 105, 160, 1)", // Rosa oscuro ajustado como nuevo color primario
+      secondary: "rgba(238, 184, 200, 1)", // Rosa pastel menos saturado
+      tertiary: "rgba(255, 153, 179, 1)", // Rosa claro menos saturado (subido ligeramente)
+      quaternary: "rgba(239, 160, 184, 1)", // Rojo oscuro menos saturado
 
       textDark: "rgba(20, 20, 40, 1)", // Tono oscuro estándar
       textWhite: "rgba(180, 60, 80, 1)", // Tono rojizo acercándose al textDark
 
-      background: "rgba(220, 220, 240, 0.8)", // Ajustado para adaptarse al nuevo tono predominante
+      background: "rgba(220, 220, 240, 1)", // Ajustado para adaptarse al nuevo tono predominante
     },
   },
   Fighting: {
@@ -266,15 +266,15 @@ export const typesPokemon = {
       Fairy: "0.5",
     },
     colors: {
-      primary: "rgba(190, 80, 75, 0.9)", // Rojo intermedio
-      secondary: "rgba(225, 120, 105, 0.9)", // Rojo intermedio ligeramente más claro
-      tertiary: "rgba(116, 154, 230, 0.9)", // Azul intermedio
-      quaternary: "rgba(100, 100, 100, 0.9)", // Gris intermedio
+      primary: "rgba(190, 80, 75, 1)", // Rojo intermedio
+      secondary: "rgba(225, 120, 105, 1)", // Rojo intermedio ligeramente más claro
+      tertiary: "rgba(116, 154, 230, 1)", // Azul intermedio
+      quaternary: "rgba(100, 100, 100, 1)", // Gris intermedio
 
       textDark: "rgba(20, 20, 40, 1)", // Tono oscuro estándar
       textWhite: "rgba(222, 200, 200, 1)", // Tono claro estándar
 
-      background: "rgba(240, 240, 220, 0.8)", // Ajustado para adaptarse al nuevo tono predominante
+      background: "rgba(240, 240, 220, 1)", // Ajustado para adaptarse al nuevo tono predominante
     },
   },
   Fire: {
@@ -300,15 +300,15 @@ export const typesPokemon = {
       Fairy: "1",
     },
     colors: {
-      primary: "rgba(204, 51, 51, 0.9)", // Rojo oscuro para Fuego
-      secondary: "rgba(255, 204, 102, 0.9)", // Amarillo claro
-      tertiary: "rgba(255, 153, 51, 0.9)", // Amarillo rojizo más intenso
-      quaternary: "rgba(102, 51, 0, 0.9)", // Marrón oscuro
+      primary: "rgba(204, 51, 51, 1)", // Rojo oscuro para Fuego
+      secondary: "rgba(255, 204, 102, 1)", // Amarillo claro
+      tertiary: "rgba(255, 153, 51, 1)", // Amarillo rojizo más intenso
+      quaternary: "rgba(102, 51, 0, 1)", // Marrón oscuro
 
       textDark: "rgba(20, 20, 40, 1)", // Tono oscuro estándar
       textWhite: "rgba(160, 40, 40, 1)", // Rojo oscuro para textWhite
 
-      background: "rgba(255, 240, 220, 0.8)", // Naranja pálido para el fondo
+      background: "rgba(255, 240, 220, 1)", // Naranja pálido para el fondo
     },
   },
   Flying: {
@@ -334,15 +334,15 @@ export const typesPokemon = {
       Fairy: "1",
     },
     colors: {
-      primary: "rgba(120, 195, 225, 0.9)", // Azul claro para Volador
-      secondary: "rgba(170, 220, 255, 0.9)", // Azul claro más saturado
-      tertiary: "rgba(240, 240, 255, 0.9)", // Blanco azulado
-      quaternary: "rgba(50, 120, 160, 0.9)", // Azul oscuro
+      primary: "rgba(120, 195, 225, 1)", // Azul claro para Volador
+      secondary: "rgba(170, 220, 255, 1)", // Azul claro más saturado
+      tertiary: "rgba(240, 240, 255, 1)", // Blanco azulado
+      quaternary: "rgba(50, 120, 160, 1)", // Azul oscuro
 
       textDark: "rgba(20, 20, 40, 1)", // Tono oscuro estándar
       textWhite: "rgba(40, 80, 120, 1)", // Azul medianamente oscuro para textWhite
 
-      background: "rgba(200, 220, 240, 0.8)", // Azul pálido para el fondo
+      background: "rgba(200, 220, 240, 1)", // Azul pálido para el fondo
     },
   },
   Ghost: {
@@ -647,9 +647,9 @@ export const typesPokemon = {
       quaternary: "rgba(64, 96, 96, 1)", // Mezcla de tonos para Dragon (azul-verde más oscuro)
 
       textDark: "rgba(40, 20, 80, 1)", // Nuevo tono oscuro
-      textWhite: "rgba(200, 210, 235, 1)", // Nuevo tono claro (ajustado para combinar)
+      textWhite: "rgba(150, 160, 185, 1)", // Nuevo tono claro (ajustado para combinar)
 
-      background: "rgba(200, 210, 230, 0.8)", // Ajustado para adaptarse al tono predominante de la mezcla
+      background: "rgba(200, 210, 230, 1)", // Ajustado para adaptarse al tono predominante de la mezcla
     },
   },
   Water: {
