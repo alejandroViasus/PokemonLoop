@@ -9,12 +9,12 @@ import Pokeball from "@/app/Icons/Pokeball";
 
 import BackGroundPokeball from "@/app/Icons/BackGroundPokeball";
 import CardButtonTeam from "../CardButtonTeam/CardButtonTeam";
-function ShowCardMiniTeam({ pokemon, disposition }) {
+function ShowCardMiniTeam({ pokemon,format='pixel',scale=1 , disposition }) {
   const initialState = {
     theme: pokemon.type1,
     size: {
-      height: "130px",
-      width: "110px",
+      height:`${130*scale}px`,
+      width:`${110*scale}px`,
     },
     stars: [],
     rarity: "rare",
@@ -23,6 +23,8 @@ function ShowCardMiniTeam({ pokemon, disposition }) {
 
   useEffect(() => {
     //console.log(pokemonGet.valuePokemon(pokemon));
+
+    const theme=pokemon.type1
     const valuestars = [];
 
     for (let i = 0; i < pokemonGet.valuePokemon(pokemon); i++) {
@@ -34,8 +36,13 @@ function ShowCardMiniTeam({ pokemon, disposition }) {
         ? valuesPokemon.rateRarity[valuestars.length - 1]
         : valuesPokemon.rateRarity[valuesPokemon.rateRarity.length - 1];
 
-    setState({ ...state, stars: valuestars, rarity });
-  }, []);
+    setState({ ...state, stars: valuestars, rarity ,theme});
+
+
+
+  }, [pokemon]);
+
+
 
   const styleContentCard = {
     position: "relative",
@@ -83,7 +90,9 @@ function ShowCardMiniTeam({ pokemon, disposition }) {
 
   const styleImagePokemon = {
     top: "15px",
-    scale:'0.9'
+    scale: '0.9',
+    zIndex:'3',
+    top: format==='pixel'?'20%':'28%'
   };
 
   const bordeMargin = {
@@ -135,25 +144,28 @@ function ShowCardMiniTeam({ pokemon, disposition }) {
         <Image
           className="absolute"
           style={styleImagePokemon}
-          src={imagesPokemon.pixel(pokemon.noPokedex, pokemon.shiny)}
+          src={imagesPokemon[format](pokemon.noPokedex, pokemon.shiny)}
           width={80}
           height={80}
+          layout="responsive"
+          objectFit="cover"
           alt={`detail pokemon ${state.name}`}
         />
         <div
           className="absolute "
           style={{
             bottom: "0%",
-            right:'0%',
+            right: '0%',
             width: "auto",
-            backgroundColor:`${typesPokemon[state.theme]?.colors.background}`,
-            padding:'1px 5px',
-            display:'flex',
-            justifyContent:'flex-end',
-            fontSize:'12px',
-            fontWeight:'700',
-            borderRadius:'4px 0px 0px 0px',
-            color:`${typesPokemon[state.theme]?.colors.textDark}`
+            backgroundColor: `${typesPokemon[state.theme]?.colors.background}`,
+            padding: '1px 5px',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            fontSize: '12px',
+            fontWeight: '700',
+            borderRadius: '4px 0px 0px 0px',
+            zIndex:'4',
+            color: `${typesPokemon[state.theme]?.colors.textDark}`
           }}
         >
           <p>lvl. {pokemonGet.calcularNivel(pokemon.experience)}</p>
@@ -172,25 +184,25 @@ function ShowCardMiniTeam({ pokemon, disposition }) {
       </div>
 
       <div
-      className="absolute  cursor-pointer"
-      style={{
-        top:'28%',
-        left:'5%',
-        //backgroundColor:'red'
-        zIndex:'2'
-      }}
+        className="absolute  cursor-pointer"
+        style={{
+          top: '28%',
+          left: '5%',
+          //backgroundColor:'red'
+          zIndex: '2'
+        }}
       >
-      <CardButtonTeam pokemon={pokemon}/>
+        <CardButtonTeam pokemon={pokemon} />
       </div>
       <div
-      className="absolute cursor-pointer flex-all-center"
-      style={{
-        top:'48%',
-        left:'5%',
-        zIndex:'2'
-      }}
+        className="absolute cursor-pointer flex-all-center"
+        style={{
+          top: '48%',
+          left: '5%',
+          zIndex: '2'
+        }}
       >
-      <CardButtonTeam pokemon={pokemon} porperty={'favorite'}/>
+        <CardButtonTeam pokemon={pokemon} porperty={'favorite'} />
       </div>
     </div>
   );

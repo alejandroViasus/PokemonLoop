@@ -60,6 +60,11 @@
 .hover-scale:hover {
   scale: 1.03;
 }
+.title-details {
+  font-weight: 300;
+  font-size: 40px ;
+  letter-spacing: 6px;
+}
 .hover-bg-black-hard {
   padding: 10px 20px;
   background-color: transparent;
@@ -106,13 +111,13 @@
 .sidebar::-webkit-scrollbar-thumb {
   background-color: rgba(22, 22, 22, 0.5);
   border-radius: 0px 32px 32px 0px;
-  border-radius: 32px ;
+  border-radius: 32px;
   transition: all 2s;
 }
 .sidebar::-webkit-scrollbar-thumb:hover {
   scale: 1.1;
 }
-@bg-blue :rgba (80,80,80,1);
+@bg-blue : rgba (80, 80, 80, 1);
 .content-alert-standard {
   position: absolute;
   left: 0px;
@@ -168,6 +173,42 @@
 }
 .content-alert-standard .panel-info .info .bottons-info:hover {
   scale: 1.05;
+}
+.card-selected {
+  animation: springAnimation 0.5s ease-in-out;
+}
+@keyframes springAnimation {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.01);
+  }
+  20% {
+    transform: scale(1.015);
+  }
+  30% {
+    transform: scale(1.014);
+  }
+  40% {
+    transform: scale(1.013);
+  }
+  50% {
+    transform: scale(1.012);
+  }
+  60% {
+    transform: scale(1.011);
+  }
+  70% {
+    transform: scale(1.01);
+  }
+  75% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @font-face {
   font-family: 'Kodchasan';

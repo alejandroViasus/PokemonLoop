@@ -16,7 +16,7 @@ function Pokeball({color='rgba(22,22,22,1)'}) {
       </g>
     </g>
     <defs>
-      <clipPath id="a">
+      <clipPath id="a" style={{backgroundColor:'red'}}>
         <path fill={color} d="M0 0h14v12H0z" />
       </clipPath>
       <clipPath id="b">

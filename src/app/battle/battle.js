@@ -1,7 +1,7 @@
 import { trainers } from "@/Assets/trainers";
 import { typesPokemon } from "@/Assets/typesPokemon";
 import { generate, pokemonGet, valuesPokemon } from "@/Assets/funcions";
-import { valuesPokemon as vp} from "@/Assets/funcions";
+import { valuesPokemon as vp } from "@/Assets/funcions";
 import e from "cors";
 
 
@@ -38,7 +38,7 @@ export const handlerState = {
     let rival = newState.turn.user ? "rival" : "user";
     const cardSelectedTrainer =
       newState.vectorCards[trainerTurn][
-        newState.select.cardVector[trainerTurn]
+      newState.select.cardVector[trainerTurn]
       ];
     const cardSelectedRival = newState.reactionColision[rival];
     assetBattle;
@@ -231,7 +231,7 @@ export const assetBattle = {
       const heald = {
         rival:
           newState.team[newState.turn.user ? "user" : "rival"][
-            newState.select.pokemon[newState.turn.user ? "user" : "rival"]
+          newState.select.pokemon[newState.turn.user ? "user" : "rival"]
           ],
       };
 
@@ -259,7 +259,7 @@ export const assetBattle = {
       const magnitude = {
         trainer:
           cardSelect.trainer.powerActual /
-            valuesPokemon.componentBattle.groupCards.maxPower +
+          valuesPokemon.componentBattle.groupCards.maxPower +
           0.1,
         rival:
           cardSelect.rival.powerActual /
@@ -367,30 +367,30 @@ export const assetBattle = {
           (position.trainer.pokemon.x + size.trainer >=
             position.rival.pokemon.x &&
             position.trainer.pokemon.x + size.trainer <=
-              position.rival.pokemon.x + size.rival &&
+            position.rival.pokemon.x + size.rival &&
             position.trainer.pokemon.y + size.trainer >=
-              position.rival.pokemon.y &&
+            position.rival.pokemon.y &&
             position.trainer.pokemon.y + size.trainer <=
-              position.rival.pokemon.y + size.rival) ||
+            position.rival.pokemon.y + size.rival) ||
           // collide left-botton
           (position.trainer.pokemon.x >= position.rival.pokemon.x &&
             position.trainer.pokemon.x <=
-              position.rival.pokemon.x + size.rival &&
+            position.rival.pokemon.x + size.rival &&
             position.trainer.pokemon.y + size.trainer >=
-              position.rival.pokemon.y &&
+            position.rival.pokemon.y &&
             position.trainer.pokemon.y + size.trainer <=
-              position.rival.pokemon.y + size.rival) ||
+            position.rival.pokemon.y + size.rival) ||
           //collide left-top
           (position.trainer.pokemon.x >= position.rival.pokemon.x &&
             position.trainer.pokemon.x <=
-              position.rival.pokemon.x + size.rival &&
+            position.rival.pokemon.x + size.rival &&
             position.trainer.pokemon.y >= position.rival.pokemon.y &&
             position.trainer.pokemon.y <=
-              position.rival.pokemon.y + size.rival) ||
+            position.rival.pokemon.y + size.rival) ||
           (position.trainer.pokemon.x + size.trainer >=
             position.rival.pokemon.x &&
             position.trainer.pokemon.x + size.trainer <=
-              position.rival.pokemon.x + size.rival &&
+            position.rival.pokemon.x + size.rival &&
             position.trainer.pokemon.y >= position.rival.pokemon.y &&
             position.trainer.pokemon.y <= position.rival.pokemon.y + size.rival)
         ) {
@@ -464,13 +464,13 @@ export const assetBattle = {
             (3 * cardSelect.trainer.powerActual) /
             valuesPokemon.componentBattle.groupCards.maxPower;
 
-          const typeOfDeffense = cardSelect.typeAttack === "Normal" 
-          ?'Deffense'
-          :'SpecialDeffense'; //! 1.0 version Nueva
-          
-          const typeOfAttack = cardSelect.typeAttack === "Normal" 
-          ?'Attack'
-          :'SpecialAttack'; //! 1.1 version Nueva
+          const typeOfDeffense = cardSelect.typeAttack === "Normal"
+            ? 'Deffense'
+            : 'SpecialDeffense'; //! 1.0 version Nueva
+
+          const typeOfAttack = cardSelect.typeAttack === "Normal"
+            ? 'Attack'
+            : 'SpecialAttack'; //! 1.1 version Nueva
 
           const defenseRival = generate.getStat(
             pokemonSelect.rival,
@@ -478,13 +478,13 @@ export const assetBattle = {
             //"Deffense" //! 1.0 version Anterior
           );
 
-          
+
 
           const damage =
             generate.getStat(pokemonSelect.trainer,
               typeOfAttack //! 1.1 version Nueva
               // "Attack"  //! 1.1 version Anterior
-              ) *
+            ) *
             scaleDamage4CardEnergy *
             scaleDamage4Types;
 

@@ -66,15 +66,15 @@ function page() {
   const changeselect = (pokemon) => {
     setPokemonSelected(pokemon);
   };
-console.log(globalState.user.theme)
+  console.log(globalState.user.theme)
   return (
     <section
       className="percentage-100-width percentage-100-height flex-all-center"
       style={{
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        backgroundColor:`${typesPokemon[globalState.user.theme].colors.background}`,
-        
+        backgroundColor: `${typesPokemon[globalState.user.theme].colors.background}`,
+
       }}
     >
       <div>
@@ -89,16 +89,16 @@ console.log(globalState.user.theme)
       
       flex-all-center"
         style={{
-           //backgroundColor: 'blue',
+          //backgroundColor: 'blue',
           // gap:'10px'
         }}>
         <CardsRender
-        pokemonSelected={pokemonSelected}
+          pokemonSelected={pokemonSelected}
           pokemons={listPokemons?.slice().reverse()}
           changeselect={changeselect}
           theme={globalState.user.theme}
         />
-        <CardDetail pokemon={pokemonSelected}  theme={globalState.user.theme}/>
+        <CardDetail pokemon={pokemonSelected} theme={globalState.user.theme}/>
       </div>
     </section>
   );

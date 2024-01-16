@@ -1,7 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { generate } from "@/Assets/funcions";
+import { typesPokemon } from "@/Assets/typesPokemon";
 
-function ShowStacks({ pokemon }) {
+import Image from "next/image";
+import { pokemonGet } from "@/Assets/funcions";
+import { valuesPokemon } from "@/Assets/funcions";
+
+//import icons
+import iconHeald from '../../../../public/Assets/icons/iconHeald.svg';
+import iconSword from '../../../../public/Assets/icons/iconSword.svg';
+import iconSwordPlus from '../../../../public/Assets/icons/iconSword+.svg';
+import iconShield from '../../../../public/Assets/icons/iconShield.svg';
+import iconShieldPlus from '../../../../public/Assets/icons/iconShield+.svg';
+import iconSpeed from '../../../../public/Assets/icons/iconSpeed.svg';
+import Star from "../../../../public/Assets/icons/Types/Star.svg"
+
+function ShowStacks({ pokemon, theme }) {
+
+
+
+
+  const sizeIcon = 80;
+  const icons = {
+    Heald: iconHeald,
+    Attack: iconSword,
+    Deffense: iconShield,
+    SpecialAttack: iconSwordPlus,
+    SpecialDeffense: iconShieldPlus,
+    Speed: iconSpeed,
+  }
+
   const setValue = (item, offset) => {
     if (item < offset) {
       return item + 1;
@@ -10,8 +38,35 @@ function ShowStacks({ pokemon }) {
     }
   };
 
+  const [star, setStar] = useState({
+    stars: [],
+    rarity: '',
+  })
+
+  useEffect(() => {
+    //console.log(pokemonGet.valuePokemon(pokemon));
+    const valuestars = [];
+
+    for (let i = 0; i < pokemonGet.valuePokemon(pokemon); i++) {
+      valuestars.push(<Image key={`starDetail${pokemon._id}${i}`} src={Star} width={13} height={13} alt="star" />);
+    }
+
+    const rarity =
+      valuesPokemon?.rateRarity[valuestars.length - 1] !== undefined
+        ? valuesPokemon.rateRarity[valuestars.length - 1]
+        : valuesPokemon.rateRarity[valuesPokemon.rateRarity.length - 1];
+
+    setStar({ ...state, stars: valuestars, rarity });
+  }, [pokemon]);
+
+
+
+
+
   const setPercentage = (item, offset) => {
-    return ((item / offset) * 100).toFixed(2);
+    console.log('////////////----setPercentage', item, offset)
+    let percent = ((item / offset) * 100).toFixed(2)
+    return percent > 100 ? 100 : percent
   };
 
   const initialState = {
@@ -147,11 +202,11 @@ function ShowStacks({ pokemon }) {
       state.actualValues.statHeald >= state.referencePercentage.statHeald &&
       state.actualValues.statAttack >= state.referencePercentage.statAttack &&
       state.actualValues.statDeffense >=
-        state.referencePercentage.statDeffense &&
+      state.referencePercentage.statDeffense &&
       state.actualValues.statSpecialAttack >=
-        state.referencePercentage.statSpecialAttack &&
+      state.referencePercentage.statSpecialAttack &&
       state.actualValues.statSpecialDeffense >=
-        state.referencePercentage.statSpecialDeffense &&
+      state.referencePercentage.statSpecialDeffense &&
       state.actualValues.statSpeed >= state.referencePercentage.statSpeed
     ) {
       return true;
@@ -160,14 +215,178 @@ function ShowStacks({ pokemon }) {
     }
   };
 
-  //console.log(state);
+  console.log('validationScale', state);
   return (
-    <>
+    <div>
+
+
       <div
         style={{
-          height: "400px",
-          width: "400px",
-          backgroundColor: "rgba(22,22,22,0.1)",
+          position: "absolute",
+          opacity: '1',
+          left: "5%",
+          top: "5%",
+          height: "90%",
+          width: "90%",
+          clipPath: `polygon(
+                                50% 0%, 
+                                100% 25%, 
+                                100% 75%, 
+                                50% 100%, 
+                                0% 75%, 
+                                0% 25%
+                              )`,
+          backgroundColor: typesPokemon[theme].colors.primary,
+        }}
+      ></div>
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "5%",
+          top: "5%",
+          height: "90%",
+          width: "90%",
+          scale: '0.75',
+          clipPath: `polygon(
+            50% 0%, 
+            100% 25%, 
+            100% 75%, 
+            50% 100%, 
+            0% 75%, 
+            0% 25%
+                              )`,
+          backgroundColor: `rgba(222,222,222,0.15)`,
+        }}
+      ></div>
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "5%",
+          top: "5%",
+          height: "90%",
+          width: "90%",
+          scale: '0.5',
+          clipPath: `polygon(
+            50% 0%, 
+            100% 25%, 
+            100% 75%, 
+            50% 100%, 
+            0% 75%, 
+            0% 25%
+                              )`,
+          backgroundColor: typesPokemon[theme].colors.primary,
+        }}
+      ></div>
+
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "5%",
+          top: "5%",
+          height: "90%",
+          width: "90%",
+          scale: '0.25',
+          clipPath: `polygon(
+            50% 0%, 
+            100% 25%, 
+            100% 75%, 
+            50% 100%, 
+            0% 75%, 
+            0% 25%
+                              )`,
+          backgroundColor: `rgba(222,222,222,0.15)`,
+        }}
+      ></div>
+
+
+
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "50%",
+          top: "5%",
+          height: "90%",
+          width: "0.1%",
+          scale: '1',
+          backgroundColor: `rgba(22,22,22,0.3)`,
+        }}
+      ></div>
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "50%",
+          top: "0%",
+          height: "100%",
+          width: "0.1%",
+          scale: '1',
+          transform: 'rotate(63deg)',
+          backgroundColor: `rgba(22,22,22,0.3)`,
+        }}
+      ></div>
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "50%",
+          top: "0%",
+          height: "100%",
+          width: "0.1%",
+          scale: '1',
+          transform: 'rotate(-63deg)',
+          backgroundColor: `rgba(22,22,22,0.3)`,
+        }}
+      ></div>
+
+
+      {/* <div
+      style={{
+        position: "absolute",
+        opacity: '1',
+        left: "50%",
+        top: "5%",
+        height: "90%",
+        width: "0.1%",
+        scale: '1',
+        backgroundColor: `rgba(22,22,22,0.3)`,
+      }}
+    ></div>
+    <div
+      style={{
+        position: "absolute",
+        opacity: '1',
+        left: "50%",
+        top: "0%",
+        height: "100%",
+        width: "0.1%",
+        scale: '1',
+        transform: 'rotate(63deg)',
+        backgroundColor: `rgba(22,22,22,0.3)`,
+      }}
+    ></div>
+    <div
+      style={{
+        position: "absolute",
+        opacity: '1',
+        left: "50%",
+        top: "0%",
+        height: "100%",
+        width: "0.1%",
+        scale: '1',
+        transform: 'rotate(-63deg)',
+        backgroundColor: `rgba(22,22,22,0.3)`,
+      }}
+    ></div> */}
+
+      <div
+        style={{
+          height: "300px",
+          width: "300px",
+          backgroundColor: "rgba(22,22,22,0)",
           position: "relative",
           display: "flex",
           justifyContent: "center",
@@ -178,93 +397,316 @@ function ShowStacks({ pokemon }) {
           style={{
             position: "absolute",
             top: `${50 - state.actualValues.statHeald / 2}%`,
+            top: `-5%`,
             left: `50%`,
           }}
         >
-          <p>{state.actualValues.statHeald}</p>
+
+          <div
+            className="flex-all-center"
+            style={{
+              // alignItems: 'flex-end',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'green'
+
+            }}
+          >
+            <Image
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '0.7',
+                // bottom:'16%',
+                opacity: '1'
+              }}
+              src={icons.Heald}
+              height={sizeIcon}
+              width={sizeIcon}
+              alt="icon-show-speed"
+            ></Image>
+
+            <h1
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '1',
+                color: typesPokemon[theme].colors.textDark
+              }}
+            >
+              {state.actualValues.statHeald}
+            </h1>
+          </div>
+
         </div>
 
         <div
           style={{
             position: "absolute",
-            left: `${50 + (50 * state.actualValues.statAttack) / 100}%`,
-            top: `${25 + (25 - (25 * state.actualValues.statAttack) / 100)}%`,
+            // left: `${50 + (50 * state.actualValues.statAttack) / 100}%`,
+            left: `105%`,
+            // top: `${25 + (25 - (25 * state.actualValues.statAttack) / 100)}%`,
+            top: `25%`,
+            zIndex: '2'
           }}
         >
-          {state.actualValues.statAttack}
+          <div
+            className="flex-all-center"
+            style={{
+              // alignItems: 'flex-end',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'green'
+
+            }}
+          >
+            <Image
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '0.7',
+                // bottom:'16%',
+                opacity: '1'
+              }}
+              src={icons.Attack}
+              height={sizeIcon}
+              width={sizeIcon}
+              alt="icon-show-speed"
+            ></Image>
+
+            <h1
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '1',
+                color: typesPokemon[theme].colors.textDark
+              }}
+            >
+              {state.actualValues.statAttack}
+            </h1>
+          </div>
+
         </div>
 
         <div
           style={{
             position: "absolute",
-            left: `${50 + 50 * (state.actualValues.statDeffense / 100)}% `,
-            top: `${50 + 25 * (state.actualValues.statDeffense / 100)}%`,
+            // left: `${50 + 50 * (state.actualValues.statDeffense / 100)}% `,
+            left: `105% `,
+            // top: `${50 + 25 * (state.actualValues.statDeffense / 100)}%`,
+            top: `75%`,
           }}
         >
-          {state.actualValues.statDeffense}
+
+          <div
+            className="flex-all-center"
+            style={{
+              // alignItems: 'flex-end',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'green'
+
+            }}
+          >
+            <Image
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '0.7',
+                // bottom:'16%',
+                opacity: '1'
+              }}
+              src={icons.Deffense}
+              height={sizeIcon}
+              width={sizeIcon}
+              alt="icon-show-speed"
+            ></Image>
+
+            <h1
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '1',
+                color: typesPokemon[theme].colors.textDark
+              }}
+            >
+              {state.actualValues.statDeffense}
+            </h1>
+          </div>
+
         </div>
         <div
           style={{
             position: "absolute",
             left: `50% `,
-            top: `${50 + 50 * (state.actualValues.statSpecialAttack / 100)}%`,
+            // top: `${50 + 50 * (state.actualValues.statSpecialAttack / 100)}%`,
+            bottom: `-5%`,
           }}
         >
-          {state.actualValues.statSpecialAttack}
+          <div
+            className="flex-all-center"
+            style={{
+              // alignItems: 'flex-end',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'green'
+
+            }}
+          >
+            <Image
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '0.7',
+                // bottom:'16%',
+                opacity: '1'
+              }}
+              src={icons.SpecialAttack}
+              height={sizeIcon}
+              width={sizeIcon}
+              alt="icon-show-speed"
+            ></Image>
+
+            <h1
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '1',
+                color: typesPokemon[theme].colors.textDark
+              }}
+            >
+              {state.actualValues.statSpecialAttack}
+            </h1>
+          </div>
+
         </div>
 
         <div
           style={{
             position: "absolute",
-            left: `${
-              50 - 50 * (state.actualValues.statSpecialDeffense / 100)
-            }%  `,
-            top: ` ${
-              50 + 25 * (state.actualValues.statSpecialDeffense / 100)
-            }%`,
+            // left: `${50 - 50 * (state.actualValues.statSpecialDeffense / 100)}% `,
+            left: `-5% `,
+            // top: ` ${50 + 25 * (state.actualValues.statSpecialDeffense / 100)}%`,
+            top: `75%`,
           }}
         >
-          {state.actualValues.statSpecialDeffense}
+          <div
+            className="flex-all-center"
+            style={{
+              // alignItems: 'flex-end',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'green'
+
+            }}
+          >
+            <Image
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '0.7',
+                // bottom:'16%',
+                opacity: '1'
+              }}
+              src={icons.SpecialDeffense}
+              height={sizeIcon}
+              width={sizeIcon}
+              alt="icon-show-speed"
+            ></Image>
+
+            <h1
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '1',
+                color: typesPokemon[theme].colors.textDark
+              }}
+            >
+              {state.actualValues.statSpecialDeffense}
+            </h1>
+          </div>
+
         </div>
 
         <div
+          className="flex-all-center"
           style={{
+            flexDirection: 'column',
             position: "absolute",
-            left: `0%`,
-            top: `0%`,
+            left: `-12%`,
+            bottom: `-10%`,
+            scale:"2",
+            opacity:'0.4'
           }}
         >
+
+          
+
+          <div className=" flex-all-center"
+          
+          
+          >
+            {star.stars} 
+          </div>
           {state.interval}
         </div>
         <div
           style={{
             position: "absolute",
-            left: `${50 - 50 * (state.actualValues.statSpeed / 100)}%   `,
-            top: ` ${50 - 25 * (state.actualValues.statSpeed / 100)}%`,
+            // left: `${50 - 50 * (state.actualValues.statSpeed / 100)}%   `,
+            left: `-15%   `,
+            // top: ` ${50 - 25 * (state.actualValues.statSpeed / 100)}%`,
+            top: `15%`,
+            height: '80px',
+            width: '50px',
+            //  backgroundColor: 'blue',
           }}
         >
-          {state.actualValues.statSpeed}
+
+          <div
+            className="flex-all-center"
+            style={{
+              // alignItems: 'flex-end',
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'green'
+
+            }}
+          >
+            <Image
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '0.7',
+                // bottom:'16%',
+                opacity: '1'
+              }}
+              src={iconSpeed}
+              height={sizeIcon}
+              width={sizeIcon}
+              alt="icon-show-speed"
+            ></Image>
+
+            <h1
+              style={{
+                position: 'absolute',
+                // backgroundColor: 'red',
+                scale: '1',
+                color: typesPokemon[theme].colors.textDark
+              }}
+            >
+              {state.actualValues.statSpeed}
+            </h1>
+          </div>
         </div>
 
-        <div
-          style={{
-            position: "absolute",
 
-            left: "5%",
-            top: "5%",
-            height: "90%",
-            width: "90%",
-            clipPath: `polygon(
-      50% 0%, 
-      100% 25%, 
-      100% 75%, 
-      50% 100%, 
-      0% 75%, 
-      0% 25%
-    )`,
-            backgroundColor: "rgba(222,222,222,0.1)",
-          }}
-        ></div>
 
         <div
           style={{
@@ -287,11 +729,53 @@ function ShowStacks({ pokemon }) {
       ${50 - 50 * (state.actualValues.statSpeed / 100)}% 
       ${50 - 25 * (state.actualValues.statSpeed / 100)}%
           )`,
-            backgroundColor: "rgba(22,22,22,0.3)",
+            backgroundColor: typesPokemon[theme].colors.secondary,
+            opacity: '0.7'
           }}
         ></div>
       </div>
-    </>
+
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "50%",
+          top: "5%",
+          height: "90%",
+          width: "0.1%",
+          scale: '1',
+          backgroundColor: `rgba(22,22,22,0.1)`,
+        }}
+      ></div>
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "50%",
+          top: "0%",
+          height: "100%",
+          width: "0.1%",
+          scale: '1',
+          transform: 'rotate(63deg)',
+          backgroundColor: `rgba(22,22,22,0.1)`,
+        }}
+      ></div>
+      <div
+        style={{
+          position: "absolute",
+          opacity: '1',
+          left: "50%",
+          top: "0%",
+          height: "100%",
+          width: "0.1%",
+          scale: '1',
+          transform: 'rotate(-63deg)',
+          backgroundColor: `rgba(22,22,22,0)`,
+        }}
+      ></div>
+
+
+    </div>
   );
 }
 

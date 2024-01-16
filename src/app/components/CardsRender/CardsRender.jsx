@@ -5,11 +5,12 @@ import React, { useState, useEffect } from "react";
 import { valuesPokemon } from "@/Assets/funcions";
 
 //? components
-import Card from "../Card/Card";
+
+import Card from '../ComponentsCard/Card'
 import CardEmpty from "../CardEmpty/CardEmpty";
 import CardsSelector from "../CardsSelector/CardsSelector";
 
-function CardsRender({ pokemons, changeselect,pokemonSelected }) {
+function CardsRender({ pokemons, changeselect,pokemonSelected,theme }) {
 
   const [showPokemons, setShowPokemons] = useState([]);
 
@@ -94,7 +95,7 @@ function CardsRender({ pokemons, changeselect,pokemonSelected }) {
         //backgroundColor:'green',
         flexWrap: 'wrap',
         columnGap: '32px',
-        rowGap: '32px',
+        rowGap: '0px',
         //padding: '86px',
         justifyContent:'left'
       }}
@@ -106,6 +107,7 @@ function CardsRender({ pokemons, changeselect,pokemonSelected }) {
            index={index}
            totalCards={pokemons.length}
            handlerSelector={handlerSelector}
+           theme={theme}
          />
       </div>
       </div>

@@ -204,12 +204,12 @@ export const pokemonGet = {
   calcularNivel: (experiencia) => {
     let nivel = 1;
     let experienciaBase = 50;
-  
+
     while (experiencia >= experienciaBase) {
       experienciaBase = Math.round(experienciaBase + experienciaBase * 0.2);
       nivel++;
     }
-  
+
     return nivel;
   },
 
@@ -219,7 +219,7 @@ export const pokemonGet = {
     for (let i = 2; i <= nivel; i++) {
       experienciaBase = Math.round(experienciaBase + experienciaBase * 0.2);
     }
-  
+
     return experienciaBase;
   },
 
@@ -227,10 +227,10 @@ export const pokemonGet = {
     const tolerance = valuesPokemon.toleranceShiny;
     const value = Math.random() * tolerance;
     if (value > tolerance - 0.1 && value <= tolerance) {
-      console.log("SHINY", value);
+      //("SHINY", value);
       return 1;
     } else {
-      //console.log(value);
+      ////(value);
       return 0;
     }
   },
@@ -250,7 +250,7 @@ export const pokemonGet = {
       Math.round(Math.random() * valuesPokemon.maxNumberPokedex) +
       valuesPokemon.minNumberPokedex;
 
-    //console.log("nopokedex:", noPokedex, "levelTrainer", levelTrainer);
+    ////("nopokedex:", noPokedex, "levelTrainer", levelTrainer);
 
     if (valuesPokemon.listWarningPokemon.pokerfull.list.includes(noPokedex)) {
       if (
@@ -293,7 +293,7 @@ export const pokemonGet = {
       const levelDifferenceLeague =
         valuesPokemon.componentBattle.dificult[dificult].levelDifferenceLeague;
 
-      console.log("in level pokemon", trainer);
+      //("in level pokemon", trainer);
       levelpokemon =
         levelpokemon +
         Math.round(Math.random() * (levelpokemon + diferenceLevel)) +
@@ -304,7 +304,7 @@ export const pokemonGet = {
   level: (experienceTrainer = 1, difficult = 0) => {
     const probability = Math.random();
     const levelTrainer = pokemonGet.calcularNivel(experienceTrainer);
-    console.log('level', levelTrainer)
+    //('level', levelTrainer)
 
     let levelPokemon = levelTrainer;
     const keysProbability = Object.keys(valuesPokemon.probabilitiLevel);
@@ -330,7 +330,7 @@ export const pokemonGet = {
     );
   },
   type: (value, types) => {
-    //console.log(types);
+    ////(types);
 
     if (types.length === 1) {
       return capitalizeFirstLetter(types[0].type.name);
@@ -369,11 +369,11 @@ export const generate = {
     const newState = { ...state };
 
     //! newState.battleField?.pokemonSelectedRival aparece como undefinded y no podemos hacer la validacion pa terminar el combate
-    console.log("in validation game.........................A.");
-    console.log("stateBattle  :", stateBttle);
-    console.log("New State  :", newState.battlefield);
-    console.log("battlefield  :", newState);
-    console.log("in validation game.........................Z.");
+    //("in validation game.........................A.");
+    //("stateBattle  :", stateBttle);
+    //("New State  :", newState.battlefield);
+    //("battlefield  :", newState);
+    //("in validation game.........................Z.");
 
     // if (
     //   stateBttle.pokemonRival.dataPokemon === undefined ||
@@ -415,9 +415,9 @@ export const generate = {
     if (index >= team.length || index < 0) {
       index = 0;
     }
-    //console.log("index  :", index, team[index]);
+    ////("index  :", index, team[index]);
     if (team[index].alive) {
-      console.log("Selector _________", team[index]);
+      //("Selector _________", team[index]);
       return team[index];
     } else {
       return generate.SelectorPokemonTeamRival(team, count + 1);
@@ -429,7 +429,7 @@ export const generate = {
     //levelRival=60;
     let dificult = "";
     Object.keys(valuesPokemon.levelsTrainers).map((level) => {
-      //console.log('level', level )
+      ////('level', level )
       if (valuesPokemon.levelsTrainers[level].probability <= porbability) {
         dificult = level;
         levelRival = Math.round(
@@ -441,7 +441,7 @@ export const generate = {
       }
     });
 
-    //console.log('prob',porbability, '...  level', levelRival ,user.level )
+    ////('prob',porbability, '...  level', levelRival ,user.level )
     return { levelRival: levelRival + addLevel, dificult };
   },
   getSizePokemon: (pokemon) => {
@@ -455,9 +455,10 @@ export const generate = {
     return size;
   },
   getStat: (pokemon, typeStack) => {
-    //console.log("in generate", pokemon, typeStack);
+    ////("in generate", pokemon, typeStack);
     if (pokemon !== undefined) {
-      let nivel = pokemonGet.calcularNivel(pokemonGet.calcularNivel(pokemon.experience));
+      let nivel = pokemonGet.calcularNivel(pokemon.experience);
+
       let statBase = pokemon[`base${typeStack}`];
       let iv = pokemon[`scale${typeStack}`];
       //iv = 30;
@@ -466,16 +467,16 @@ export const generate = {
       let pe = pokemon[`effort${typeStack}`];
       let naturaleza = 1;
 
-      //console.log("nivel:", nivel);
-      //console.log("statBase:", statBase);
-      //console.log("pe:", pe);
-      //console.log("iv:", iv);
-
+      ////("nivel:", nivel);
+      ////("statBase:", statBase);
+      ////("pe:", pe);
+      ////("iv:", iv);
+      ////('--getStat :', 'lvl', nivel, statBase, iv, pe, typeStack);
       if (typeStack === "Heald") {
         // Cálculo de HP
         const stat =
           5 * ((nivel / 10) * ((statBase + iv) * 2 + iv + pe)) + nivel;
-
+        ////('getStat', Math.round(stat))
         return Math.round(stat);
       } else {
         // Cálculo de otras estadísticas (como ataque y defensa)
@@ -493,13 +494,12 @@ export const generate = {
         ) {
           stat = valuesPokemon.componentBattle.limitSpeedL.min;
         }
-
+        ////('getStat ************************', Math.round(stat))
         return Math.round(stat);
       }
     }
   },
   getStackReference: (pokemon, typeStack) => {
-    //console.log(pokemon, typeStack);
 
     let nivel = pokemonGet.calcularNivel(pokemon.experience);
     let statBase = pokemon[`base${typeStack}`];
@@ -508,21 +508,24 @@ export const generate = {
     //iv = 1;
     let pe = pokemon[`effort${typeStack}`];
     let naturaleza = 1;
+   // //('getStatReference :', 'lvl', nivel, statBase, iv, pe, typeStack);
 
-    // console.log("nivel:", nivel);
-    // console.log("statBase:", statBase);
-    // console.log("pe:", pe);
-    // console.log("iv:", iv);
+    // //("nivel:", nivel);
+    // //("statBase:", statBase);
+    // //("pe:", pe);
+    // //("iv:", iv);
 
     if (typeStack === "Heald") {
       // Cálculo de HP
-      const stat = 5 * ((nivel / 10) * ((statBase + iv) * 2 + iv + pe)) + nivel;
+      const stat = 15 * ((nivel / 10) * ((statBase + iv) * 2 + iv + pe)) + nivel;
+      // //('getStackReference', Math.round(stat))
       return Math.round(stat);
     } else {
       // Cálculo de otras estadísticas (como ataque y defensa)
       const stat = 5 + (nivel / 100) * (statBase * iv * 2 + iv + pe) + nivel;
 
-      //console.log(stat , typeStack)
+      ////(stat , typeStack)
+      //('getStackReference', Math.round(stat))
       return Math.round(stat);
     }
   },
@@ -530,10 +533,10 @@ export const generate = {
   newPokemon: (dataPokemon, trainer, general) => {
     let height = Math.round();
 
-    //console.log("Trainer in generate.newPokemon", dataPokemon,trainer)
+    ////("Trainer in generate.newPokemon", dataPokemon,trainer)
     const levelPokemon = pokemonGet.level(trainer.experience);
     const exp = pokemonGet.calcularExperiencia(levelPokemon)
-    console.log('exp', exp, 'level', levelPokemon, 'fbLevel', pokemonGet.calcularNivel(exp))
+    //('exp', exp, 'level', levelPokemon, 'fbLevel', pokemonGet.calcularNivel(exp))
 
     const newPokemon = { ...pokemonFormat };
     newPokemon.shiny = pokemonGet.shiny();
@@ -545,7 +548,7 @@ export const generate = {
     newPokemon.experience = exp;
     newPokemon.actualStack = 0;
     //newPokemon.level = pokemonGet.levelRival(trainer, general) || pokemonGet.level(trainer.level) + 1;
-    newPokemon.level = pokemonGet.level(trainer.level) ;
+    newPokemon.level = pokemonGet.level(trainer.level);
     newPokemon.weight = (dataPokemon.weight * 0.1).toFixed(3);
     newPokemon.height = (dataPokemon.height * 0.1).toFixed(3);
     newPokemon.type1 = pokemonGet.type(0, dataPokemon.types);
@@ -573,9 +576,9 @@ export const generate = {
     newPokemon.baseSpecialDeffense = dataPokemon.stats[4].base_stat;
     newPokemon.baseSpeed = dataPokemon.stats[5].base_stat;
 
-    console.log('isPokemon!!!!!!!!!!!!!!!!!!!', newPokemon)
+    //('isPokemon!!!!!!!!!!!!!!!!!!!', newPokemon)
     if (newPokemon.shiny === 1) {
-      console.log("No Pokedex !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", newPokemon.noPokedex);
+      //("No Pokedex !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", newPokemon.noPokedex);
     }
     return newPokemon;
   },
@@ -586,11 +589,10 @@ export const imagesPokemon = {
     //https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/754.png
     //https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/555.png
     const noPokedexOfficial = "";
-    console.log();
     return shiny
-      ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`
-      : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${noPokedex}.png` ||
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${noPokedex}.png`;
+      ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${noPokedex}.png`
+      : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${noPokedex}.png`
+
   },
 
   pixel: (noPokedex = 1, shiny = 0) => {
@@ -600,10 +602,10 @@ export const imagesPokemon = {
   },
   gif: (noPokedex = 1, shiny = 0) => {
     return shiny
-    ?`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/${noPokedex}.gif`
-    :`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${noPokedex}.gif`
+      ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/${noPokedex}.gif`
+      : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${noPokedex}.gif`
   },
-  svg:(noPokedex = 1, shiny = 0)=>{
+  svg: (noPokedex = 1, shiny = 0) => {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${noPokedex}.svg`
   }
 };

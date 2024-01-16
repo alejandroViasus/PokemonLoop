@@ -6,11 +6,17 @@ import Like from "@/app/Icons/Like";
 import Pokeball from "@/app/Icons/Pokeball";
 import Image from "next/image";
 import { typesPokemon } from "@/Assets/typesPokemon";
+import { colorsStack } from "@/Assets/typesPokemon";
 
-function CardButtonTeam({ pokemon, porperty = "team" }) {
+function CardButtonTeam({ pokemon, porperty = "team", subColor = 'primary', scale = 1, theme }) {
+
+  if (theme === undefined) {
+    theme = pokemon.type1
+  }
+
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state.valueState);
- 
+
 
 
   const initialState = {
@@ -92,18 +98,19 @@ function CardButtonTeam({ pokemon, porperty = "team" }) {
 
           className="none-styles-button"
           style={{
-            
-            scale: '1.5',
-           opacity:state[porperty]?'1':'0.3'
+
+            scale: state[porperty] ? 1.5 * scale : 1.3 * scale,
+            opacity: state[porperty] ? '1' : '0.5',
+            opacity: state[porperty] ? '1' : '0.7',
           }
           }
         >
           {/* {state[porperty] ? `${porperty}` : "...." || ""} */}
-          {porperty==='team'
-          ?
-          <Pokeball color={typesPokemon[pokemon.type1].colors.primary} />
-          :
-          <Like color={typesPokemon[pokemon.type1].colors.primary} />
+          {porperty === 'team'
+            ?
+            <Pokeball color={state[porperty] ? colorsStack.Heald : typesPokemon[theme].colors.primary} />
+            :
+            <Like color={state[porperty] ? colorsStack.Heald : typesPokemon[theme].colors.primary} />
           }
         </button>
 

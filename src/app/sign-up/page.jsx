@@ -33,7 +33,7 @@ function Page() {
 
   const globalState = useSelector((state) => state.valueState);
 
-  console.log(globalState,'.........................')
+  console.log(globalState, '.........................')
 
   const keyRegionPokemon = Object.keys(valuesPokemon.inicialesPokemon);
 
@@ -143,7 +143,14 @@ function Page() {
               const dataPokemon = await responsePokemonData.json();
               newPokemon = generate.newPokemon(dataPokemon, data.data);
               newPokemon.team = true;
-              newPokemon.favorite=true;
+              newPokemon.favorite = true;
+              newPokemon.scaleHeald = 16;
+              newPokemon.scaleAttack = 16;
+              newPokemon.scaleDeffense = 16;
+              newPokemon.scaleSpecialAttack= 16;
+              newPokemon.scaleSpecialDeffense = 16;
+              newPokemon.scaleSpeed= 16;
+
               console.log("|||||||||||||", newPokemon);
               const responsePokemon = await fetch(
                 "/api/pokemon/create-pokemon",
@@ -241,9 +248,9 @@ function Page() {
 
     opacity:
       state.email === "" ||
-      state.type === "None" ||
-      state.trainer === "None" ||
-      state.name.length < 4
+        state.type === "None" ||
+        state.trainer === "None" ||
+        state.name.length < 4
         ? "0.3"
         : "1",
   };
@@ -423,9 +430,8 @@ function Page() {
                     flex-all-center
                     "
                     style={{
-                      backgroundColor: `${
-                        typesPokemon[state.type].colors.secondary
-                      }`,
+                      backgroundColor: `${typesPokemon[state.type].colors.secondary
+                        }`,
                       height: "100%",
                       width: "100%",
                       display: "flex",
@@ -438,7 +444,7 @@ function Page() {
                         if (state.initialPokemon == pokemon) {
                           exibition = false;
                         }
-                       
+
                         return (
                           <CardMini
                             exibicion={exibition}

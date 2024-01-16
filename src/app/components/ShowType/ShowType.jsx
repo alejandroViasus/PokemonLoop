@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { typesPokemon } from "@/Assets/typesPokemon";
 
-import IconNone from "@/app/components/IconType/IconNone";
-import IconBug from "@/app/components/IconType/IconBug";
-import IconDark from "@/app/components/IconType/IconDark";
-import IconDragon from "@/app/components/IconType/IconDragon";
-import IconElectric from "@/app/components/IconType/IconElectric";
-import IconFairy from "@/app/components/IconType/IconFairy";
-import IconFighting from "@/app/components/IconType/IconFighting";
-import IconFire from "@/app/components/IconType/IconFire";
-import IconFlying from "@/app/components/IconType/IconFlying";
-import IconGhost from "@/app/components/IconType/IconGhost";
-import IconGrass from "@/app/components/IconType/IconGrass";
-import IconGround from "@/app/components/IconType/IconGround";
-import IconIce from "@/app/components/IconType/IconIce";
-import IconNormal from "@/app/components/IconType/IconNormal";
-import IconPoison from "@/app/components/IconType/IconPoison";
-import IconPsychic from "@/app/components/IconType/IconPsychic";
-import IconRock from "@/app/components/IconType/IconRock";
-import IconSteel from "@/app/components/IconType/IconSteel";
-import IconWater from "@/app/components/IconType/IconWater";
+import IconNone from "@/app/Icons/None";
+import IconBug from "@/app/Icons/Bug";
+import IconDark from "@/app/Icons/Dark";
+import IconDragon from "@/app/Icons/Dragon";
+import IconElectric from "@/app/Icons/Electric";
+import IconFairy from "@/app/Icons/Fairy";
+import IconFighting from "@/app/Icons/Fighting";
+import IconFire from "@/app/Icons/Fire";
+import IconFlying from "@/app/Icons/Flying";
+import IconGhost from "@/app/Icons/Ghost";
+import IconGrass from "@/app/Icons/Grass";
+import IconGround from "@/app/Icons/Ground";
+import IconIce from "@/app/Icons/Ice";
+import IconNormal from "@/app/Icons/Normal";
+import IconPoison from "@/app/Icons/Poison";
+import IconPsychic from "@/app/Icons/Psychic";
+import IconRock from "@/app/Icons/Rock";
+import IconSteel from "@/app/Icons/Steel";
+import IconWater from "@/app/Icons/Water";
 
-function ShowType({ type1, type2, fill = `rgba(100,100,100,1)` }) {
+function ShowType({ type1, type2, fill = `rgba(100,100,100,1)` ,scale='1'}) {
   const iconC = {
     IconNone,
     IconBug,
@@ -58,17 +58,19 @@ function ShowType({ type1, type2, fill = `rgba(100,100,100,1)` }) {
   }, [type1, type2]);
 
   return (
-    <div style={{ display: "flex" }}>
-      {state.map((type, index) => {
+    <div 
+    className="flex-all-center percentage-100-width"
+    style={{ display: "flex" ,gap:'30px',scale:scale, }}>
+      {state.reverse().map((type, index) => {
         if (type !== undefined) {
           const Component = iconC[`Icon${type}`];
 
           return (
             <div
               key={`type${type}${Math.random() * index}`}
-              style={{width: `50px`, height: `50px` }}
+              style={{width: `auto`, height: `auto` ,}}
             >
-              <Component fill={fill} />
+              <Component color={fill} />
             </div>
           );
         }

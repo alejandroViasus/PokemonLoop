@@ -37,6 +37,17 @@ import IconPsychic from "@/app/components/IconType/IconPsychic";
 import IconRock from "@/app/components/IconType/IconRock";
 import IconSteel from "@/app/components/IconType/IconSteel";
 import IconWater from "@/app/components/IconType/IconWater";
+
+export const titleStack = {
+  Heald: `HP`,
+  Attack: `ATK`,
+  Deffense: `DFS`,
+};
+export const colorsStack = {
+  Heald: `rgba(255,113,112,1)`,
+  Attack: `rgba(112,177,255,1)`,
+  Deffense: `rgba(107,210,130,1)`,
+};
 export const typesPokemon = {
   None: {
     icon: iconNone,
@@ -67,7 +78,6 @@ export const typesPokemon = {
       quaternary: "rgba(180, 51, 65,1)",
       textDark: "rgba(150, 21, 35,1)", // Tono oscuro estándar
       textWhite: "rgba(250, 120, 120, 1)", // Nuevo tono claro de rojo pastel
-
       background: "rgba(220, 220, 220, 1)", // Ajustado para adaptarse al nuevo tono predominante
     },
   },
@@ -201,12 +211,9 @@ export const typesPokemon = {
       secondary: "rgba(102, 153, 255, 1)", // Azul pastel más oscuro
       tertiary: "rgba(255, 170, 102, 1)", // Amarillo terciario
       quaternary: "rgba(255, 184, 77, 1)", // Azul terciario
-
       textDark: "rgba(20, 20, 40, 1)", // Tono oscuro estándar
       textWhite: "rgba(0, 0, 40, 1)", // Azul oscuro para textWhite
-
-      background: "rgba(220, 220, 240, 1)", // Ajustado para adaptarse al nuevo tono predominante
-    
+      background: "rgba(200, 200, 240, 1)", // Ajustado para adaptarse al nuevo tono predominante
     },
   },
   Fairy: {
