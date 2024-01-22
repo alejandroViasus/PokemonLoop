@@ -14,7 +14,9 @@ function IconBox({ type, subColor = 'primary', color = '' }) {
             fill="none"
 
         >
-            {/* <path
+            {/* 
+            //yesid unibio
+            <path
                 fill={color !== ''
                     ? color
                     : typesPokemon[type].colors[subColor]

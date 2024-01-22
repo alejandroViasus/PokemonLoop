@@ -87,9 +87,9 @@
   }
 }
 
-.title-details{
+.title-details {
   font-weight: 300;
-  font-size: 40px ;
+  font-size: 40px;
   letter-spacing: 6px;
 }
 
@@ -115,6 +115,16 @@
 
   }
 }
+.hover-scale-select-pokemon {
+
+  scale: 1;
+  transition: all 0.3s;
+  
+  &:hover {
+    scale: 1.1;
+
+  }
+}
 
 .transition-small {
   transition: all 0.3s;
@@ -129,6 +139,14 @@
 .border-radius-mid {
   border-radius: 8px;
   border: 0px;
+}
+.border-radius-small {
+  border-radius: 4px;
+  border: 0px;
+}
+
+.outline-box-big{
+  outline: 4px solid rgb(255,255,255);
 }
 
 .gap-big {
@@ -243,37 +261,72 @@
 }
 
 @keyframes springAnimation {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
 
   10% {
     transform: scale(1.01);
   }
+
   20% {
     transform: scale(1.015);
   }
+
   30% {
     transform: scale(1.014);
   }
+
   40% {
     transform: scale(1.013);
   }
+
   50% {
     transform: scale(1.012);
   }
+
   60% {
     transform: scale(1.011);
   }
+
   70% {
     transform: scale(1.010);
   }
+
   75% {
     transform: scale(1.01);
   }
+
   100% {
     transform: scale(1);
   }
-  
+
 }
 
+.animation-rotate-360{
+  animation: rotate 120s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animation-up-and-down{
+  animation: subirBajar 6s ease-in-out infinite;
+}
+
+@keyframes subirBajar {
+  0%, 100% {
+    transform: translateY(0); /* En la posición inicial y final, el elemento está en su posición normal */
+  }
+  50% {
+    transform: translateY(-5%); /* A la mitad de la animación, el elemento se desplaza hacia arriba */
+  }
+}

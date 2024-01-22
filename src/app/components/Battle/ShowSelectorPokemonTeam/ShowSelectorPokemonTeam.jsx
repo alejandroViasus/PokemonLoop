@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ShowSelectorPokemonTeamItem from "../ShowSelectorPokemonTeamItem/ShowSelectorPokemonTeamItem";
+import Image from "next/image";
+import { trainers } from "@/Assets/trainers";
 
-function ShowSelectorPokemonTeam({ team, methods, trainer, selector }) {
+
+function ShowSelectorPokemonTeam({ team, methods, trainer, selector, battleState }) {
+
+  // console.log('SSelectorPokemon',trainer,team[selector])
   const [pokemonTeam, setPokemonTeam] = useState([]);
 
   useEffect(() => {
@@ -12,7 +17,7 @@ function ShowSelectorPokemonTeam({ team, methods, trainer, selector }) {
 
   useEffect(() => {
     if (Array.isArray(pokemonTeam) && pokemonTeam.length > 0) {
-      console.log("Change Pokemon ?", trainer, pokemonTeam[selector]?.heald);
+      // console.log("Change Pokemon ?", trainer, pokemonTeam[selector]?.heald);
       if (pokemonTeam[selector]?.heald === 0) {
         return randomSelectPokemon();
       }
@@ -35,7 +40,7 @@ function ShowSelectorPokemonTeam({ team, methods, trainer, selector }) {
       if (unablePokemon.length === pokemonTeam.length) {
         console.log("pokemonsUnable:", unablePokemon);
 
-        return methods.changeActualPhase(0,trainer);
+        return methods.changeActualPhase(0, trainer);
       } else {
         if (pokemonTeam[newSelector].heald > 0) {
           return methods.selector.pokemon(newSelector, trainer);
@@ -45,20 +50,31 @@ function ShowSelectorPokemonTeam({ team, methods, trainer, selector }) {
       }
     }
   };
-
+  // console.log('InSelector', )
   return (
     <div>
-      <h1>{trainer}</h1>
-      {pokemonTeam.map((pokemon, index) => (
-        <ShowSelectorPokemonTeamItem
-          key={pokemon._id}
-          trainer={trainer}
-          methods={methods}
-          pokemon={pokemon}
-          selector={selector}
-          index={index}
-        />
-      ))}
+      {/* <h1>{trainer}</h1> */}
+
+      {/* <Image src={trainers[trainer.pictureTrainer].image} height={100}width={100} alt={`image trainer ${battleState?.users?.s}`}/> */}
+      <div
+      className="flex-all-center"
+      style={{
+        gap:'30px'
+      }}
+      >
+
+
+        {pokemonTeam.map((pokemon, index) => (
+          <ShowSelectorPokemonTeamItem
+            key={pokemon._id}
+            trainer={trainer}
+            methods={methods}
+            pokemon={pokemon}
+            selector={selector}
+            index={index}
+          />
+        ))}
+      </div>
     </div>
   );
 }

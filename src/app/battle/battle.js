@@ -207,6 +207,7 @@ export const battleVariables = {
 export const assetBattle = {
   get: {
     nextStep: (state, trainerTurn, rival) => {
+
       let newState = { ...state };
 
       //? Selectores
@@ -217,8 +218,8 @@ export const assetBattle = {
 
       //?pokemon Select
       const pokemonSelect = {
-        trainer: newState.team[trainerTurn][select.pokemon[trainerTurn]],
-        rival: newState.team[rival][select.pokemon[rival]],
+        trainer: newState.team?.[trainerTurn]?.[select.pokemon?.[trainerTurn]],
+  rival: newState.team?.[rival]?.[select.pokemon?.[rival]],
       };
 
       //?card Select
@@ -230,8 +231,8 @@ export const assetBattle = {
 
       const heald = {
         rival:
-          newState.team[newState.turn.user ? "user" : "rival"][
-          newState.select.pokemon[newState.turn.user ? "user" : "rival"]
+          newState?.team?.[newState?.turn?.user ? "user" : "rival"]?.[
+          newState?.select?.pokemon?.[newState?.turn?.user ? "user" : "rival"]
           ],
       };
 
@@ -290,7 +291,7 @@ export const assetBattle = {
 
       //?Types
       const types = {
-        trainer: pokemonSelect.trainer[`type${cardSelect.trainer.type}`],
+        trainer: pokemonSelect?.trainer?.[`type${cardSelect?.trainer?.type}`],
         rival: {
           type1: pokemonSelect.rival.type1,
           type2: pokemonSelect.rival.type2,
@@ -312,7 +313,7 @@ export const assetBattle = {
 
         //?Types
         const types = {
-          trainer: pokemonSelect.trainer[`type${cardSelect.trainer.type}`],
+          trainer: pokemonSelect?.trainer?.[`type${cardSelect?.trainer?.type}`],
           rival: {
             type1: pokemonSelect.rival.type1,
             type2: pokemonSelect.rival.type2,
@@ -590,19 +591,22 @@ export const assetBattle = {
 
       return newState;
     },
-    decrementPower: (state, trainerTurn) => {
+    decrementPower: (state, trainerTurn="rival") => {
       // si el pokemon tiene el uno de los tipos del bioma el decremento sera se le restara 0.05 ,si tiene los dos tiempo , el decremento se le restara  0.1
       // si el pokemon tiene un tipo debil con el bioma se le sumara al decremento 0.05 , si el pokemon tiene dos tipos debiles contra el bioma , se le sumara al decremento 0.1
       // de lo contrario el decremento sera de 1
-      let decrement = 1;
-
+      let decrement = 1;      
       const bioma = state.game.bioma;
       const bonus = battleVariables.powerVariables.decrement.bonus;
       const indexPokemon = state?.select?.pokemon[trainerTurn];
       const indexCard = state.select.cardVector[trainerTurn];
       const cardSelect = state.vectorCards[trainerTurn][indexCard];
-      const pokemonSelect = state.team[trainerTurn][indexPokemon];
-      const type = pokemonSelect[`type${cardSelect.type}`];
+      const teamTrainer=state.team[trainerTurn];
+      let pokemonSelect ={}
+      if(teamTrainer !== undefined ){
+        pokemonSelect = teamTrainer[indexPokemon];
+      }
+      const type = pokemonSelect[`type${cardSelect.type}`]||'Normal';
       // console.log(
       //   "!!DecreasePokemon",
       //   "type:",
@@ -799,7 +803,7 @@ export const assetBattle = {
         user: false,
         loser: "",
       },
-      phase: { time: 0, actual: 3, turn: 0, CountTurn: 0 },
+      phase: { time: 0, actual: 1, turn: 0, CountTurn: 0 ,pause:false},
       game: {
         bioma: assetBattle.get.bioma(),
       },

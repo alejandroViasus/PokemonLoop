@@ -28,6 +28,7 @@ function page() {
       router.push(`${urlHome}`);
     }
   }, []);
+
   useEffect(() => {
     if (
       (state.validation.team === 5 || state.validation.team === "continue") &&
@@ -41,12 +42,12 @@ function page() {
     }
   }, [state]);
 
-  useEffect(() => {
+  useEffect(async() => {
     if (state.pokeRivaldex.length === 5) {
       //console.log("Ready To Create Team Rival");
 
       //!-------------------------------
-      const fetchArray = state.pokeRivaldex?.map((noPokedex) =>
+      const fetchArray = await state.pokeRivaldex?.map((noPokedex) =>
         fetch(`https://pokeapi.co/api/v2/pokemon/${noPokedex}`)
       );
       if (fetchArray !== undefined) {

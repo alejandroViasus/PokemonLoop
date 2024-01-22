@@ -22,7 +22,7 @@ import IconRock from "@/app/Icons/Rock";
 import IconSteel from "@/app/Icons/Steel";
 import IconWater from "@/app/Icons/Water";
 
-function ShowType({ type1, type2, fill = `rgba(100,100,100,1)` ,scale='1'}) {
+function ShowType({ type1, type2, fill = `rgba(100,100,100,1)` ,scale='1', disposition="row"} ) {
   const iconC = {
     IconNone,
     IconBug,
@@ -59,12 +59,12 @@ function ShowType({ type1, type2, fill = `rgba(100,100,100,1)` ,scale='1'}) {
 
   return (
     <div 
-    className="flex-all-center percentage-100-width"
-    style={{ display: "flex" ,gap:'30px',scale:scale, }}>
+    // className="flex-all-center percentage-100-width"
+    className="flex-all-center "
+    style={{ display: "flex", flexDirection:disposition ,gap:'30px',scale:scale,}}>
       {state.reverse().map((type, index) => {
         if (type !== undefined) {
           const Component = iconC[`Icon${type}`];
-
           return (
             <div
               key={`type${type}${Math.random() * index}`}

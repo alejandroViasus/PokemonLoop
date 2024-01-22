@@ -11,6 +11,7 @@ import IconExpedition from "@/app/Icons/IconExpedition";
 import IconPokeballsL from "@/app/Icons/IconPokeballsL";
 
 import CardButtonTeam from "../CardButtonTeam/CardButtonTeam";
+import iconArroeTrade from "@/app/Icons/iconArroeTrade";
 
 
 
@@ -165,6 +166,12 @@ function SendToOak({ pokemon, theme }) {
     gap: '5%'
 
   }
+  const styleButtonTrade = {
+    flexDirection: 'column',
+    backgroundColor: typesPokemon[theme].colors.background,
+    width: '40%',
+    padding: '5px 25px',
+  }
   return (
     <div
 
@@ -173,7 +180,7 @@ function SendToOak({ pokemon, theme }) {
 
         // disabled={state.team || state.favorite}
         onClick={handlerTrade}
-        className="flex-all-center none-styles-button "
+        className="flex-all-center none-styles-button"
         style={{ scale: 3 }}
 
       >
@@ -197,7 +204,7 @@ function SendToOak({ pokemon, theme }) {
 
       {state.showTrade ? (
         <div
-          className="flex-all-center absolute"
+          className="flex-all-center absolute "
           style={{
             flexDirection: 'column',
             left: "0%",
@@ -207,7 +214,7 @@ function SendToOak({ pokemon, theme }) {
             width: '100%',
             height: '100%',
             backgroundColor: typesPokemon[theme].colors.primary,
-            gap: '10%',
+            gap: '3%',
           }}
         // onClick={handlerTrade}
         >
@@ -235,50 +242,24 @@ function SendToOak({ pokemon, theme }) {
             >profesor OAK</h3>
           </div>
 
-          <div
-            className="flex-all-center"
-            style={{
-              flexDirection: 'column',
-              height: '10%',
-              width: '100%',
-              gap: "10%"
-              //backgroundColor: 'red'
-            }}
-          >
-            {state.team ? (
-              <p
-                className="flex-all-center"
-                style={styleAlert}
-              >
-                <CardButtonTeam pokemon={pokemon} />
-                Your Pokémon cannot be in your Pokémon team.</p>
-            ) : null}
-            {state.favorite ? (
-              <p
-                className="flex-all-center"
-                style={styleAlert}
-              >
-                <CardButtonTeam pokemon={pokemon} porperty={"favorite"} />
-                Your Pokémon cannot be set as favorites.</p>
-            ) : null}
-          </div>
+
 
           <div
             className="flex-all-center border-radius-mid "
             style={{
               gap: '10px',
-              backgroundColor:typesPokemon[theme].colors.background,
-              padding:'15px 20px',
-             
+              backgroundColor: typesPokemon[theme].colors.background,
+              padding: '15px 20px',
+
             }}
           >
-
-
             <div>
               <ShowCardMiniTeam pokemon={pokemon} format='gif' />
             </div>
 
-            <div> icon Arrow trade</div>
+            <div>
+              <iconArroeTrade type={theme}/>
+            </div>
             <div
               className="flex-all-center"
               style={{
@@ -355,30 +336,71 @@ function SendToOak({ pokemon, theme }) {
 
           </div>
 
-         
+          <div
+            className="flex-all-center"
+            style={{
+              flexDirection: 'column',
+              height: '10%',
+              width: '100%',
+              gap: "10%",
+              // backgroundColor: 'red',
+            }}
+          >
+            {state.team ? (
+              <p
+                className="flex-all-center"
+                style={styleAlert}
+              >
+                <CardButtonTeam pokemon={pokemon} />
+                Your Pokémon cannot be in your Pokémon team.</p>
+            ) : null}
+            {state.favorite ? (
+              <p
+                className="flex-all-center"
+                style={styleAlert}
+              >
+                <CardButtonTeam pokemon={pokemon} porperty={"favorite"} />
+                Your Pokémon cannot be set as favorites.</p>
+            ) : null}
+          </div>
 
-          <div>
+          <div
+            className="flex-all-center percentage-100-width"
+            style={{
+              gap: '5%',
+              // backgroundColor: 'red'
+            }}
+
+          >
             <button onClick={handlerTrade}
-
-              style={{
-
-              }}
+              className="none-styles-button flex-all-center border-radius-small hover-bg-black-lite"
+              style={styleButtonTrade}
             >
 
-              <h1>Cancel</h1>
-              <h6>trade</h6>
+              <h1
+                style={{ color: typesPokemon[theme].colors.primary, fontSize: '30px', fontWeight: '400' }}
+              >Cancel</h1>
+              <h4
+                style={{ color: typesPokemon[theme].colors.secondary }}
+              >trade</h4>
             </button>
 
             <button
+              className="none-styles-button flex-all-center border-radius-small hover-bg-black-lite"
+              style={styleButtonTrade}
               disabled={state.team || state.favorite}
               onClick={handlerSendToOak}
             >
-              <h1>
+              <h1
+                style={{ color: typesPokemon[theme].colors.primary, fontSize: '30px', fontWeight: '400' }}
+              >
                 Send
               </h1>
-              <h6>
+              <h4
+                style={{ color: typesPokemon[theme].colors.secondary }}
+              >
                 to Porffesor Oak
-              </h6>
+              </h4>
             </button>
           </div>
 

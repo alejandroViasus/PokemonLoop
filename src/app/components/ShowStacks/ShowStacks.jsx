@@ -14,6 +14,7 @@ import iconShield from '../../../../public/Assets/icons/iconShield.svg';
 import iconShieldPlus from '../../../../public/Assets/icons/iconShield+.svg';
 import iconSpeed from '../../../../public/Assets/icons/iconSpeed.svg';
 import Star from "../../../../public/Assets/icons/Types/Star.svg"
+import IconHeald from "@/app/Icons/IconHeald";
 
 function ShowStacks({ pokemon, theme }) {
 
@@ -413,7 +414,7 @@ function ShowStacks({ pokemon, theme }) {
 
             }}
           >
-            <Image
+            {/* <Image
               style={{
                 position: 'absolute',
                 // backgroundColor: 'red',
@@ -425,7 +426,19 @@ function ShowStacks({ pokemon, theme }) {
               height={sizeIcon}
               width={sizeIcon}
               alt="icon-show-speed"
-            ></Image>
+            ></Image> */}
+
+            <div
+            style={{
+              position: 'absolute',
+              //  backgroundColor: typesPokemon[theme].colors.background,
+              scale: '0.5',
+              // bottom:'16%',
+              opacity: '1'
+            }}
+            >
+              <IconHeald type={theme} subColor="background"/>
+            </div>
 
             <h1
               style={{

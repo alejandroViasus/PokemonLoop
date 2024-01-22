@@ -62,7 +62,7 @@
 }
 .title-details {
   font-weight: 300;
-  font-size: 40px ;
+  font-size: 40px;
   letter-spacing: 6px;
 }
 .hover-bg-black-hard {
@@ -83,6 +83,13 @@
   background-color: rgba(22, 22, 22, 0.05);
   scale: 1;
 }
+.hover-scale-select-pokemon {
+  scale: 1;
+  transition: all 0.3s;
+}
+.hover-scale-select-pokemon:hover {
+  scale: 1.1;
+}
 .transition-small {
   transition: all 0.3s;
 }
@@ -93,6 +100,13 @@
 .border-radius-mid {
   border-radius: 8px;
   border: 0px;
+}
+.border-radius-small {
+  border-radius: 4px;
+  border: 0px;
+}
+.outline-box-big {
+  outline: 4px solid #ffffff;
 }
 .gap-big {
   gap: 30px;
@@ -208,6 +222,31 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+.animation-rotate-360 {
+  animation: rotate 120s linear infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animation-up-and-down {
+  animation: subirBajar 6s ease-in-out infinite;
+}
+@keyframes subirBajar {
+  0%,
+  100% {
+    transform: translateY(0);
+    /* En la posición inicial y final, el elemento está en su posición normal */
+  }
+  50% {
+    transform: translateY(-5%);
+    /* A la mitad de la animación, el elemento se desplaza hacia arriba */
   }
 }
 @font-face {

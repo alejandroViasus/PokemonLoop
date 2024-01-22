@@ -356,6 +356,34 @@ export const pokemonGet = {
 };
 
 export const generate = {
+
+  getEffectiveness: (pokemon, rival, bioma = 'Normal') => {
+    let Effectiveness = 0;
+    console.log(
+      pokemon?.type1,
+      pokemon?.type2,
+      rival,
+      rival?.type2,
+      bioma)
+
+
+    const effectivenessBioma = [...new Set([
+      typesPokemon[bioma].effectiveness[pokemon.type1],
+      typesPokemon[bioma].effectiveness[pokemon.type2]
+    ])]
+    const effectivenessRival = [...new Set([
+      typesPokemon[rival.type1].effectiveness[pokemon.type1],
+      typesPokemon[rival.type1].effectiveness[pokemon.type2]
+    ])]
+
+    console.log(effectivenessBioma, effectivenessRival)
+
+
+
+    // Effectiveness=(typesPokemon[bioma].effectiveness[pokemon.type1]*0.5)
+    // Effectiveness=Effectiveness+typesPokemon[rival.type1].effectiveness[pokemon.type1]
+    return 1 - Effectiveness
+  },
   bioma: () => {
     const biomas = Object.keys(typesPokemon);
     let selectorBioma = Math.round(Math.random() * biomas.length);
@@ -445,7 +473,7 @@ export const generate = {
     return { levelRival: levelRival + addLevel, dificult };
   },
   getSizePokemon: (pokemon) => {
-    let size = pokemon.height * battleVariables.size.pokemon.scale.base;
+    let size = pokemon?.height * battleVariables.size.pokemon.scale.base;
     if (size < battleVariables.size.pokemon.scale.min) {
       size = battleVariables.size.pokemon.scale.min;
     }
@@ -508,7 +536,7 @@ export const generate = {
     //iv = 1;
     let pe = pokemon[`effort${typeStack}`];
     let naturaleza = 1;
-   // //('getStatReference :', 'lvl', nivel, statBase, iv, pe, typeStack);
+    // //('getStatReference :', 'lvl', nivel, statBase, iv, pe, typeStack);
 
     // //("nivel:", nivel);
     // //("statBase:", statBase);

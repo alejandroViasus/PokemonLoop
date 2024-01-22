@@ -3,47 +3,94 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { assetBattle, battleVariables, handlerState } from "./battle";
 import { generate } from "@/Assets/funcions";
+import { useSearchParams, useRouter } from "next/navigation";
 
 //!Components
 import BattleField from "../components/Battle/BattleField/BattleField";
 import BoxSelectPokemon from "../components/Battle/BoxSelectPokemon/BoxSelectPokemon";
 import EndGame from "../components/Battle/EndGame/EndGame";
 import ShowCardsVector from "../components/Battle/ShowCardsVector/ShowCardsVector";
+import { typesPokemon } from "@/Assets/typesPokemon";
 
 function Page() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const urlHome = "/";
   const globalState = useSelector((state) => state.valueState);
   const [state, setState] = useState(assetBattle.initialState(globalState));
-  console.log(state);
+  // console.log(state);
 
   useEffect(() => {
-    const fetchArray = state.game.teamRivalPokedex?.map((noPokedex) =>
-      fetch(`https://pokeapi.co/api/v2/pokemon/${noPokedex}`)
-    );
-    if (fetchArray !== undefined) {
-      const newState = { ...state };
-      Promise.all(fetchArray)
-        .then((responses) =>
-          Promise.all(responses.map((response) => response.json()))
-        )
-        .then((data) => {
-          const createTeam = [];
-          data.map((pokemon) => {
-            let referencePokemon = generate.newPokemon(
-              pokemon,
-              state.trainer.rival
-            );
-            referencePokemon._id = `rival${
-              Math.random() * (referencePokemon.id || 1)
-            }${referencePokemon.name}${
-              Math.random() * (referencePokemon.id || 1)
+    //valido si el globalState tiene datos validos, de lo contrario re dirije a "/"
+    if (globalState.user._id == 0) {
+      router.push(`${urlHome}`);
+    }
+  }, []);
+
+
+  useEffect(async () => {
+    if (globalState.user._id !== 0) {
+      try {
+        const responses = await Promise.all(
+          state.game.teamRivalPokedex?.map((noPokedex) =>
+            fetch(`https://pokeapi.co/api/v2/pokemon/${noPokedex}`)
+          )
+        );
+        const data = await Promise.all(
+          responses.map((response) => response.json())
+        );
+  
+        const createTeam = data.map((pokemon) => {
+          let referencePokemon = generate.newPokemon(
+            pokemon,
+            state.trainer.rival
+          );
+          referencePokemon._id = `rival${Math.random() * (referencePokemon.id || 1)
+            }${referencePokemon.name}${Math.random() * (referencePokemon.id || 1)
             }`;
-            createTeam.push(referencePokemon);
-          });
-          newState.team.rival = createTeam;
-          setState({ ...newState });
+          return referencePokemon;
         });
+  
+        const newState = { ...state, team: { ...state.team, rival: createTeam } };
+        setState(newState);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
   }, [state.game.teamRivalPokedex]);
+  
+
+
+  // useEffect(() => {
+  //   console.log(globalState.user._id)
+  //   if (globalState.user._id !== 0) {
+  //     const fetchArray = state.game.teamRivalPokedex?.map((noPokedex) =>
+  //       fetch(`https://pokeapi.co/api/v2/pokemon/${noPokedex}`)
+  //     );
+  //     if (fetchArray !== undefined) {
+  //       const newState = { ...state };
+  //       Promise.all(fetchArray)
+  //         .then((responses) =>
+  //           Promise.all(responses.map((response) => response.json()))
+  //         )
+  //         .then((data) => {
+  //           const createTeam = [];
+  //           data.map((pokemon) => {
+  //             let referencePokemon = generate.newPokemon(
+  //               pokemon,
+  //               state.trainer.rival
+  //             );
+  //             referencePokemon._id = `rival${Math.random() * (referencePokemon.id || 1)
+  //               }${referencePokemon.name}${Math.random() * (referencePokemon.id || 1)
+  //               }`;
+  //             createTeam.push(referencePokemon);
+  //           });
+  //           newState.team.rival = createTeam;
+  //           setState({ ...newState });
+  //         });
+  //     }
+  //   }
+  // }, [state.game.teamRivalPokedex]);
 
   useEffect(() => {
     const newState = { ...state };
@@ -56,7 +103,7 @@ function Page() {
           state.team.rival[state.select.pokemon.rival],
           "Speed"
         ) || 0;
-      console.log("Init SetPosition", speedPokemonUser, speedPokemonRival);
+      // console.log("Init SetPosition", speedPokemonUser, speedPokemonRival);
       if (speedPokemonUser >= speedPokemonRival) {
         newState.game.phase;
       }
@@ -88,13 +135,14 @@ function Page() {
 
   useEffect(() => {
     if (
-      state.phase.actual === 5 &&
-      state.team.user[state.select.pokemon.user].heald > 0 &&
-      state.team.rival[state.select.pokemon.rival].heald > 0
+      (state.phase.actual === 5 &&
+        state.team.user[state.select.pokemon.user].heald > 0 &&
+        state.team.rival[state.select.pokemon.rival].heald > 0) ||
+      state.phase.pause === false
     ) {
       const trainerTurn = state.turn.user ? "user" : "rival";
 
-      
+
       const cardSelected =
         state.vectorCards[trainerTurn][state.select.cardVector[trainerTurn]];
 
@@ -138,7 +186,7 @@ function Page() {
         return setState(newState);
       },
       cardVector: (index, trainer = "user") => {
-        const newState={...state}
+        const newState = { ...state }
         // const newState = {
         //   ...state,
         //   select: {
@@ -172,16 +220,20 @@ function Page() {
   //assetBattle.get.nextStep(state,'rival','user')
   return (
     <div
+      className=" overflow-hidden "
       style={{
         position: "relative",
         width: "100vw",
         height: "100vh",
-        backgroundColor: "rgba(20,200,200,1)",
+        backgroundColor: typesPokemon[state.game.bioma].colors.background,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
+
+
+
       <h1>
         {" "}
         turn : {state.turn.user ? "user" : "rival"} power :{" "}
@@ -197,7 +249,7 @@ function Page() {
 
       <h1>
         {" "}
-        collide {!state.turn.user ? "user" : "rival"}{" "}
+        {state.phase.pause ? 'true' : 'false'} collide {!state.turn.user ? "user" : "rival"}{" "}
         {
           state.reactionColision[!state.turn.user ? "user" : "rival"]
             .powerActual
@@ -219,11 +271,10 @@ function Page() {
         - Phase{" "}
       </button>
       <h1>
-        {`phase ${battleVariables.phases[state.phase.actual]}  // timmer ${
-          (battleVariables.timmer.turn[state.turn.user ? "user" : "rival"] -
-            state.turn.timmer) /
+        {`phase ${battleVariables.phases[state.phase.actual]}  // timmer ${(battleVariables.timmer.turn[state.turn.user ? "user" : "rival"] -
+          state.turn.timmer) /
           battleVariables.timmer.turn.delay
-        }`}{" "}
+          }`}{" "}
       </h1>
       <button onClick={() => methods.changeActualPhase(state.phase.actual + 1)}>
         {" "}
@@ -241,6 +292,8 @@ function Page() {
         {" "}
         reduce Move
       </button>
+
+
 
       {state.phase.actual === 0 ? <EndGame battleState={state} /> : null}
 
