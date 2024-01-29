@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { generate } from '@/Assets/funcions'
 import { imagesPokemon } from '@/Assets/funcions';
 import { typesPokemon } from '@/Assets/typesPokemon';
+import { colors } from '@/Assets/colors';
 
 
 import IconHeald from '@/app/Icons/IconHeald';
@@ -12,15 +13,15 @@ import IconAttackPlus from '@/app/Icons/IconAttackPlus';
 import IconDeffensePlus from '@/app/Icons/IconDeffensePlus';
 import IconSpeed from '@/app/Icons/IconSpeed';
 
-import { colors } from '@/Assets/colors';
+
 
 import ShowType from '../../ShowType/ShowType';
 
 
-function StadisticInBattle({ pokemon, trainer = 'user', rival = 'rival', bioma = 'Normal', dificult }) {
+function StadisticInBattle({ theme = 'None', pokemon, trainer = 'user', rival = 'rival', bioma = 'Normal', dificult }) {
 
 
-  console.log('pokemons...', pokemon)
+  // console.log('pokemons...', pokemon)
   const IconStat = {
     Heald: IconHeald,
     Attack: IconAttack,
@@ -31,6 +32,8 @@ function StadisticInBattle({ pokemon, trainer = 'user', rival = 'rival', bioma =
   }
 
   const stats = ['Heald', 'Attack', 'Deffense', 'SpecialAttack', 'SpecialDeffense', 'Speed']
+  
+  // console.log('fffffffffffffffffffffffff',pokemon)
   return (
     <div className='flex-all-center relative'
       style={{
@@ -40,7 +43,7 @@ function StadisticInBattle({ pokemon, trainer = 'user', rival = 'rival', bioma =
         alignItems: 'flex-start',
         height: '240px',
         width: '410px',
-        
+
       }}
     >
       <div
@@ -68,12 +71,18 @@ function StadisticInBattle({ pokemon, trainer = 'user', rival = 'rival', bioma =
                 className='flex-all-center'
                 style={{
                   justifyContent: 'flex-end',
-                  color: colors.Battle.selectorPokemon.background.white,
+                  color: typesPokemon[theme].colors.textWhite,
                   width: '100px',
                   //  backgroundColor:'green'
                 }}
               >
-                {generate.getStat(pokemon[trainer], stat)}
+                {
+                  stat === 'Heald' 
+                  ? (generate.getStat(pokemon[trainer], stat) * pokemon[trainer].heald)/100
+                  :generate.getStat(pokemon[trainer], stat)
+                }
+                
+
                 {/* x {generate.getEffectiveness(pokemon[trainer],pokemon[rival],bioma)} */}
               </h1>
               <div
@@ -86,7 +95,7 @@ function StadisticInBattle({ pokemon, trainer = 'user', rival = 'rival', bioma =
                   scale: '0.5'
                 }}
               >
-                <Component color={colors.Battle.selectorPokemon.background.white} />
+                <Component color={typesPokemon[theme].colors.textWhite} />
               </div>
 
               <div className="absolute animation-up-and-down"
@@ -108,43 +117,55 @@ function StadisticInBattle({ pokemon, trainer = 'user', rival = 'rival', bioma =
         })}
       </div>
       <div
-        className='flex-all-center border-radius-mid relative'
+        className='flex-all-center border-radius-mid relative '
         style={{
           height: '180px',
           width: '200px',
-          backgroundColor: trainer==='user'? colors.Battle.selectorPokemon.background.blue: colors.Battle.selectorPokemon.background.red
+          backgroundColor: typesPokemon[theme].colors.background
+          // backgroundColor: trainer==='user'? colors.Battle.selectorPokemon.background.blue: colors.Battle.selectorPokemon.background.red
 
         }}
       >
         <h2
-          className='absolute title-details'
+          className='absolute title-details percentage-100-width'
           style={{
+            width: '101%',
             fontSize: '25px',
-            color: trainer==='user'? colors.Battle.selectorPokemon.background.blueIcons: colors.Battle.selectorPokemon.background.redIcons,
-            top: '0%'
+            textAlign: 'center',
+            padding: '10% 0%',
+            // color: trainer==='user'? colors.Battle.selectorPokemon.background.blueIcons: colors.Battle.selectorPokemon.background.redIcons,
+            color: typesPokemon[theme].colors.background,
+            backgroundColor: typesPokemon[theme].colors.tertiary,
+            top: '5%',
+            opacity: 1
           }}
         >
-          {pokemon[trainer]?.name}
+          {pokemon[trainer]?.name?.substring(0, 12)}
         </h2>
 
-        <Image src={imagesPokemon.official(pokemon[trainer]?.noPokedex, pokemon[trainer]?.shiny)} width={150} height={150} alt="pokemon User selected" />
+        <Image
+          className='absolute'
+          style={{
+            zIndex: 2,
+          }}
+          src={imagesPokemon.official(pokemon[trainer]?.noPokedex, pokemon[trainer]?.shiny)} width={150} height={150} alt="pokemon User selected" />
 
       </div>
       <div className="flex-all-center absolute "
         style={{
           bottom: '-5%',
           right: '10%',
-          backgroundColor: trainer==='user'? colors.Battle.selectorPokemon.background.blue: colors.Battle.selectorPokemon.background.red,
+          backgroundColor: typesPokemon[theme].colors.background,
           height: '60px',
           width: '160px',
           borderRadius: '30px',
-          
+
         }}
       >
         <ShowType
           type1={pokemon[trainer]?.type1}
           type2={pokemon[trainer]?.type2}
-          fill={trainer==='user'? colors.Battle.selectorPokemon.background.blueIcons: colors.Battle.selectorPokemon.background.redIcons}
+          fill={typesPokemon[theme].colors.primary}
           scale='0.5'
           disposition='row'
         ></ShowType>

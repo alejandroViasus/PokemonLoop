@@ -4,7 +4,7 @@ import Image from "next/image";
 import { trainers } from "@/Assets/trainers";
 
 
-function ShowSelectorPokemonTeam({ team, methods, trainer, selector, battleState }) {
+function ShowSelectorPokemonTeam({ team, methods, trainer, selector, theme }) {
 
   // console.log('SSelectorPokemon',trainer,team[selector])
   const [pokemonTeam, setPokemonTeam] = useState([]);
@@ -72,6 +72,7 @@ function ShowSelectorPokemonTeam({ team, methods, trainer, selector, battleState
             pokemon={pokemon}
             selector={selector}
             index={index}
+            theme={theme}
           />
         ))}
       </div>

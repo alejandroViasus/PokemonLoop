@@ -18,15 +18,26 @@ function CardButtonTeam({ pokemon, porperty = "team", subColor = 'primary', scal
   const globalState = useSelector((state) => state.valueState);
 
 
-
+  
+  
+  
+  
   const initialState = {
     team: pokemon.team || false,
     favorite: pokemon.favorite || false,
   };
-
+  
   const [state, setState] = useState(initialState);
   const [actualTeam, setActualTeam] = useState(globalState.teamUser);
   const [disabledButton, setDisabledButton] = useState(true);
+  
+  
+  let iconOpacity= state?.[porperty] ? '1' : '0.7'||'0';
+  if( actualTeam.length >= valuesPokemon.componentBattle.size.team &&
+    porperty === "team"&& !state.team){
+      iconOpacity='0'
+    }
+
   useEffect(() => {
     if (pokemon._id !== undefined) {
       fetch(`/api/pokemon/get/getById?id=${pokemon._id}`)
@@ -100,17 +111,17 @@ function CardButtonTeam({ pokemon, porperty = "team", subColor = 'primary', scal
           style={{
 
             scale: state[porperty] ? 1.5 * scale : 1.3 * scale,
-            opacity: state[porperty] ? '1' : '0.5',
-            opacity: state[porperty] ? '1' : '0.7',
+            // opacity: state[porperty] ? '1' : '0.5',
+            opacity:iconOpacity
           }
           }
         >
           {/* {state[porperty] ? `${porperty}` : "...." || ""} */}
           {porperty === 'team'
             ?
-            <Pokeball color={state[porperty] ? colorsStack.Heald : typesPokemon[theme].colors.primary} />
+            <Pokeball color={state[porperty] ? `rgba(22,22,22,1)` : typesPokemon[theme].colors.primary} />
             :
-            <Like color={state[porperty] ? colorsStack.Heald : typesPokemon[theme].colors.primary} />
+            <Like color={state[porperty] ?`rgba(255,82,102,1)` : `rgba(255,255,255,1)`} />
           }
         </button>
 

@@ -83,8 +83,8 @@ export const battle = {
       switch (tail) {
         case "pokemon":
           {
-            if(axis==='x'){
-              console.log( 'newPosition',axis , battle.move.next(state, user, axis) )
+            if (axis === 'x') {
+              console.log('newPosition', axis, battle.move.next(state, user, axis))
             }
             return battle.move.next(state, user, axis);
           }
@@ -110,11 +110,11 @@ export const battle = {
       let divisor = 0.05;
       let step =
         (speed * direccion.variable + speed * direccion.aceleration.actual) *
-        (0.5 * divisor * state.general.figth.actualSpeed.value);
-        let desfase =valuesPokemon.componentBattle.size.desfase 
+        (0.4 * divisor * state.general.figth.actualSpeed.value);
+      let desfase = valuesPokemon.componentBattle.size.desfase
       if (direccion.value === "Rigth" || direccion.value === "Down") {
         focus = focus + step;
-        focus > 100? (focus = 100) : null;
+        focus > 100 ? (focus = 100) : null;
         console.log("Limit -----------", direccion.value, focus, limitArea);
       }
       if (direccion.value === "Left" || direccion.value === "Up") {
@@ -122,7 +122,7 @@ export const battle = {
         focus < 0 ? (focus = 0) : null;
       }
       // console.log('focus, in battle-_-_-______',state[selector].stats,direccion);
-       console.log(`focus, in battle-_-_-___${axis}___`, focus, step);
+      console.log(`focus, in battle-_-_-___${axis}___`, focus, step);
       return focus;
     },
   },
@@ -130,16 +130,16 @@ export const battle = {
   get: {
     sizePokemon: (state, user) => {
       const pokemon =
-      user === "User"
-      ? {...state.battlefield.pokemonSelectedUser}
-      : {...state.battlefield.pokemonSelectedRival};
-      
-      if(pokemon?.height>=valuesPokemon.componentBattle.size.max){
-        pokemon.height=valuesPokemon.componentBattle.size.max;
+        user === "User"
+          ? { ...state.battlefield.pokemonSelectedUser }
+          : { ...state.battlefield.pokemonSelectedRival };
+
+      if (pokemon?.height >= valuesPokemon.componentBattle.size.max) {
+        pokemon.height = valuesPokemon.componentBattle.size.max;
       }
       //console.log("InSizePokemon", pokemon?.height,(pokemon?.height)*valuesPokemon.componentBattle.size.scale);
-      return (pokemon?.height)*valuesPokemon.componentBattle.size.scale
-     
+      return (pokemon?.height) * valuesPokemon.componentBattle.size.scale
+
     },
     aceleration: (state, user, axis) => {
       let selector = `pokemon${user}`;
@@ -156,16 +156,16 @@ export const battle = {
       return focus;
     },
 
-    initialPosition: (user, axis,state) => {
-      let size =battle.get.sizePokemon(state,user)
+    initialPosition: (user, axis, state) => {
+      let size = battle.get.sizePokemon(state, user)
       //console.log('-------------------------- size Data', size)
 
-let desfase=1.2*size
+      let desfase = 1.2 * size
 
       if (axis === "x") {
-        return user === "User" ? 0 : 100-desfase ;
+        return user === "User" ? 0 : 100 - desfase;
       } else {
-        return 50-(size);
+        return 50 - (size);
       }
     },
 
@@ -214,7 +214,7 @@ let desfase=1.2*size
       let focus = state[selector].position[axis].direction.value;
       let positionPokemon = state[selector].dimension;
       const dimensionBattlefield = battle.get.dimension('id_battlefield');
-      
+
       let focusAxis = "a";
       let limitPokemon = 0;
       if (axis === "x") {
@@ -223,7 +223,7 @@ let desfase=1.2*size
         focusAxis = "top";
       }
       if (focus === "Rigth") {
-        limitPokemon = positionPokemon[focusAxis] +positionPokemon.width;
+        limitPokemon = positionPokemon[focusAxis] + positionPokemon.width;
 
         if (limitPokemon >= dimensionBattlefield.width) {
           console.log(

@@ -20,6 +20,14 @@ import StadisticInBattle from "../StadisticInBattle/StadisticInBattle";
 
 const BoxSelectPokemon = ({ battleState, methods }) => {
 
+  let theme='Normal'
+  let themeRival='Normal'
+
+  if(battleState.trainer.user.theme!==undefined){
+    theme=battleState.trainer.user.theme
+    themeRival=battleState.trainer.rival.theme
+  }
+
   const size = {
     trainer: {
       width: 700,
@@ -42,7 +50,7 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
     user: battleState.team.user !== undefined ? battleState.team.user[battleState.select.pokemon.user] : {},
     rival: battleState.team.rival !== undefined ? battleState.team.rival[battleState.select.pokemon.rival] : {},
   }
-  console.log('from-selectorR', battleState)
+  // console.log('from-selectorR', battleState)
   return (
     <div
       className="flex-all-center overflow-hidden"
@@ -56,7 +64,7 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.bgBlack,
+        backgroundColor: `rgba(22,22,22,1`,
         gap: '5%'
       }}
     >
@@ -70,7 +78,7 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
           // backgroundColor:'red',
           top: '8%',
           borderRadius: '40px',
-          outline: `6px solid ${typesPokemon[battleState.game.bioma].colors.primary}`,
+          outline: `4px solid ${typesPokemon[battleState.game.bioma].colors.primary}`,
           color: typesPokemon[battleState.game.bioma].colors.primary
         }}
       >
@@ -95,16 +103,53 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
             disposition='column'
           ></ShowType>
         </div>
+        
       </div>
       <div
         className="flex-all-center border-radius-big"
         style={{
           width: '90%',
           height: '60%',
-          background: `linear-gradient(to right, ${colors.bgBlue} 50%, ${colors.bgRed}50%)`,
+          background: `linear-gradient(to right, ${typesPokemon?.[theme]?.colors.primary} 50%, ${typesPokemon?.[themeRival]?.colors?.textWhite}50%)`,
         }}
       >
         <Image className="animation-rotate-360 absolute" src={haloStar} height={900} width={900} alt="image halo star" />
+
+        <div className="absolute"
+          style={{
+            bottom:'23%',
+            left:'9%',
+            scale:'2',
+            opacity:'0.3'
+          }}
+        >
+          <ShowType
+            type1={battleState.trainer.user.theme}
+            type2={battleState.trainer.user.theme}
+            fill={typesPokemon[battleState.trainer.user.theme].colors.background}
+            scale='0.5'
+            disposition='row'
+          ></ShowType>
+        </div>
+
+
+        <div className="absolute"
+          style={{
+            bottom:'23%',
+            right:'7%',
+            scale:'2',
+            opacity:'0.3'
+          }}
+        >
+          <ShowType
+            type1={battleState.trainer.rival.theme}
+            type2={battleState.trainer.rival.theme}
+            fill={typesPokemon?.[battleState?.trainer?.rival?.theme]?.colors.background}
+            scale='0.5'
+            disposition='row'
+          ></ShowType>
+        </div>
+
         <div
           className="flex-all-center relative"
           style={
@@ -139,7 +184,11 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
               style={{
 
               }}
-              src={boxName} width={size.boxName.width} height={size.boxName.height} alt='image trainer user' />
+              src={boxName}
+              width={size.boxName.width}
+              height={size.boxName.height}
+              alt='image trainer user'
+            />
             <h1 className="absolute"
               style={{
                 fontSize: '40px'
@@ -162,6 +211,7 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
               methods={methods}
               trainer="user"
               selector={battleState.select.pokemon.user}
+              theme={battleState.trainer.user.theme}
             />
           </div>
 
@@ -194,15 +244,21 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
               top: "0%",
               scale: '0.8',
               zIndex: 2,
-              backgroundColor: colors.iconBlue,
+              backgroundColor: typesPokemon[battleState.trainer.user.theme].colors.tertiary,
               padding: '25px 15px',
-              outline: `6px solid ${globalColors.Battle.selectorPokemon.background.blackMarginSelectors}`,
+              outline: `6px solid ${typesPokemon[battleState.trainer.user.theme].colors.textDark}`,
             }}
           >
-            <StadisticInBattle pokemon={pokemonSelector} trainer={'user'} rival={'rival'} bioma={battleState.game.bioma} dificult={battleState.game.dificult} />
+            <StadisticInBattle pokemon={pokemonSelector}
+              trainer={'user'}
+              rival={'rival'}
+              bioma={battleState.game.bioma}
+              dificult={battleState.game.dificult}
+              theme={battleState.trainer.user.theme}
+            />
           </div>
         </div>
-
+        {/* ------------------------------------------------------------------------- */}
         <div
           className="flex-all-center relative"
           style={
@@ -233,6 +289,7 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
           >
 
 
+
             <Image className="absolute"
               style={{
 
@@ -258,6 +315,7 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
               methods={methods}
               trainer="rival"
               selector={battleState.select.pokemon.rival}
+              theme={battleState.trainer.rival.theme}
             />
 
           </div>
@@ -268,17 +326,24 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
               top: "0%",
               scale: '0.8',
               zIndex: 2,
-              backgroundColor: colors.iconRed,
+              backgroundColor: typesPokemon[battleState.trainer.rival.theme].colors.tertiary,
               padding: '25px 15px',
-              outline: `6px solid ${globalColors.Battle.selectorPokemon.background.blackMarginSelectors}`,
+              outline: `6px solid ${typesPokemon[battleState.trainer.rival.theme].colors.textDark}`,
             }}
           >
-            <StadisticInBattle pokemon={pokemonSelector} trainer={'rival'} rival={'user'} bioma={battleState.game.bioma} dificult={battleState.game.dificult} />
+            <StadisticInBattle pokemon={pokemonSelector}
+              trainer={'rival'}
+              rival={'user'}
+              bioma={battleState.game.bioma}
+              dificult={battleState.game.dificult}
+              theme={battleState.trainer.rival.theme}
+            />
           </div>
         </div>
 
 
       </div>
+      {/* --------------------------------------------------------------------------- */}
 
       <Image className="absolute"
         src={lightning}
@@ -286,9 +351,9 @@ const BoxSelectPokemon = ({ battleState, methods }) => {
         width={222}
         alt={`image Lightning to battle selector`}
         style={{
-          top: '21.5%',
+          top: '21%',
           left: '45.2%',
-          scale: '1.1'
+          scale: '1.13'
         }}
       />
 

@@ -2,19 +2,21 @@ import React from 'react'
 import Image from 'next/image'
 import { imagesPokemon, pokemonGet } from '@/Assets/funcions'
 import { colors } from '@/Assets/colors'
-function ShowSelectorPokemonTeamItem({ methods, trainer, pokemon, index, selector }) {
+import { typesPokemon } from '@/Assets/typesPokemon'
+
+function ShowSelectorPokemonTeamItem({ methods, trainer, pokemon, index, selector,theme='Normal' }) {
 
   const scale = selector === index ? 1.1 : 1
 
   let selectorColor = `${selector === index
-    ? colors.Battle.selectorPokemon.background.whiteRedSelected
-    : colors.Battle.selectorPokemon.background.redIcons}`
+    ? typesPokemon[theme].colors.textWhite
+    : typesPokemon[theme].colors.textDark}`
 
-  if (trainer === 'user') {
-    selectorColor = `${selector === index
-      ? colors.Battle.selectorPokemon.background.whiteBlueSelected
-      : colors.Battle.selectorPokemon.background.blueIcons}`
-  }
+  // if (trainer === 'user') {
+  //   selectorColor = `${selector === index
+  //     ? typesPokemon[theme].colors.textWhite
+  //     : colors.Battle.selectorPokemon.background.blueIcons}`
+  // }
 
   return (
     <div
@@ -35,10 +37,10 @@ function ShowSelectorPokemonTeamItem({ methods, trainer, pokemon, index, selecto
         `}
         style={{
           backgroundColor: selectorColor,
-          height: '100px',
-          width: '100px',
+          height: '120px',
+          width: '120px',
           flexDirection: 'column',
-          outline: `4px solid ${colors.Battle.selectorPokemon.background.blackMarginSelectors}`,
+          outline: `4px solid ${typesPokemon[theme].colors.secondary}`,
           scale: scale,
 
         }}
@@ -46,15 +48,20 @@ function ShowSelectorPokemonTeamItem({ methods, trainer, pokemon, index, selecto
       >
 
 
-        <div className="absolute percentage-100-width"
+        <div className="absolute percentage-100-width flex-all-center"
           style={{
-            backgroundColor: trainer === 'user'
-              ? colors.Battle.selectorPokemon.background.whiteBlueSelected
-              : colors.Battle.selectorPokemon.background.whiteRedSelected,
-            color: trainer === 'user'
-
-              ? colors.Battle.selectorPokemon.background.blue
-              : colors.Battle.selectorPokemon.background.red,
+            // backgroundColor: trainer === 'user'
+            //   ? colors.Battle.selectorPokemon.background.whiteBlueSelected
+            //   : colors.Battle.selectorPokemon.background.whiteRedSelected,
+            backgroundColor:selector === index
+            ?typesPokemon[theme].colors.textDark
+            :typesPokemon[theme].colors.textWhite,
+            color:selector === index
+            ?typesPokemon[theme].colors.textWhite
+            :typesPokemon[theme].colors.textDark,
+            // color: trainer === 'user'
+            //   ? colors.Battle.selectorPokemon.background.blue
+            //   : colors.Battle.selectorPokemon.background.red,
             height: '20%',
             top: '10%',
           }}
@@ -68,13 +75,13 @@ function ShowSelectorPokemonTeamItem({ methods, trainer, pokemon, index, selecto
             top: '20%'
           }}
           src={imagesPokemon.pixel(pokemon.noPokedex, pokemon.shiny)}
-          width={80}
-          height={80}
+          width={100}
+          height={100}
           alt={`detail pokemon ${pokemon.name}`}
         />
         <h4 className="absolute"
           style={{
-            color: colors.Battle.selectorPokemon.background.blackMarginSelectors,
+            color: typesPokemon[theme].colors.textDark,
             bottom: '8%',
             right: '8%'
           }}

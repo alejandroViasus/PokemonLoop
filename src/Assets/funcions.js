@@ -47,7 +47,9 @@ export const valuesPokemon = {
 
   componentBattle: {
     limitSpeedL: {
-      max: 20,
+      // max: 20,
+      // min: 5,
+      max: 50,
       min: 5,
     },
     areaBattlefield: {
@@ -77,8 +79,8 @@ export const valuesPokemon = {
         height: 120,
         width: 80,
       },
-      maxPower: 500,
-      minPower: 200,
+      maxPower: 400,
+      minPower: 100,
     },
     size: {
       team: 4,

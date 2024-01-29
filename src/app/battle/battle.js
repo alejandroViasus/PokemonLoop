@@ -92,7 +92,7 @@ export const battleVariables = {
   },
   phases: [
     "endGame",
-    "validation",
+    "validationTeam",
     "selectMode",
     "selectPokemon",
     "selectCard",
@@ -102,15 +102,15 @@ export const battleVariables = {
     pokemon: {
       tail: 28,
       scale: {
-        base: 30, // valor Unico de escala que se multiplicara por el tamanio de la data
-        min: 50, //valor en pixeles
-        max: 100, //valor en pixeles
+        base: 35, // valor Unico de escala que se multiplicara por el tamanio de la data
+        min: 60, //valor en pixeles
+        max: 120, //valor en pixeles
       },
     },
     structure: {
       stadium: {
-        heigth: 600,
-        width: 1153,
+        heigth: 700,
+        width: 1500,
       },
     },
     team: 4,
@@ -120,37 +120,37 @@ export const battleVariables = {
     },
   },
   dificult: {
-    easy: { rate: 0, value: "easy", difflevel: 2 },
-    medium: { rate: 0.7, value: "medium", difflevel: 4 },
-    hard: { rate: 0.9, value: "hard", difflevel: 8 },
-    master: { rate: 0.95, value: " master", difflevel: 12 },
-    legend: { rate: 0.99, value: "legend", difflevel: 16 },
+    easy: { rate: 0, value: "easy", difflevel: 3 },
+    medium: { rate: 0.7, value: "medium", difflevel: 6 },
+    hard: { rate: 0.9, value: "hard", difflevel: 12 },
+    master: { rate: 0.95, value: " master", difflevel: 16 },
+    legend: { rate: 0.99, value: "legend", difflevel: 20 },
   },
   baseExperience: {
     winner: {
       easy: {
-        experiencePokemon: 25,
+        experiencePokemon: 250,
         experienceTrainer: 50,
         pokeballs: 5,
         box: 0,
         coins: 20,
       },
       medium: {
-        experiencePokemon: 35,
+        experiencePokemon: 350,
         experienceTrainer: 70,
         pokeballs: 8,
         box: 0,
         coins: 30,
       },
       hard: {
-        experiencePokemon: 65,
+        experiencePokemon: 650,
         experienceTrainer: 100,
         pokeballs: 8,
         box: 0,
         coins: 80,
       },
       master: {
-        experiencePokemon: 150,
+        experiencePokemon: 1500,
         experienceTrainer: 200,
         pokeballs: 10,
         box: 0,
@@ -219,7 +219,7 @@ export const assetBattle = {
       //?pokemon Select
       const pokemonSelect = {
         trainer: newState.team?.[trainerTurn]?.[select.pokemon?.[trainerTurn]],
-  rival: newState.team?.[rival]?.[select.pokemon?.[rival]],
+        rival: newState.team?.[rival]?.[select.pokemon?.[rival]],
       };
 
       //?card Select
@@ -495,9 +495,10 @@ export const assetBattle = {
             damageTotal = 3;
           }
 
+
           const healdReduction =
-            (damageTotal / generate.getStat(pokemonSelect.trainer, "Heald")) *
-            100;
+            ((damageTotal / generate.getStat(pokemonSelect.trainer, "Heald")) *
+              100) * (16 / 16);//!! (1/16) nuevo Nerfeo !!! 25/01/2024
 
           const newStateTeamRival = [...newState.team[rival]];
           const selectedPokemon = newState.select.pokemon[rival];
@@ -518,12 +519,12 @@ export const assetBattle = {
             newState.team[rival][selectedPokemon].heald,
             pokemonSelect
           );
-          const showDamage = document.getElementById("show_last_damage");
-          const showDefence = document.getElementById("show_last_defense");
-          const showTotal = document.getElementById("show_last_total");
+          // const showDamage = document.getElementById("show_last_damage");
+          // const showDefence = document.getElementById("show_last_defense");
+          // const showTotal = document.getElementById("show_last_total");
           // showDamage.innerHTML = `${trainerTurn} : ${damageTotal}`;
-          showDefence.innerHTML = `${pokemonSelect.trainer.name} : ${damage}=> ${pokemonSelect.rival.name} ${defenseRival} `;
-          showTotal.innerHTML = `Damage : ${damageTotal} => reduxHeald ${healdReduction}% heald => ${newStateTeamRival[selectedPokemon].heald}%`;
+          // showDefence.innerHTML = `${pokemonSelect.trainer.name} : ${damage}=> ${pokemonSelect.rival.name} ${defenseRival} `;
+          // showTotal.innerHTML = `Damage : ${damageTotal} => reduxHeald ${healdReduction}% heald => ${newStateTeamRival[selectedPokemon].heald}%`;
         }
         //!Collide limit Stadium
         if (position.trainer.pokemon.x >= size.stadium.width - size.trainer) {
@@ -591,22 +592,22 @@ export const assetBattle = {
 
       return newState;
     },
-    decrementPower: (state, trainerTurn="rival") => {
+    decrementPower: (state, trainerTurn = "rival") => {
       // si el pokemon tiene el uno de los tipos del bioma el decremento sera se le restara 0.05 ,si tiene los dos tiempo , el decremento se le restara  0.1
       // si el pokemon tiene un tipo debil con el bioma se le sumara al decremento 0.05 , si el pokemon tiene dos tipos debiles contra el bioma , se le sumara al decremento 0.1
       // de lo contrario el decremento sera de 1
-      let decrement = 1;      
+      let decrement = 1;
       const bioma = state.game.bioma;
       const bonus = battleVariables.powerVariables.decrement.bonus;
       const indexPokemon = state?.select?.pokemon[trainerTurn];
       const indexCard = state.select.cardVector[trainerTurn];
       const cardSelect = state.vectorCards[trainerTurn][indexCard];
-      const teamTrainer=state.team[trainerTurn];
-      let pokemonSelect ={}
-      if(teamTrainer !== undefined ){
+      const teamTrainer = state.team[trainerTurn];
+      let pokemonSelect = {}
+      if (teamTrainer !== undefined) {
         pokemonSelect = teamTrainer[indexPokemon];
       }
-      const type = pokemonSelect[`type${cardSelect.type}`]||'Normal';
+      const type = pokemonSelect[`type${cardSelect.type}`] || 'Normal';
       // console.log(
       //   "!!DecreasePokemon",
       //   "type:",
@@ -803,7 +804,7 @@ export const assetBattle = {
         user: false,
         loser: "",
       },
-      phase: { time: 0, actual: 1, turn: 0, CountTurn: 0 ,pause:false},
+      phase: { time: 0, actual: 1, turn: 0, CountTurn: 0, pause: false },
       game: {
         bioma: assetBattle.get.bioma(),
       },
