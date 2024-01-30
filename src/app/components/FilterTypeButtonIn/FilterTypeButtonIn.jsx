@@ -2,7 +2,7 @@ import React from "react";
 import { typesPokemon } from "@/Assets/typesPokemon";
 import Image from "next/image";
 
-function FilterTypeButtonIn({ type, handleState }) {
+function FilterTypeButtonIn({  type='None', handleState=()=>{} }) {
   const sizeButton = 40;
   return (
     <button

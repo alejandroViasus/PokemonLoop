@@ -101,7 +101,7 @@ function Page() {
 
     if (
       state.name !== "" &&
-      state.type !== "None" &&
+      // state.type !== "None" &&
       state.trainer !== "None" &&
       state.initialPokemon !== undefined
     ) {

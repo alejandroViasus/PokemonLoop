@@ -77,7 +77,7 @@ export const typesPokemon = {
       tertiary: "rgba(30, 30, 30, 1)", // Negro menos saturado
       quaternary: "rgba(180, 51, 65,1)",
       textDark: "rgba(150, 21, 35,1)", // Tono oscuro estándar
-      textWhite: "rgba(250, 120, 120, 1)", // Nuevo tono claro de rojo pastel
+      textWhite: "rgba(250, 200, 200, 1)", // Nuevo tono claro de rojo pastel
       background: "rgba(220, 220, 220, 1)", // Ajustado para adaptarse al nuevo tono predominante
     },
   },

@@ -5,7 +5,7 @@ import { typesPokemon } from "@/Assets/typesPokemon";
 import Image from "next/image";
 import BackGroundPokeball from "@/app/Icons/BackGroundPokeball";
 
-function FilterTypeButton({ type, handleState }) {
+function FilterTypeButton({ type='None', handleState=()=>{}  }) {
   const sizeButton = 100;
   return (
     <button

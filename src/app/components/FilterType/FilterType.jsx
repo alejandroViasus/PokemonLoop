@@ -8,7 +8,7 @@ import FilterTypeButton from "../FilterTypeButton/FilterTypeButton";
 import FilterTypeButtonIn from "../FilterTypeButtonIn/FilterTypeButtonIn";
 import { valuesPokemon } from "@/Assets/funcions";
 
-function FilterType({ type = "None", handlerType }) {
+function FilterType({ type = "None", handlerType=()=>{} }) {
   const initialState = {
     showFilter: false,
     type: type,

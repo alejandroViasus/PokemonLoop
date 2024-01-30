@@ -119,12 +119,14 @@ function NavigationMenu({ iNeedInfoUser = () => { } }) {
       }}
     >
       <div className="content-image-navigation-menu">
-        {/* <h3>{globalState.user.email}</h3>
-        <h3>lvl {globalState.user.level}</h3>
-        <h3>exp: {globalState.user.experience}</h3>
-        <h3>pokeballs: {globalState.user.pokeballs}</h3>
-        <h3>box: {globalState.user.box}</h3>
-        <h3>coins: {globalState.user.coins}</h3> */}
+        {/* 
+          <h3>{globalState.user.email}</h3>
+          <h3>lvl {globalState.user.level}</h3>
+          <h3>exp: {globalState.user.experience}</h3>
+          <h3>pokeballs: {globalState.user.pokeballs}</h3>
+          <h3>box: {globalState.user.box}</h3>
+          <h3>coins: {globalState.user.coins}</h3> 
+        */}
 
         <Image
           src={
@@ -143,10 +145,10 @@ function NavigationMenu({ iNeedInfoUser = () => { } }) {
 
       {globalState.user._id !== "0" ? (
         <div className="content-items-navigation">{menuNavigation}</div>
-        ) : null}
+      ) : null}
 
 
-       
+
 
       <div className="button-login"
         style={{
